@@ -2,7 +2,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getLoginUrl } from "@/const";
-import { BookOpen, Trophy, MessageCircle, Sparkles, ArrowRight, CheckCircle, GraduationCap, Zap, Crown, Shield } from "lucide-react";
+import { BookOpen, Trophy, MessageCircle, Sparkles, ArrowRight, CheckCircle, GraduationCap, Zap, Crown, Shield, Bitcoin, Star, Users, Target } from "lucide-react";
 import { Link } from "wouter";
 
 export default function Home() {
@@ -11,64 +11,77 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b bg-card">
+      <header className="border-b bg-card/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
             <GraduationCap className="h-8 w-8 text-primary" />
-            <span className="text-xl font-bold">Sklora</span>
+            <span className="text-xl font-bold font-['Lexend']">Sklora</span>
           </div>
           <nav className="flex items-center gap-4">
             <Link href="/pricing">
-              <Button variant="ghost">Tarifs</Button>
+              <Button variant="ghost" className="btn-squishy">Tarifs</Button>
             </Link>
             {isAuthenticated ? (
               <>
                 <Link href="/dashboard">
-                  <Button variant="ghost">Tableau de bord</Button>
+                  <Button variant="ghost" className="btn-squishy">Tableau de bord</Button>
                 </Link>
                 {user?.role === "admin" && (
                   <Link href="/admin">
-                    <Button variant="ghost">Administration</Button>
+                    <Button variant="ghost" className="btn-squishy">Administration</Button>
                   </Link>
                 )}
               </>
             ) : (
               <a href={getLoginUrl()}>
-                <Button>Se connecter</Button>
+                <Button className="btn-squishy">Se connecter</Button>
               </a>
             )}
           </nav>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="py-20 px-4 bg-gradient-to-b from-primary/5 to-background">
-        <div className="container max-w-6xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-4">
-            <span className="text-primary">Sklora</span>
+      {/* Hero Section - Calm UI with Cloud Dancer background */}
+      <section className="py-24 px-4 relative overflow-hidden">
+        {/* Subtle gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-purple-500/5" />
+        <div className="absolute top-20 right-20 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 left-20 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+        
+        <div className="container max-w-6xl mx-auto text-center relative z-10">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
+            <Sparkles className="h-4 w-4" />
+            Propulsé par l'Intelligence Artificielle
+          </div>
+          
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-4 font-['Lexend'] title-kinetic">
+            <span className="bg-gradient-to-r from-primary via-teal-500 to-primary bg-clip-text text-transparent">
+              Sklora
+            </span>
           </h1>
-          <p className="text-2xl md:text-3xl font-medium text-foreground/80 mb-6">
+          <p className="text-2xl md:text-3xl font-medium text-foreground/80 mb-6 font-['Lexend']">
             Éclore dans son métier
           </p>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-            Une plateforme d'apprentissage interactive avec génération de contenu par IA, gamification et assistant virtuel pour vous accompagner dans votre parcours professionnel.
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
+            Une plateforme d'apprentissage interactive avec génération de contenu par IA, 
+            gamification et assistant virtuel pour vous accompagner dans votre parcours professionnel.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             {isAuthenticated ? (
               <Link href="/dashboard">
-                <Button size="lg" className="gap-2">
-                  Accéder à mon espace <ArrowRight className="h-4 w-4" />
+                <Button size="lg" className="btn-squishy gap-2 px-8 py-6 text-lg bg-gradient-to-r from-primary to-teal-600 hover:from-primary/90 hover:to-teal-600/90 shadow-lg">
+                  Accéder à mon espace <ArrowRight className="h-5 w-5" />
                 </Button>
               </Link>
             ) : (
               <a href={getLoginUrl()}>
-                <Button size="lg" className="gap-2">
-                  Commencer gratuitement <ArrowRight className="h-4 w-4" />
+                <Button size="lg" className="btn-squishy gap-2 px-8 py-6 text-lg bg-gradient-to-r from-primary to-teal-600 hover:from-primary/90 hover:to-teal-600/90 shadow-lg">
+                  Commencer gratuitement <ArrowRight className="h-5 w-5" />
                 </Button>
               </a>
             )}
             <Link href="/pricing">
-              <Button size="lg" variant="outline">
+              <Button size="lg" variant="outline" className="btn-squishy px-8 py-6 text-lg">
                 Voir les tarifs
               </Button>
             </Link>
@@ -76,48 +89,62 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-20 px-4">
+      {/* Features Section - Bento Grid 2.0 */}
+      <section className="py-24 px-4">
         <div className="container max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12">
-            Tout ce dont vous avez besoin pour éclore
-          </h2>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 font-['Lexend']">
+              Tout ce dont vous avez besoin pour éclore
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Des outils modernes et intelligents pour un apprentissage efficace et engageant.
+            </p>
+          </div>
+          
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card className="dashboard-card">
+            <Card className="bento-card group">
               <CardHeader>
-                <Sparkles className="h-10 w-10 text-primary mb-2" />
-                <CardTitle>Contenu généré par IA</CardTitle>
-                <CardDescription>
+                <div className="p-3 rounded-xl bg-primary/10 w-fit mb-4 group-hover:bg-primary/20 transition-colors">
+                  <Sparkles className="h-8 w-8 text-primary" />
+                </div>
+                <CardTitle className="font-['Lexend']">Contenu généré par IA</CardTitle>
+                <CardDescription className="text-base">
                   Des leçons et quiz créés automatiquement par intelligence artificielle, personnalisés pour votre apprentissage.
                 </CardDescription>
               </CardHeader>
             </Card>
 
-            <Card className="dashboard-card">
+            <Card className="bento-card group">
               <CardHeader>
-                <BookOpen className="h-10 w-10 text-primary mb-2" />
-                <CardTitle>Parcours structurés</CardTitle>
-                <CardDescription>
+                <div className="p-3 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 w-fit mb-4 group-hover:bg-emerald-200 dark:group-hover:bg-emerald-900/50 transition-colors">
+                  <BookOpen className="h-8 w-8 text-emerald-600 dark:text-emerald-400" />
+                </div>
+                <CardTitle className="font-['Lexend']">Parcours structurés</CardTitle>
+                <CardDescription className="text-base">
                   Des modules et leçons organisés pour un apprentissage progressif et efficace.
                 </CardDescription>
               </CardHeader>
             </Card>
 
-            <Card className="dashboard-card">
+            <Card className="bento-card group">
               <CardHeader>
-                <Trophy className="h-10 w-10 text-gold mb-2" />
-                <CardTitle>Gamification</CardTitle>
-                <CardDescription>
+                <div className="p-3 rounded-xl bg-amber-100 dark:bg-amber-900/30 w-fit mb-4 group-hover:bg-amber-200 dark:group-hover:bg-amber-900/50 transition-colors">
+                  <Trophy className="h-8 w-8 text-amber-600 dark:text-amber-400" />
+                </div>
+                <CardTitle className="font-['Lexend']">Gamification</CardTitle>
+                <CardDescription className="text-base">
                   Gagnez des XP, montez de niveau et débloquez des badges pour rester motivé.
                 </CardDescription>
               </CardHeader>
             </Card>
 
-            <Card className="dashboard-card">
+            <Card className="bento-card group">
               <CardHeader>
-                <MessageCircle className="h-10 w-10 text-accent mb-2" />
-                <CardTitle>Tuteur IA 24/7</CardTitle>
-                <CardDescription>
+                <div className="p-3 rounded-xl bg-purple-100 dark:bg-purple-900/30 w-fit mb-4 group-hover:bg-purple-200 dark:group-hover:bg-purple-900/50 transition-colors">
+                  <MessageCircle className="h-8 w-8 text-purple-600 dark:text-purple-400" />
+                </div>
+                <CardTitle className="font-['Lexend']">Tuteur IA 24/7</CardTitle>
+                <CardDescription className="text-base">
                   Un assistant virtuel disponible à tout moment pour répondre à vos questions.
                 </CardDescription>
               </CardHeader>
@@ -126,38 +153,79 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Crypto Discount Banner */}
+      <section className="py-12 px-4">
+        <div className="container max-w-4xl mx-auto">
+          <div className="bento-card bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30 border-amber-200 dark:border-amber-800 p-8">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="flex items-center gap-4">
+                <div className="p-4 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 text-white shadow-lg">
+                  <Bitcoin className="h-8 w-8" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-xl font-['Lexend'] text-amber-900 dark:text-amber-100">
+                    Payez en Crypto, Économisez 10%
+                  </h3>
+                  <p className="text-amber-700 dark:text-amber-300">
+                    Bitcoin (BTC) & USDC acceptés • Cumulable avec -20% annuel
+                  </p>
+                </div>
+              </div>
+              <Link href="/pricing">
+                <Button className="btn-squishy bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-lg">
+                  Voir les offres
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Pricing Preview Section */}
-      <section className="py-20 px-4 bg-muted/50">
+      <section className="py-24 px-4 bg-gradient-to-b from-muted/30 to-background">
         <div className="container max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-4">
-            Des tarifs adaptés à vos besoins
-          </h2>
-          <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-            Commencez gratuitement et évoluez selon vos besoins. 20% de réduction sur les abonnements annuels, 10% supplémentaire en payant en crypto.
-          </p>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 font-['Lexend']">
+              Des tarifs adaptés à vos besoins
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Commencez gratuitement et évoluez selon vos besoins. 
+              <span className="font-semibold text-primary"> 20% de réduction</span> sur les abonnements annuels, 
+              <span className="font-semibold text-amber-600"> 10% supplémentaire</span> en payant en crypto.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
             {/* Free Tier */}
-            <Card className="relative">
+            <Card className="bento-card relative">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Zap className="h-5 w-5" />
-                  Free
-                </CardTitle>
-                <div className="text-3xl font-bold">0$</div>
-                <CardDescription>Pour découvrir la plateforme</CardDescription>
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="p-2 rounded-xl bg-teal-100 dark:bg-teal-900/30">
+                    <Zap className="h-5 w-5 text-teal-600 dark:text-teal-400" />
+                  </div>
+                  <CardTitle className="font-['Lexend']">Free</CardTitle>
+                </div>
+                <div className="text-4xl font-bold font-['Lexend']">$0</div>
+                <CardDescription className="text-base">Pour découvrir la plateforme</CardDescription>
               </CardHeader>
               <CardContent>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-success" />
+                <ul className="space-y-3">
+                  <li className="flex items-center gap-3">
+                    <div className="p-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30">
+                      <CheckCircle className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                    </div>
                     3 leçons gratuites
                   </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-success" />
+                  <li className="flex items-center gap-3">
+                    <div className="p-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30">
+                      <CheckCircle className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                    </div>
                     Quiz de base
                   </li>
-                  <li className="flex items-center gap-2 text-muted-foreground">
-                    <span className="h-4 w-4">•</span>
+                  <li className="flex items-center gap-3 text-muted-foreground">
+                    <div className="p-0.5 rounded-full bg-muted">
+                      <span className="block h-4 w-4 text-center text-xs">•</span>
+                    </div>
                     Avec publicités
                   </li>
                 </ul>
@@ -165,139 +233,180 @@ export default function Home() {
             </Card>
 
             {/* Basic Tier */}
-            <Card className="relative border-primary">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                <span className="bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full">
+            <Card className="bento-card relative pricing-popular md:scale-105 z-10">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                <span className="bg-gradient-to-r from-primary to-teal-600 text-white text-sm font-semibold px-4 py-1.5 rounded-full shadow-lg">
                   Populaire
                 </span>
               </div>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Crown className="h-5 w-5 text-primary" />
-                  Basic
-                </CardTitle>
-                <div className="text-3xl font-bold">14.99$/mois</div>
-                <CardDescription>Accès complet à la plateforme</CardDescription>
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="p-2 rounded-xl bg-primary/10">
+                    <Crown className="h-5 w-5 text-primary" />
+                  </div>
+                  <CardTitle className="font-['Lexend']">Basic</CardTitle>
+                </div>
+                <div className="text-4xl font-bold font-['Lexend']">$14.99<span className="text-lg font-normal text-muted-foreground">/mois</span></div>
+                <CardDescription className="text-base">Accès complet à la plateforme</CardDescription>
               </CardHeader>
               <CardContent>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-success" />
+                <ul className="space-y-3">
+                  <li className="flex items-center gap-3">
+                    <div className="p-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30">
+                      <CheckCircle className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                    </div>
                     Tous les parcours
                   </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-success" />
+                  <li className="flex items-center gap-3">
+                    <div className="p-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30">
+                      <CheckCircle className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                    </div>
                     Quiz illimités
                   </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-success" />
+                  <li className="flex items-center gap-3">
+                    <div className="p-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30">
+                      <CheckCircle className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                    </div>
                     Sans publicités
                   </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-success" />
-                    Progression sauvegardée
+                  <li className="flex items-center gap-3">
+                    <div className="p-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30">
+                      <CheckCircle className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                    </div>
+                    Badges et gamification
                   </li>
                 </ul>
               </CardContent>
             </Card>
 
             {/* Pro Tier */}
-            <Card className="relative">
+            <Card className="bento-card relative">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Shield className="h-5 w-5 text-gold" />
-                  Pro
-                </CardTitle>
-                <div className="text-3xl font-bold">29.99$/mois</div>
-                <CardDescription>L'expérience complète</CardDescription>
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="p-2 rounded-xl bg-purple-100 dark:bg-purple-900/30">
+                    <Shield className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                  </div>
+                  <CardTitle className="font-['Lexend']">Pro</CardTitle>
+                </div>
+                <div className="text-4xl font-bold font-['Lexend']">$29.99<span className="text-lg font-normal text-muted-foreground">/mois</span></div>
+                <CardDescription className="text-base">L'expérience complète</CardDescription>
               </CardHeader>
               <CardContent>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-success" />
+                <ul className="space-y-3">
+                  <li className="flex items-center gap-3">
+                    <div className="p-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30">
+                      <CheckCircle className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                    </div>
                     Tout de Basic +
                   </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-success" />
+                  <li className="flex items-center gap-3">
+                    <div className="p-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30">
+                      <CheckCircle className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                    </div>
                     Certifications officielles
                   </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-success" />
+                  <li className="flex items-center gap-3">
+                    <div className="p-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30">
+                      <CheckCircle className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                    </div>
                     Tuteur IA illimité
                   </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-success" />
+                  <li className="flex items-center gap-3">
+                    <div className="p-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30">
+                      <CheckCircle className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                    </div>
                     Support prioritaire
                   </li>
                 </ul>
               </CardContent>
             </Card>
           </div>
-          <div className="text-center mt-8">
+          
+          <div className="text-center mt-12">
             <Link href="/pricing">
-              <Button size="lg">
-                Voir tous les détails <ArrowRight className="ml-2 h-4 w-4" />
+              <Button size="lg" className="btn-squishy gap-2 px-8">
+                Voir tous les détails <ArrowRight className="h-5 w-5" />
               </Button>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-20 px-4">
+      {/* Stats Section - Bento style */}
+      <section className="py-24 px-4">
         <div className="container max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8 text-center">
-            <div>
-              <div className="text-4xl font-bold text-primary mb-2">IA</div>
+          <div className="grid md:grid-cols-4 gap-6">
+            <div className="bento-card text-center py-8">
+              <div className="p-3 rounded-xl bg-primary/10 w-fit mx-auto mb-4">
+                <Sparkles className="h-8 w-8 text-primary" />
+              </div>
+              <div className="text-3xl font-bold font-['Lexend'] text-primary mb-1">IA</div>
               <div className="text-muted-foreground">Génération de contenu</div>
             </div>
-            <div>
-              <div className="text-4xl font-bold text-primary mb-2">24/7</div>
+            <div className="bento-card text-center py-8">
+              <div className="p-3 rounded-xl bg-purple-100 dark:bg-purple-900/30 w-fit mx-auto mb-4">
+                <MessageCircle className="h-8 w-8 text-purple-600 dark:text-purple-400" />
+              </div>
+              <div className="text-3xl font-bold font-['Lexend'] text-purple-600 dark:text-purple-400 mb-1">24/7</div>
               <div className="text-muted-foreground">Tuteur IA disponible</div>
             </div>
-            <div>
-              <div className="text-4xl font-bold text-primary mb-2">10%</div>
+            <div className="bento-card text-center py-8">
+              <div className="p-3 rounded-xl bg-amber-100 dark:bg-amber-900/30 w-fit mx-auto mb-4">
+                <Bitcoin className="h-8 w-8 text-amber-600 dark:text-amber-400" />
+              </div>
+              <div className="text-3xl font-bold font-['Lexend'] text-amber-600 dark:text-amber-400 mb-1">10%</div>
               <div className="text-muted-foreground">Réduction crypto</div>
+            </div>
+            <div className="bento-card text-center py-8">
+              <div className="p-3 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 w-fit mx-auto mb-4">
+                <Target className="h-8 w-8 text-emerald-600 dark:text-emerald-400" />
+              </div>
+              <div className="text-3xl font-bold font-['Lexend'] text-emerald-600 dark:text-emerald-400 mb-1">100%</div>
+              <div className="text-muted-foreground">Personnalisé</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4">
+      <section className="py-24 px-4">
         <div className="container max-w-4xl mx-auto text-center">
-          <Card className="bg-primary text-primary-foreground">
-            <CardContent className="py-12">
-              <h2 className="text-3xl font-bold mb-4">
+          <div className="bento-card bg-gradient-to-br from-primary via-primary to-teal-600 text-white p-12 relative overflow-hidden">
+            {/* Decorative elements */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+            
+            <div className="relative z-10">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 font-['Lexend']">
                 Prêt à éclore dans votre métier ?
               </h2>
-              <p className="text-primary-foreground/80 mb-8 max-w-xl mx-auto">
+              <p className="text-white/80 mb-8 max-w-xl mx-auto text-lg">
                 Rejoignez Sklora et découvrez une nouvelle façon d'acquérir des compétences avec l'aide de l'intelligence artificielle.
               </p>
               {isAuthenticated ? (
                 <Link href="/dashboard">
-                  <Button size="lg" variant="secondary" className="gap-2">
-                    Accéder à mon tableau de bord <ArrowRight className="h-4 w-4" />
+                  <Button size="lg" variant="secondary" className="btn-squishy gap-2 px-8 py-6 text-lg">
+                    Accéder à mon tableau de bord <ArrowRight className="h-5 w-5" />
                   </Button>
                 </Link>
               ) : (
                 <a href={getLoginUrl()}>
-                  <Button size="lg" variant="secondary" className="gap-2">
-                    Créer mon compte gratuit <ArrowRight className="h-4 w-4" />
+                  <Button size="lg" variant="secondary" className="btn-squishy gap-2 px-8 py-6 text-lg">
+                    Créer mon compte gratuit <ArrowRight className="h-5 w-5" />
                   </Button>
                 </a>
               )}
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t py-8 px-4">
+      <footer className="border-t py-10 px-4 bg-card/50">
         <div className="container max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2">
             <GraduationCap className="h-6 w-6 text-primary" />
-            <span className="font-semibold">Sklora</span>
+            <span className="font-bold font-['Lexend']">Sklora</span>
           </div>
           <p className="text-sm text-muted-foreground">
             © {new Date().getFullYear()} Sklora. Éclore dans son métier. Tous droits réservés.

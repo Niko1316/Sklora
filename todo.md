@@ -45,3 +45,13 @@
 - [x] Système d'alertes admin
 - [x] Design responsive
 - [x] Tests unitaires
+
+
+## Design 2026 - Calm UI
+- [x] Appliquer la palette Cloud Dancer (#F0EEE9)
+- [x] Intégrer Transformative Teal comme couleur principale
+- [x] Ajouter les accents Neo-Mint, Digital Lavender et Hyper-Coral
+- [x] Intégrer les polices Lexend et Inter
+- [x] Appliquer le design Bento Grid 2.0
+- [x] Créer des boutons tactiles (squishy)
+- [x] Mettre en évidence le rabais crypto sur la page tarifs

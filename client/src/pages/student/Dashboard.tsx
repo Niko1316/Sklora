@@ -16,6 +16,7 @@ import {
   ArrowRight,
   CheckCircle,
   Award,
+  Sparkles,
 } from "lucide-react";
 import { Link } from "wouter";
 
@@ -23,22 +24,22 @@ function StatCard({
   icon: Icon,
   label,
   value,
-  color = "primary",
+  colorClass,
 }: {
   icon: React.ElementType;
   label: string;
   value: string | number;
-  color?: string;
+  colorClass: string;
 }) {
   return (
-    <Card className="dashboard-card">
+    <Card className="bento-card">
       <CardContent className="pt-6">
         <div className="flex items-center gap-4">
-          <div className={`p-3 rounded-lg bg-${color}/10`}>
-            <Icon className={`h-6 w-6 text-${color}`} />
+          <div className={`p-3 rounded-xl ${colorClass}`}>
+            <Icon className="h-6 w-6" />
           </div>
           <div>
-            <p className="text-2xl font-bold">{value}</p>
+            <p className="text-2xl font-bold font-['Lexend']">{value}</p>
             <p className="text-sm text-muted-foreground">{label}</p>
           </div>
         </div>
@@ -70,35 +71,37 @@ export default function StudentDashboard() {
         {/* Welcome Section */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold">
-              Bonjour, {user?.name?.split(" ")[0] || "Apprenant"} ! 👋
+            <h1 className="text-3xl font-bold font-['Lexend']">
+              Bonjour, {user?.name?.split(" ")[0] || "Apprenant"} ! 
+              <span className="inline-block ml-2 title-kinetic">👋</span>
             </h1>
             <p className="text-muted-foreground mt-1">
               Continuez votre apprentissage et atteignez vos objectifs.
             </p>
           </div>
           <Link href="/parcours">
-            <Button className="gap-2">
+            <Button className="btn-squishy gap-2 bg-gradient-to-r from-primary to-teal-600 hover:from-primary/90 hover:to-teal-600/90">
               Explorer les parcours <ArrowRight className="h-4 w-4" />
             </Button>
           </Link>
         </div>
 
-        {/* Level Progress Card */}
-        <Card className="bg-gradient-to-r from-primary/10 to-accent/10">
-          <CardContent className="pt-6">
+        {/* Level Progress Card - Bento style */}
+        <Card className="bento-card bg-gradient-to-br from-primary/5 via-background to-purple-500/5 overflow-hidden relative">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          <CardContent className="pt-6 relative z-10">
             <div className="flex flex-col md:flex-row md:items-center gap-6">
               <div className="flex items-center gap-4">
                 <div className="relative">
-                  <div className="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center">
+                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary/20 to-teal-500/20 flex items-center justify-center">
                     <Star className="h-10 w-10 text-primary" />
                   </div>
-                  <div className="absolute -bottom-1 -right-1 bg-gold text-white text-xs font-bold px-2 py-1 rounded-full">
+                  <div className="absolute -bottom-2 -right-2 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
                     Niv. {user?.currentLevel || 1}
                   </div>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-lg">Niveau {user?.currentLevel || 1}</h3>
+                  <h3 className="font-semibold text-lg font-['Lexend']">Niveau {user?.currentLevel || 1}</h3>
                   <p className="text-sm text-muted-foreground">
                     {xpToNextLevel} XP pour le niveau suivant
                   </p>
@@ -106,17 +109,22 @@ export default function StudentDashboard() {
               </div>
               <div className="flex-1">
                 <div className="flex justify-between text-sm mb-2">
-                  <span>{user?.totalXp || 0} XP</span>
-                  <span>{(user?.currentLevel || 1) * 100} XP</span>
+                  <span className="font-medium">{user?.totalXp || 0} XP</span>
+                  <span className="text-muted-foreground">{(user?.currentLevel || 1) * 100} XP</span>
                 </div>
-                <Progress value={levelProgress} className="h-3 xp-gradient" />
+                <div className="h-3 rounded-full bg-muted overflow-hidden">
+                  <div 
+                    className="h-full rounded-full bg-gradient-to-r from-primary to-teal-500 transition-all duration-500"
+                    style={{ width: `${levelProgress}%` }}
+                  />
+                </div>
               </div>
               {(user?.currentStreak || 0) > 0 && (
-                <div className="flex items-center gap-2 bg-orange-500/10 px-4 py-2 rounded-lg">
-                  <Flame className="h-6 w-6 text-orange-500 streak-flame" />
+                <div className="flex items-center gap-3 bg-gradient-to-r from-orange-100 to-amber-100 dark:from-orange-900/30 dark:to-amber-900/30 px-5 py-3 rounded-xl border border-orange-200 dark:border-orange-800">
+                  <Flame className="h-7 w-7 text-orange-500 streak-flame" />
                   <div>
-                    <p className="font-bold text-orange-500">{user?.currentStreak} jours</p>
-                    <p className="text-xs text-muted-foreground">Série en cours</p>
+                    <p className="font-bold text-orange-600 dark:text-orange-400 text-lg">{user?.currentStreak} jours</p>
+                    <p className="text-xs text-orange-700 dark:text-orange-300">Série en cours</p>
                   </div>
                 </div>
               )}
@@ -124,14 +132,14 @@ export default function StudentDashboard() {
           </CardContent>
         </Card>
 
-        {/* Stats Grid */}
+        {/* Stats Grid - Bento Grid 2.0 */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {statsLoading ? (
             <>
               {[1, 2, 3, 4].map((i) => (
-                <Card key={i}>
+                <Card key={i} className="bento-card">
                   <CardContent className="pt-6">
-                    <Skeleton className="h-16 w-full" />
+                    <Skeleton className="h-16 w-full rounded-xl" />
                   </CardContent>
                 </Card>
               ))}
@@ -142,25 +150,25 @@ export default function StudentDashboard() {
                 icon={BookOpen}
                 label="Leçons complétées"
                 value={stats?.completedLessons || 0}
-                color="primary"
+                colorClass="bg-primary/10 text-primary"
               />
               <StatCard
                 icon={CheckCircle}
                 label="Modules terminés"
                 value={stats?.completedModules || 0}
-                color="success"
+                colorClass="bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400"
               />
               <StatCard
                 icon={Target}
                 label="Quiz réussis"
                 value={stats?.passedQuizzes || 0}
-                color="accent"
+                colorClass="bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400"
               />
               <StatCard
                 icon={Award}
                 label="Badges obtenus"
                 value={stats?.badgesEarned || 0}
-                color="gold"
+                colorClass="bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400"
               />
             </>
           )}
@@ -168,61 +176,65 @@ export default function StudentDashboard() {
 
         {/* Parcours Section */}
         <div>
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold">Parcours disponibles</h2>
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-semibold font-['Lexend']">Parcours disponibles</h2>
             <Link href="/parcours">
-              <Button variant="ghost" size="sm" className="gap-1">
+              <Button variant="ghost" size="sm" className="gap-1 btn-squishy">
                 Voir tout <ArrowRight className="h-4 w-4" />
               </Button>
             </Link>
           </div>
 
           {parcoursLoading ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[1, 2, 3].map((i) => (
-                <Card key={i}>
+                <Card key={i} className="bento-card">
                   <CardContent className="pt-6">
-                    <Skeleton className="h-32 w-full" />
+                    <Skeleton className="h-32 w-full rounded-xl mb-4" />
+                    <Skeleton className="h-6 w-3/4 rounded-lg mb-2" />
+                    <Skeleton className="h-4 w-full rounded-lg" />
                   </CardContent>
                 </Card>
               ))}
             </div>
           ) : parcours && parcours.length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {parcours.slice(0, 3).map((p) => (
                 <Link key={p.id} href={`/parcours/${p.slug}`}>
-                  <Card className="dashboard-card cursor-pointer h-full">
+                  <Card className="bento-card cursor-pointer h-full group">
                     {p.imageUrl && (
-                      <div className="h-32 overflow-hidden rounded-t-lg">
+                      <div className="h-36 overflow-hidden rounded-t-xl -mx-5 -mt-5 mb-4">
                         <img
                           src={p.imageUrl}
                           alt={p.title}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                       </div>
                     )}
-                    <CardHeader>
-                      <div className="flex items-start justify-between">
-                        <CardTitle className="text-lg">{p.title}</CardTitle>
+                    <CardHeader className="p-0">
+                      <div className="flex items-start justify-between gap-2">
+                        <CardTitle className="text-lg font-['Lexend'] group-hover:text-primary transition-colors">{p.title}</CardTitle>
                         {p.isFree && (
-                          <Badge variant="secondary">Gratuit</Badge>
+                          <Badge className="bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 border-0">
+                            Gratuit
+                          </Badge>
                         )}
                       </div>
-                      <CardDescription className="line-clamp-2">
+                      <CardDescription className="line-clamp-2 mt-2">
                         {p.description || "Découvrez ce parcours de formation."}
                       </CardDescription>
                     </CardHeader>
-                    <CardContent>
-                      <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                        <span className="flex items-center gap-1">
-                          <BookOpen className="h-4 w-4" />
+                    <CardContent className="p-0 mt-4">
+                      <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                        <span className="flex items-center gap-1.5 bg-muted px-2 py-1 rounded-lg">
+                          <BookOpen className="h-3.5 w-3.5" />
                           {p.totalModules} modules
                         </span>
-                        <span className="flex items-center gap-1">
-                          <Clock className="h-4 w-4" />
+                        <span className="flex items-center gap-1.5 bg-muted px-2 py-1 rounded-lg">
+                          <Clock className="h-3.5 w-3.5" />
                           {p.totalHours}h
                         </span>
-                        <Badge variant="outline" className="capitalize">
+                        <Badge variant="outline" className="capitalize text-xs">
                           {p.difficulty}
                         </Badge>
                       </div>
@@ -232,10 +244,12 @@ export default function StudentDashboard() {
               ))}
             </div>
           ) : (
-            <Card>
-              <CardContent className="py-12 text-center">
-                <BookOpen className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-                <h3 className="font-semibold mb-2">Aucun parcours disponible</h3>
+            <Card className="bento-card">
+              <CardContent className="py-16 text-center">
+                <div className="p-4 rounded-2xl bg-muted w-fit mx-auto mb-4">
+                  <BookOpen className="h-12 w-12 text-muted-foreground" />
+                </div>
+                <h3 className="font-semibold mb-2 font-['Lexend']">Aucun parcours disponible</h3>
                 <p className="text-muted-foreground">
                   Les parcours seront bientôt disponibles. Revenez plus tard !
                 </p>
@@ -247,24 +261,26 @@ export default function StudentDashboard() {
         {/* Badges Section */}
         {badges && badges.length > 0 && (
           <div>
-            <h2 className="text-xl font-semibold mb-4">Mes badges récents</h2>
+            <h2 className="text-xl font-semibold mb-6 font-['Lexend']">Mes badges récents</h2>
             <div className="flex flex-wrap gap-4">
               {badges.slice(0, 6).map((ub) => (
                 <div
                   key={ub.badge.id}
-                  className={`p-4 rounded-lg border text-center badge-${ub.badge.rarity}`}
+                  className={`bento-card p-5 text-center min-w-[120px] badge-${ub.badge.rarity}`}
                 >
                   {ub.badge.iconUrl ? (
                     <img
                       src={ub.badge.iconUrl}
                       alt={ub.badge.name}
-                      className="w-12 h-12 mx-auto mb-2"
+                      className="w-14 h-14 mx-auto mb-3"
                     />
                   ) : (
-                    <Trophy className="w-12 h-12 mx-auto mb-2 text-gold" />
+                    <div className="p-3 rounded-xl bg-amber-100 dark:bg-amber-900/30 w-fit mx-auto mb-3">
+                      <Trophy className="w-8 h-8 text-amber-600 dark:text-amber-400" />
+                    </div>
                   )}
-                  <p className="font-medium text-sm">{ub.badge.name}</p>
-                  <Badge variant="outline" className="mt-1 text-xs capitalize">
+                  <p className="font-medium text-sm font-['Lexend']">{ub.badge.name}</p>
+                  <Badge variant="outline" className="mt-2 text-xs capitalize">
                     {ub.badge.rarity}
                   </Badge>
                 </div>
@@ -272,6 +288,30 @@ export default function StudentDashboard() {
             </div>
           </div>
         )}
+
+        {/* AI Tutor Promo */}
+        <Card className="bento-card bg-gradient-to-br from-purple-50 to-purple-100/50 dark:from-purple-950/30 dark:to-purple-900/20 border-purple-200 dark:border-purple-800">
+          <CardContent className="py-8">
+            <div className="flex flex-col md:flex-row items-center gap-6">
+              <div className="p-4 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-lg">
+                <Sparkles className="h-10 w-10" />
+              </div>
+              <div className="flex-1 text-center md:text-left">
+                <h3 className="font-bold text-xl font-['Lexend'] text-purple-900 dark:text-purple-100 mb-1">
+                  Besoin d'aide ?
+                </h3>
+                <p className="text-purple-700 dark:text-purple-300">
+                  Notre tuteur IA est disponible 24/7 pour répondre à vos questions et vous guider dans votre apprentissage.
+                </p>
+              </div>
+              <Link href="/chatbot">
+                <Button className="btn-squishy bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white shadow-lg">
+                  Discuter avec l'IA
+                </Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </StudentLayout>
   );
