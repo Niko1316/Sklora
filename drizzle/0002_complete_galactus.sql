@@ -1,0 +1,41 @@
+CREATE TABLE `ai_generated_content` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`contentType` enum('lesson','quiz','question') NOT NULL,
+	`moduleId` int,
+	`lessonId` int,
+	`quizId` int,
+	`prompt` text NOT NULL,
+	`generatedContent` text NOT NULL,
+	`status` enum('pending','approved','rejected','modified') NOT NULL DEFAULT 'pending',
+	`generatedBy` int,
+	`reviewedBy` int,
+	`reviewedAt` timestamp,
+	`modifications` text,
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+	CONSTRAINT `ai_generated_content_id` PRIMARY KEY(`id`)
+);
+--> statement-breakpoint
+CREATE TABLE `subscriptions` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`userId` int NOT NULL,
+	`planId` enum('free','basic','pro') NOT NULL DEFAULT 'free',
+	`billingPeriod` enum('monthly','yearly') NOT NULL DEFAULT 'monthly',
+	`paymentMethod` enum('card','crypto') NOT NULL DEFAULT 'card',
+	`stripeCustomerId` varchar(255),
+	`stripeSubscriptionId` varchar(255),
+	`stripePriceId` varchar(255),
+	`cryptoWalletAddress` varchar(255),
+	`cryptoCurrency` enum('btc','usdc'),
+	`status` enum('active','canceled','past_due','trialing','incomplete') NOT NULL DEFAULT 'active',
+	`currentPeriodStart` timestamp,
+	`currentPeriodEnd` timestamp,
+	`cancelAtPeriodEnd` boolean NOT NULL DEFAULT false,
+	`canceledAt` timestamp,
+	`cryptoDiscount` boolean NOT NULL DEFAULT false,
+	`annualDiscount` boolean NOT NULL DEFAULT false,
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+	CONSTRAINT `subscriptions_id` PRIMARY KEY(`id`),
+	CONSTRAINT `subscriptions_userId_unique` UNIQUE(`userId`)
+);

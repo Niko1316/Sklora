@@ -406,3 +406,79 @@ export const auditLogs = mysqlTable("audit_logs", {
 
 export type AuditLog = typeof auditLogs.$inferSelect;
 export type InsertAuditLog = typeof auditLogs.$inferInsert;
+
+
+// ==================== SUBSCRIPTIONS ====================
+
+export const subscriptions = mysqlTable("subscriptions", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().unique(),
+  
+  // Plan info
+  planId: mysqlEnum("planId", ["free", "basic", "pro"]).default("free").notNull(),
+  billingPeriod: mysqlEnum("billingPeriod", ["monthly", "yearly"]).default("monthly").notNull(),
+  paymentMethod: mysqlEnum("paymentMethod", ["card", "crypto"]).default("card").notNull(),
+  
+  // Stripe info
+  stripeCustomerId: varchar("stripeCustomerId", { length: 255 }),
+  stripeSubscriptionId: varchar("stripeSubscriptionId", { length: 255 }),
+  stripePriceId: varchar("stripePriceId", { length: 255 }),
+  
+  // Crypto payment info
+  cryptoWalletAddress: varchar("cryptoWalletAddress", { length: 255 }),
+  cryptoCurrency: mysqlEnum("cryptoCurrency", ["btc", "usdc"]),
+  
+  // Status
+  status: mysqlEnum("status", ["active", "canceled", "past_due", "trialing", "incomplete"]).default("active").notNull(),
+  
+  // Dates
+  currentPeriodStart: timestamp("currentPeriodStart"),
+  currentPeriodEnd: timestamp("currentPeriodEnd"),
+  cancelAtPeriodEnd: boolean("cancelAtPeriodEnd").default(false).notNull(),
+  canceledAt: timestamp("canceledAt"),
+  
+  // Discounts applied
+  cryptoDiscount: boolean("cryptoDiscount").default(false).notNull(),
+  annualDiscount: boolean("annualDiscount").default(false).notNull(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Subscription = typeof subscriptions.$inferSelect;
+export type InsertSubscription = typeof subscriptions.$inferInsert;
+
+// ==================== AI GENERATED CONTENT ====================
+
+export const aiGeneratedContent = mysqlTable("ai_generated_content", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // What was generated
+  contentType: mysqlEnum("contentType", ["lesson", "quiz", "question"]).notNull(),
+  
+  // Related entities
+  moduleId: int("moduleId"),
+  lessonId: int("lessonId"),
+  quizId: int("quizId"),
+  
+  // Generation prompt and result
+  prompt: text("prompt").notNull(),
+  generatedContent: text("generatedContent").notNull(),
+  
+  // Status
+  status: mysqlEnum("status", ["pending", "approved", "rejected", "modified"]).default("pending").notNull(),
+  
+  // Who generated and reviewed
+  generatedBy: int("generatedBy"),
+  reviewedBy: int("reviewedBy"),
+  reviewedAt: timestamp("reviewedAt"),
+  
+  // Modifications made
+  modifications: text("modifications"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type AiGeneratedContent = typeof aiGeneratedContent.$inferSelect;
+export type InsertAiGeneratedContent = typeof aiGeneratedContent.$inferInsert;

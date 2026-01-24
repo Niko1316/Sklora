@@ -37,6 +37,7 @@ const navItems = [
   { href: "/admin/modules", icon: Layers, label: "Modules" },
   { href: "/admin/lessons", icon: FileText, label: "Leçons" },
   { href: "/admin/quizzes", icon: HelpCircle, label: "Quiz" },
+  { href: "/admin/ai-generation", icon: Sparkles, label: "Génération IA" },
   { href: "/admin/users", icon: Users, label: "Utilisateurs" },
   { href: "/admin/alerts", icon: Bell, label: "Alertes" },
 ];

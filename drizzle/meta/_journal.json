@@ -15,6 +15,13 @@
       "when": 1769230717318,
       "tag": "0001_fat_microchip",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1769233124285,
+      "tag": "0002_complete_galactus",
+      "breakpoints": true
     }
   ]
 }

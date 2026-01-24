@@ -9,6 +9,7 @@ import { useAuth } from "./_core/hooks/useAuth";
 // Public pages
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Pricing from "./pages/Pricing";
 
 // Student pages
 import StudentDashboard from "./pages/student/Dashboard";
@@ -31,6 +32,7 @@ import AdminQuizzes from "./pages/admin/Quizzes";
 import AdminQuizEdit from "./pages/admin/QuizEdit";
 import AdminUsers from "./pages/admin/Users";
 import AdminAlerts from "./pages/admin/Alerts";
+import AdminAiGeneration from "./pages/admin/AiGeneration";
 
 // Protected route wrapper
 function ProtectedRoute({ children, adminOnly = false }: { children: React.ReactNode; adminOnly?: boolean }) {
@@ -69,6 +71,7 @@ function Router() {
       {/* Public routes */}
       <Route path="/" component={Home} />
       <Route path="/login" component={Login} />
+      <Route path="/pricing" component={Pricing} />
 
       {/* Student routes */}
       <Route path="/dashboard">
@@ -195,6 +198,11 @@ function Router() {
       <Route path="/admin/alerts">
         <ProtectedRoute adminOnly>
           <AdminAlerts />
+        </ProtectedRoute>
+      </Route>
+      <Route path="/admin/ai-generation">
+        <ProtectedRoute adminOnly>
+          <AdminAiGeneration />
         </ProtectedRoute>
       </Route>
 

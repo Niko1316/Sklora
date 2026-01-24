@@ -960,6 +960,297 @@ const adminRouter = router({
       const result = await db.createBadge(input);
       return result;
     }),
+  
+  // ==================== AI CONTENT GENERATION ====================
+  
+  // Generate lesson content with AI
+  generateLessonContent: adminProcedure
+    .input(z.object({
+      moduleId: z.number(),
+      title: z.string().min(1),
+      topic: z.string().min(1),
+      difficulty: z.enum(["facile", "moyen", "difficile"]).default("facile"),
+      duration: z.number().default(10), // minutes
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const module = await db.getModuleById(input.moduleId);
+      if (!module) {
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'Module non trouvé' });
+      }
+      
+      const prompt = `Tu es un expert en création de contenu pédagogique. Crée une leçon complète sur le sujet suivant:
+
+Titre: ${input.title}
+Sujet: ${input.topic}
+Niveau de difficulté: ${input.difficulty}
+Durée estimée: ${input.duration} minutes
+Module: ${module.title}
+
+Génère un contenu de leçon en format Markdown avec:
+1. Une introduction engageante
+2. Les objectifs d'apprentissage
+3. Le contenu principal structuré avec des sous-sections
+4. Des exemples pratiques
+5. Des points clés à retenir
+6. Une conclusion
+
+Le contenu doit être professionnel, clair et adapté au niveau ${input.difficulty}.`;
+
+      const response = await invokeLLM({
+        messages: [
+          { role: "system", content: "Tu es un expert en pédagogie et création de contenu éducatif. Tu crées des leçons engageantes et structurées." },
+          { role: "user", content: prompt }
+        ],
+      });
+
+      const messageContent = response.choices[0]?.message?.content;
+      const generatedContent = typeof messageContent === 'string' ? messageContent : "";
+
+      // Save the generated content for review
+      const aiContent = await db.createAiGeneratedContent({
+        contentType: "lesson",
+        moduleId: input.moduleId,
+        prompt,
+        generatedContent,
+        status: "pending",
+        generatedBy: ctx.user.id,
+      });
+
+      return {
+        id: aiContent.id,
+        content: generatedContent,
+        title: input.title,
+        moduleId: input.moduleId,
+      };
+    }),
+
+  // Generate quiz from lesson content
+  generateQuizFromLesson: adminProcedure
+    .input(z.object({
+      lessonId: z.number(),
+      questionCount: z.number().min(3).max(20).default(5),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const lesson = await db.getLessonById(input.lessonId);
+      if (!lesson) {
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'Leçon non trouvée' });
+      }
+
+      const lessonContent = lesson.contentMarkdown || lesson.contentHtml || "";
+      
+      const prompt = `Basé sur le contenu de la leçon suivante, crée un quiz de ${input.questionCount} questions.
+
+Titre de la leçon: ${lesson.title}
+Contenu:
+${lessonContent}
+
+Génère un quiz au format JSON avec la structure suivante:
+{
+  "title": "Quiz - ${lesson.title}",
+  "description": "Testez vos connaissances sur ${lesson.title}",
+  "questions": [
+    {
+      "questionText": "La question",
+      "questionType": "multiple_choice",
+      "explanation": "Explication de la réponse correcte",
+      "points": 1,
+      "answers": [
+        { "text": "Réponse A", "isCorrect": false },
+        { "text": "Réponse B", "isCorrect": true },
+        { "text": "Réponse C", "isCorrect": false },
+        { "text": "Réponse D", "isCorrect": false }
+      ]
+    }
+  ]
+}
+
+Assure-toi que:
+- Chaque question a exactement une réponse correcte
+- Les questions couvrent les points clés de la leçon
+- Les explications sont pédagogiques
+- Les réponses incorrectes sont plausibles
+
+Réponds UNIQUEMENT avec le JSON, sans texte supplémentaire.`;
+
+      const response = await invokeLLM({
+        messages: [
+          { role: "system", content: "Tu es un expert en création de quiz pédagogiques. Tu génères des questions pertinentes et bien formulées. Tu réponds uniquement en JSON valide." },
+          { role: "user", content: prompt }
+        ],
+      });
+
+      const quizMessageContent = response.choices[0]?.message?.content;
+      const generatedContent = typeof quizMessageContent === 'string' ? quizMessageContent : "{}";
+
+      // Save the generated content for review
+      const aiContent = await db.createAiGeneratedContent({
+        contentType: "quiz",
+        lessonId: input.lessonId,
+        moduleId: lesson.moduleId,
+        prompt,
+        generatedContent,
+        status: "pending",
+        generatedBy: ctx.user.id,
+      });
+
+      // Try to parse the JSON
+      let parsedQuiz = null;
+      try {
+        // Extract JSON from the response (in case there's extra text)
+        const jsonMatch = String(generatedContent).match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          parsedQuiz = JSON.parse(jsonMatch[0]);
+        }
+      } catch (e) {
+        console.error("Failed to parse quiz JSON:", e);
+      }
+
+      return {
+        id: aiContent.id,
+        content: generatedContent,
+        parsedQuiz,
+        lessonId: input.lessonId,
+      };
+    }),
+
+  // Apply generated lesson content
+  applyGeneratedLesson: adminProcedure
+    .input(z.object({
+      aiContentId: z.number(),
+      title: z.string().min(1),
+      content: z.string().min(1),
+      moduleId: z.number(),
+      duration: z.number().default(10),
+      difficulty: z.enum(["facile", "moyen", "difficile"]).default("facile"),
+      orderIndex: z.number().default(0),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      // Create the lesson
+      const lesson = await db.createLesson({
+        moduleId: input.moduleId,
+        title: input.title,
+        contentMarkdown: input.content,
+        contentHtml: input.content, // Could convert MD to HTML here
+        duration: input.duration,
+        difficulty: input.difficulty,
+        orderIndex: input.orderIndex,
+        isPublished: false, // Start as draft
+      });
+
+      // Update AI content status
+      await db.updateAiGeneratedContent(input.aiContentId, {
+        status: "approved",
+        lessonId: lesson.id,
+        reviewedBy: ctx.user.id,
+        reviewedAt: new Date(),
+      });
+
+      await db.createAuditLog({
+        userId: ctx.user.id,
+        action: 'create_from_ai',
+        entityType: 'lesson',
+        entityId: lesson.id,
+        changes: { aiContentId: input.aiContentId },
+      });
+
+      return lesson;
+    }),
+
+  // Apply generated quiz
+  applyGeneratedQuiz: adminProcedure
+    .input(z.object({
+      aiContentId: z.number(),
+      lessonId: z.number(),
+      quizData: z.object({
+        title: z.string(),
+        description: z.string().optional(),
+        questions: z.array(z.object({
+          questionText: z.string(),
+          questionType: z.enum(["multiple_choice", "true_false", "multiple_select"]).default("multiple_choice"),
+          explanation: z.string().optional(),
+          points: z.number().default(1),
+          answers: z.array(z.object({
+            text: z.string(),
+            isCorrect: z.boolean(),
+          })),
+        })),
+      }),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const lesson = await db.getLessonById(input.lessonId);
+      if (!lesson) {
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'Leçon non trouvée' });
+      }
+
+      // Create the quiz
+      const quiz = await db.createQuiz({
+        lessonId: input.lessonId,
+        moduleId: lesson.moduleId,
+        title: input.quizData.title,
+        description: input.quizData.description,
+        passingScore: 70,
+        xpReward: input.quizData.questions.length * 5,
+        isPublished: false,
+      });
+
+      // Create questions and answers
+      for (let i = 0; i < input.quizData.questions.length; i++) {
+        const q = input.quizData.questions[i];
+        const question = await db.createQuizQuestion({
+          quizId: quiz.id,
+          questionText: q.questionText,
+          questionType: q.questionType,
+          explanation: q.explanation,
+          points: q.points,
+          orderIndex: i,
+        });
+
+        for (let j = 0; j < q.answers.length; j++) {
+          const a = q.answers[j];
+          await db.createQuizAnswer({
+            questionId: question.id,
+            answerText: a.text,
+            isCorrect: a.isCorrect,
+            orderIndex: j,
+          });
+        }
+      }
+
+      // Update AI content status
+      await db.updateAiGeneratedContent(input.aiContentId, {
+        status: "approved",
+        quizId: quiz.id,
+        reviewedBy: ctx.user.id,
+        reviewedAt: new Date(),
+      });
+
+      await db.createAuditLog({
+        userId: ctx.user.id,
+        action: 'create_from_ai',
+        entityType: 'quiz',
+        entityId: quiz.id,
+        changes: { aiContentId: input.aiContentId },
+      });
+
+      return quiz;
+    }),
+
+  // Get pending AI generated content
+  getPendingAiContent: adminProcedure.query(async () => {
+    return db.getPendingAiContent();
+  }),
+
+  // Reject AI generated content
+  rejectAiContent: adminProcedure
+    .input(z.object({ id: z.number() }))
+    .mutation(async ({ ctx, input }) => {
+      await db.updateAiGeneratedContent(input.id, {
+        status: "rejected",
+        reviewedBy: ctx.user.id,
+        reviewedAt: new Date(),
+      });
+      return { success: true };
+    }),
 });
 
 // ==================== HELPER FUNCTIONS ====================
@@ -1084,6 +1375,141 @@ async function searchRelevantContent(query: string): Promise<string[]> {
   return relevantChunks;
 }
 
+// ==================== SUBSCRIPTION ROUTER ====================
+const subscriptionRouter = router({
+  // Get current user's subscription
+  getCurrent: protectedProcedure.query(async ({ ctx }) => {
+    const subscription = await db.getUserSubscription(ctx.user.id);
+    return subscription || { planId: 'free', status: 'active' };
+  }),
+
+  // Create checkout session for subscription
+  createCheckout: protectedProcedure
+    .input(z.object({
+      planId: z.enum(['basic', 'pro']),
+      billingPeriod: z.enum(['monthly', 'yearly']),
+      paymentMethod: z.enum(['card', 'crypto']).default('card'),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { getStripe, isStripeConfigured } = await import('./stripe');
+      const { PLANS, calculatePrice } = await import('./products');
+      
+      if (!isStripeConfigured()) {
+        throw new TRPCError({ 
+          code: 'PRECONDITION_FAILED', 
+          message: 'Le système de paiement n\'est pas configuré' 
+        });
+      }
+
+      const stripe = getStripe();
+      const plan = PLANS[input.planId];
+      const isCrypto = input.paymentMethod === 'crypto';
+      const isYearly = input.billingPeriod === 'yearly';
+      const priceInCents = calculatePrice(input.planId, isYearly, isCrypto);
+
+      // Get or create Stripe customer
+      let subscription = await db.getUserSubscription(ctx.user.id);
+      let customerId = subscription?.stripeCustomerId;
+
+      if (!customerId) {
+        const customer = await stripe.customers.create({
+          email: ctx.user.email || undefined,
+          name: ctx.user.name || undefined,
+          metadata: {
+            userId: ctx.user.id.toString(),
+          },
+        });
+        customerId = customer.id;
+      }
+
+      // Create checkout session
+      const origin = ctx.req.headers.origin || 'http://localhost:3000';
+      
+      const session = await stripe.checkout.sessions.create({
+        customer: customerId,
+        client_reference_id: ctx.user.id.toString(),
+        mode: 'subscription',
+        allow_promotion_codes: true,
+        line_items: [
+          {
+            price_data: {
+              currency: 'usd',
+              product_data: {
+                name: `Sklora ${plan.name} - ${isYearly ? 'Annuel' : 'Mensuel'}`,
+                description: plan.description,
+              },
+              unit_amount: priceInCents,
+              recurring: {
+                interval: isYearly ? 'year' : 'month',
+              },
+            },
+            quantity: 1,
+          },
+        ],
+        metadata: {
+          user_id: ctx.user.id.toString(),
+          customer_email: ctx.user.email || '',
+          customer_name: ctx.user.name || '',
+          plan_id: input.planId,
+          billing_period: input.billingPeriod,
+          payment_method: input.paymentMethod,
+          crypto_discount: isCrypto ? 'true' : 'false',
+        },
+        success_url: `${origin}/dashboard?subscription=success`,
+        cancel_url: `${origin}/pricing?subscription=canceled`,
+      });
+
+      return { checkoutUrl: session.url };
+    }),
+
+  // Cancel subscription
+  cancel: protectedProcedure.mutation(async ({ ctx }) => {
+    const subscription = await db.getUserSubscription(ctx.user.id);
+    if (!subscription?.stripeSubscriptionId) {
+      throw new TRPCError({ code: 'NOT_FOUND', message: 'Aucun abonnement actif' });
+    }
+
+    const { getStripe, isStripeConfigured } = await import('./stripe');
+    if (!isStripeConfigured()) {
+      throw new TRPCError({ code: 'PRECONDITION_FAILED' });
+    }
+
+    const stripe = getStripe();
+    await stripe.subscriptions.update(subscription.stripeSubscriptionId, {
+      cancel_at_period_end: true,
+    });
+
+    await db.updateSubscription(ctx.user.id, {
+      cancelAtPeriodEnd: true,
+    });
+
+    return { success: true };
+  }),
+
+  // Get billing portal URL
+  getBillingPortal: protectedProcedure.mutation(async ({ ctx }) => {
+    const subscription = await db.getUserSubscription(ctx.user.id);
+    if (!subscription?.stripeCustomerId) {
+      throw new TRPCError({ code: 'NOT_FOUND', message: 'Aucun compte de facturation' });
+    }
+
+    const { getStripe, isStripeConfigured } = await import('./stripe');
+    if (!isStripeConfigured()) {
+      throw new TRPCError({ code: 'PRECONDITION_FAILED' });
+    }
+
+    const stripe = getStripe();
+    const origin = ctx.req.headers.origin || 'http://localhost:3000';
+    
+    const session = await stripe.billingPortal.sessions.create({
+      customer: subscription.stripeCustomerId,
+      return_url: `${origin}/dashboard`,
+    });
+
+    return { portalUrl: session.url };
+  }),
+});
+
 // ==================== MAIN ROUTER ====================
 export const appRouter = router({
   system: systemRouter,
@@ -1095,6 +1521,7 @@ export const appRouter = router({
   quiz: quizRouter,
   chatbot: chatbotRouter,
   admin: adminRouter,
+  subscription: subscriptionRouter,
 });
 
 export type AppRouter = typeof appRouter;

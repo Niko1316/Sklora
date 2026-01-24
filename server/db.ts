@@ -718,3 +718,97 @@ export async function getUserStats(userId: number) {
     badgesEarned: userBadgesList.length
   };
 }
+
+
+// ==================== SUBSCRIPTION HELPERS ====================
+
+import { subscriptions, InsertSubscription, Subscription, aiGeneratedContent, InsertAiGeneratedContent } from "../drizzle/schema";
+
+export async function getUserSubscription(userId: number): Promise<Subscription | null> {
+  const db = await getDb();
+  if (!db) return null;
+  const result = await db.select().from(subscriptions).where(eq(subscriptions.userId, userId)).limit(1);
+  return result[0] || null;
+}
+
+export async function createOrUpdateSubscription(data: InsertSubscription): Promise<{ id: number }> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const existing = await getUserSubscription(data.userId);
+  
+  if (existing) {
+    await db.update(subscriptions).set(data).where(eq(subscriptions.userId, data.userId));
+    return { id: existing.id };
+  } else {
+    const result = await db.insert(subscriptions).values(data);
+    return { id: result[0].insertId };
+  }
+}
+
+export async function updateSubscription(userId: number, data: Partial<InsertSubscription>): Promise<void> {
+  const db = await getDb();
+  if (!db) return;
+  await db.update(subscriptions).set(data).where(eq(subscriptions.userId, userId));
+}
+
+export async function cancelSubscription(userId: number): Promise<void> {
+  const db = await getDb();
+  if (!db) return;
+  await db.update(subscriptions).set({
+    status: "canceled",
+    canceledAt: new Date(),
+  }).where(eq(subscriptions.userId, userId));
+}
+
+export async function getAllSubscriptions(): Promise<Subscription[]> {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(subscriptions).orderBy(desc(subscriptions.createdAt));
+}
+
+// ==================== AI GENERATED CONTENT HELPERS ====================
+
+export async function createAiGeneratedContent(data: InsertAiGeneratedContent): Promise<{ id: number }> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(aiGeneratedContent).values(data);
+  return { id: result[0].insertId };
+}
+
+export async function getAiGeneratedContent(id: number) {
+  const db = await getDb();
+  if (!db) return null;
+  const result = await db.select().from(aiGeneratedContent).where(eq(aiGeneratedContent.id, id)).limit(1);
+  return result[0] || null;
+}
+
+export async function updateAiGeneratedContent(id: number, data: Partial<InsertAiGeneratedContent>): Promise<void> {
+  const db = await getDb();
+  if (!db) return;
+  await db.update(aiGeneratedContent).set(data).where(eq(aiGeneratedContent.id, id));
+}
+
+export async function getPendingAiContent(): Promise<typeof aiGeneratedContent.$inferSelect[]> {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(aiGeneratedContent)
+    .where(eq(aiGeneratedContent.status, "pending"))
+    .orderBy(desc(aiGeneratedContent.createdAt));
+}
+
+export async function getAiContentByModule(moduleId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(aiGeneratedContent)
+    .where(eq(aiGeneratedContent.moduleId, moduleId))
+    .orderBy(desc(aiGeneratedContent.createdAt));
+}
+
+export async function getAiContentByLesson(lessonId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(aiGeneratedContent)
+    .where(eq(aiGeneratedContent.lessonId, lessonId))
+    .orderBy(desc(aiGeneratedContent.createdAt));
+}
