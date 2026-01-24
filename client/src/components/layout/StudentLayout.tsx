@@ -24,6 +24,7 @@ import {
   Flame,
   Star,
   Settings,
+  TrendingUp,
 } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { useState } from "react";
@@ -31,6 +32,7 @@ import { useState } from "react";
 const navItems = [
   { href: "/dashboard", icon: Home, label: "Tableau de bord" },
   { href: "/parcours", icon: BookOpen, label: "Parcours" },
+  { href: "/progress", icon: TrendingUp, label: "Ma progression" },
   { href: "/chatbot", icon: MessageCircle, label: "Assistant IA" },
   { href: "/profile", icon: User, label: "Mon profil" },
 ];
@@ -71,7 +73,7 @@ export default function StudentLayout({ children }: { children: React.ReactNode 
               <SheetContent side="left" className="w-64 p-0">
                 <div className="flex h-16 items-center border-b px-4">
                   <Sparkles className="h-6 w-6 text-primary mr-2" />
-                  <span className="font-bold">Pépites Mondiales</span>
+                  <span className="font-bold">Sklora</span>
                 </div>
                 <nav className="flex flex-col p-4 gap-1">
                   {navItems.map((item) => {

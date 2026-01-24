@@ -19,6 +19,7 @@ import LessonView from "./pages/student/LessonView";
 import QuizView from "./pages/student/QuizView";
 import Profile from "./pages/student/Profile";
 import Chatbot from "./pages/student/Chatbot";
+import Progress from "./pages/student/Progress";
 
 // Admin pages
 import AdminDashboard from "./pages/admin/Dashboard";
@@ -33,6 +34,7 @@ import AdminQuizEdit from "./pages/admin/QuizEdit";
 import AdminUsers from "./pages/admin/Users";
 import AdminAlerts from "./pages/admin/Alerts";
 import AdminAiGeneration from "./pages/admin/AiGeneration";
+import AdminUserProgress from "./pages/admin/UserProgress";
 
 // Protected route wrapper
 function ProtectedRoute({ children, adminOnly = false }: { children: React.ReactNode; adminOnly?: boolean }) {
@@ -113,6 +115,11 @@ function Router() {
       <Route path="/chatbot">
         <ProtectedRoute>
           <Chatbot />
+        </ProtectedRoute>
+      </Route>
+      <Route path="/progress">
+        <ProtectedRoute>
+          <Progress />
         </ProtectedRoute>
       </Route>
 
@@ -198,6 +205,11 @@ function Router() {
       <Route path="/admin/alerts">
         <ProtectedRoute adminOnly>
           <AdminAlerts />
+        </ProtectedRoute>
+      </Route>
+      <Route path="/admin/progress">
+        <ProtectedRoute adminOnly>
+          <AdminUserProgress />
         </ProtectedRoute>
       </Route>
       <Route path="/admin/ai-generation">

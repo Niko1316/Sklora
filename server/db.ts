@@ -812,3 +812,219 @@ export async function getAiContentByLesson(lessonId: number) {
     .where(eq(aiGeneratedContent.lessonId, lessonId))
     .orderBy(desc(aiGeneratedContent.createdAt));
 }
+
+
+// ==================== DETAILED PROGRESS TRACKING ====================
+
+export async function getDetailedParcoursProgress(userId: number, parcoursId: number) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  // Get parcours info
+  const parcoursData = await getParcoursById(parcoursId);
+  if (!parcoursData) return null;
+  
+  // Get all modules for this parcours
+  const parcoursModules = await getModulesByParcoursId(parcoursId, true);
+  
+  // Get user progress for all items in this parcours
+  const progressData = await getUserProgressForParcours(userId, parcoursId);
+  
+  // Calculate module progress
+  const modulesProgress = await Promise.all(parcoursModules.map(async (module) => {
+    const moduleLessons = await getLessonsByModuleId(module.id, true);
+    const moduleQuizzes = await getQuizzesByModuleId(module.id);
+    
+    const completedLessons = progressData.filter(p => 
+      p.moduleId === module.id && 
+      p.lessonId !== null && 
+      p.status === "completed"
+    ).length;
+    
+    const lessonProgress = moduleLessons.length > 0 
+      ? Math.round((completedLessons / moduleLessons.length) * 100) 
+      : 0;
+    
+    // Get quiz attempts for this module
+    const quizAttempts = await Promise.all(moduleQuizzes.map(async (quiz) => {
+      const best = await getBestQuizAttempt(userId, quiz.id);
+      return {
+        quizId: quiz.id,
+        quizTitle: quiz.title,
+        bestScore: best?.score || null,
+        passed: best?.passed || false,
+        attempts: best ? 1 : 0
+      };
+    }));
+    
+    const passedQuizzes = quizAttempts.filter(q => q.passed).length;
+    const quizProgress = moduleQuizzes.length > 0 
+      ? Math.round((passedQuizzes / moduleQuizzes.length) * 100) 
+      : 100;
+    
+    const moduleProgress = progressData.find(p => 
+      p.moduleId === module.id && 
+      p.lessonId === null
+    );
+    
+    return {
+      moduleId: module.id,
+      moduleTitle: module.title,
+      totalLessons: moduleLessons.length,
+      completedLessons,
+      lessonProgress,
+      totalQuizzes: moduleQuizzes.length,
+      passedQuizzes,
+      quizProgress,
+      overallProgress: Math.round((lessonProgress + quizProgress) / 2),
+      status: moduleProgress?.status || "not_started",
+      startedAt: moduleProgress?.startedAt || null,
+      completedAt: moduleProgress?.completedAt || null,
+      timeSpentMinutes: moduleProgress?.timeSpentMinutes || 0,
+      quizAttempts
+    };
+  }));
+  
+  // Calculate overall parcours progress
+  const totalLessons = modulesProgress.reduce((sum, m) => sum + m.totalLessons, 0);
+  const completedLessons = modulesProgress.reduce((sum, m) => sum + m.completedLessons, 0);
+  const totalQuizzes = modulesProgress.reduce((sum, m) => sum + m.totalQuizzes, 0);
+  const passedQuizzes = modulesProgress.reduce((sum, m) => sum + m.passedQuizzes, 0);
+  const totalTimeSpent = modulesProgress.reduce((sum, m) => sum + m.timeSpentMinutes, 0);
+  
+  const parcoursProgress = progressData.find(p => 
+    p.parcoursId === parcoursId && 
+    p.moduleId === null && 
+    p.lessonId === null
+  );
+  
+  return {
+    parcoursId,
+    parcoursTitle: parcoursData.title,
+    parcoursSlug: parcoursData.slug,
+    totalModules: parcoursModules.length,
+    completedModules: modulesProgress.filter(m => m.status === "completed").length,
+    totalLessons,
+    completedLessons,
+    lessonProgress: totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0,
+    totalQuizzes,
+    passedQuizzes,
+    quizProgress: totalQuizzes > 0 ? Math.round((passedQuizzes / totalQuizzes) * 100) : 100,
+    overallProgress: totalLessons > 0 
+      ? Math.round((completedLessons / totalLessons) * 100) 
+      : 0,
+    status: parcoursProgress?.status || "not_started",
+    startedAt: parcoursProgress?.startedAt || null,
+    completedAt: parcoursProgress?.completedAt || null,
+    totalTimeSpentMinutes: totalTimeSpent,
+    modules: modulesProgress
+  };
+}
+
+export async function getAllUserProgressSummary(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  // Get all published parcours
+  const allParcours = await getAllParcours(true);
+  
+  // Get progress for each parcours
+  const progressSummary = await Promise.all(allParcours.map(async (p) => {
+    const progress = await getDetailedParcoursProgress(userId, p.id);
+    return progress;
+  }));
+  
+  return progressSummary.filter(p => p !== null);
+}
+
+export async function getAdminUserProgressReport(limit = 50) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  // Get all users with their progress
+  const allUsers = await db.select().from(users).limit(limit);
+  
+  const userProgressReport = await Promise.all(allUsers.map(async (user) => {
+    const stats = await getUserStats(user.id);
+    const progressData = await getUserAllProgress(user.id);
+    
+    // Get active parcours (started but not completed)
+    const activeParcours = progressData.filter(p => 
+      p.parcoursId !== null && 
+      p.moduleId === null && 
+      p.lessonId === null &&
+      p.status !== "completed"
+    ).length;
+    
+    // Get completed parcours
+    const completedParcours = progressData.filter(p => 
+      p.parcoursId !== null && 
+      p.moduleId === null && 
+      p.lessonId === null &&
+      p.status === "completed"
+    ).length;
+    
+    // Calculate total time spent
+    const totalTimeSpent = progressData.reduce((sum, p) => sum + (p.timeSpentMinutes || 0), 0);
+    
+    return {
+      userId: user.id,
+      userName: user.name,
+      userEmail: user.email,
+      role: user.role,
+      totalXp: user.totalXp,
+      currentLevel: user.currentLevel,
+      currentStreak: user.currentStreak,
+      longestStreak: user.longestStreak,
+      activeParcours,
+      completedParcours,
+      completedLessons: stats?.completedLessons || 0,
+      completedModules: stats?.completedModules || 0,
+      passedQuizzes: stats?.passedQuizzes || 0,
+      badgesEarned: stats?.badgesEarned || 0,
+      totalTimeSpentMinutes: totalTimeSpent,
+      lastActivity: user.lastSignedIn,
+      createdAt: user.createdAt
+    };
+  }));
+  
+  return userProgressReport;
+}
+
+export async function getUserProgressTimeline(userId: number, days = 30) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const startDate = new Date();
+  startDate.setDate(startDate.getDate() - days);
+  
+  // Get all progress entries in the time range
+  const progressEntries = await db.select().from(userProgress)
+    .where(and(
+      eq(userProgress.userId, userId),
+      gte(userProgress.lastAccessedAt, startDate)
+    ))
+    .orderBy(asc(userProgress.lastAccessedAt));
+  
+  // Group by date
+  const timeline: Record<string, { lessonsCompleted: number; timeSpent: number; xpEarned: number }> = {};
+  
+  for (const entry of progressEntries) {
+    if (entry.lastAccessedAt) {
+      const dateKey = entry.lastAccessedAt.toISOString().split('T')[0];
+      if (!timeline[dateKey]) {
+        timeline[dateKey] = { lessonsCompleted: 0, timeSpent: 0, xpEarned: 0 };
+      }
+      if (entry.status === "completed" && entry.lessonId) {
+        timeline[dateKey].lessonsCompleted++;
+        timeline[dateKey].xpEarned += entry.xpEarned || 0;
+      }
+      timeline[dateKey].timeSpent += entry.timeSpentMinutes || 0;
+    }
+  }
+  
+  return Object.entries(timeline).map(([date, data]) => ({
+    date,
+    ...data
+  }));
+}

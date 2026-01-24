@@ -27,6 +27,7 @@ import {
   Settings,
   Home,
   ChevronRight,
+  TrendingUp,
 } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { useState } from "react";
@@ -38,6 +39,7 @@ const navItems = [
   { href: "/admin/lessons", icon: FileText, label: "Leçons" },
   { href: "/admin/quizzes", icon: HelpCircle, label: "Quiz" },
   { href: "/admin/ai-generation", icon: Sparkles, label: "Génération IA" },
+  { href: "/admin/progress", icon: TrendingUp, label: "Suivi progression" },
   { href: "/admin/users", icon: Users, label: "Utilisateurs" },
   { href: "/admin/alerts", icon: Bell, label: "Alertes" },
 ];

@@ -220,6 +220,9 @@ export const userProgress = mysqlTable("user_progress", {
   // XP earned for this item
   xpEarned: int("xpEarned").default(0).notNull(),
   
+  // Time tracking
+  timeSpentMinutes: int("timeSpentMinutes").default(0).notNull(),
+  
   // Timestamps
   startedAt: timestamp("startedAt"),
   completedAt: timestamp("completedAt"),

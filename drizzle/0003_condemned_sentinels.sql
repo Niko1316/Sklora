@@ -1,0 +1,1 @@
+ALTER TABLE `user_progress` ADD `timeSpentMinutes` int DEFAULT 0 NOT NULL;

@@ -55,3 +55,12 @@
 - [x] Appliquer le design Bento Grid 2.0
 - [x] Créer des boutons tactiles (squishy)
 - [x] Mettre en évidence le rabais crypto sur la page tarifs
+
+
+## Suivi de progression des utilisateurs
+- [x] Créer les procédures tRPC pour récupérer la progression détaillée
+- [x] Page de progression par parcours avec visualisation graphique
+- [x] Barre de progression par module et leçon
+- [x] Statistiques de temps passé par cours
+- [x] Tableau de bord admin pour voir la progression de tous les utilisateurs
+- [x] Filtres et export des données de progression

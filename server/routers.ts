@@ -57,6 +57,25 @@ const userRouter = router({
   getProgress: protectedProcedure.query(async ({ ctx }) => {
     return db.getUserAllProgress(ctx.user.id);
   }),
+  
+  // Get detailed progress for a specific parcours
+  getParcoursProgress: protectedProcedure
+    .input(z.object({ parcoursId: z.number() }))
+    .query(async ({ ctx, input }) => {
+      return db.getDetailedParcoursProgress(ctx.user.id, input.parcoursId);
+    }),
+  
+  // Get progress summary for all parcours
+  getAllProgressSummary: protectedProcedure.query(async ({ ctx }) => {
+    return db.getAllUserProgressSummary(ctx.user.id);
+  }),
+  
+  // Get progress timeline for charts
+  getProgressTimeline: protectedProcedure
+    .input(z.object({ days: z.number().optional().default(30) }))
+    .query(async ({ ctx, input }) => {
+      return db.getUserProgressTimeline(ctx.user.id, input.days);
+    }),
 });
 
 // ==================== PARCOURS ROUTER ====================
@@ -924,6 +943,20 @@ const adminRouter = router({
     .mutation(async ({ input }) => {
       await db.deleteAlert(input.id);
       return { success: true };
+    }),
+  
+  // User Progress Report
+  getUserProgressReport: adminProcedure
+    .input(z.object({ limit: z.number().optional().default(50) }))
+    .query(async ({ input }) => {
+      return db.getAdminUserProgressReport(input.limit);
+    }),
+  
+  // Get detailed progress for a specific user
+  getUserDetailedProgress: adminProcedure
+    .input(z.object({ userId: z.number() }))
+    .query(async ({ input }) => {
+      return db.getAllUserProgressSummary(input.userId);
     }),
   
   // Audit logs
