@@ -64,3 +64,7 @@
 - [x] Statistiques de temps passé par cours
 - [x] Tableau de bord admin pour voir la progression de tous les utilisateurs
 - [x] Filtres et export des données de progression
+
+
+## Bug Fixes
+- [x] Corriger l'erreur DialogTitle manquant dans les composants Dialog
