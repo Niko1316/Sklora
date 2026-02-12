@@ -12,7 +12,8 @@ import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
-import { Sparkles, BookOpen, FileQuestion, Loader2, Check, X, Eye, Wand2 } from "lucide-react";
+import { Sparkles, BookOpen, FileQuestion, Loader2, Check, X, Eye, Wand2, ArrowLeft } from "lucide-react";
+import { Link } from "wouter";
 import { Streamdown } from "streamdown";
 
 export default function AiGeneration() {
@@ -158,14 +159,19 @@ export default function AiGeneration() {
   return (
     <AdminLayout>
       <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold flex items-center gap-2">
-            <Sparkles className="h-8 w-8 text-primary" />
-            Génération IA de contenu
-          </h1>
+        <div className="flex items-center gap-3">
+          <Link href="/admin">
+            <Button variant="ghost" size="icon"><ArrowLeft className="h-5 w-5" /></Button>
+          </Link>
+          <div>
+            <h1 className="text-3xl font-bold font-heading flex items-center gap-2">
+              <Sparkles className="h-8 w-8 text-primary" />
+              Génération IA de contenu
+            </h1>
           <p className="text-muted-foreground mt-2">
             Utilisez l'intelligence artificielle pour générer automatiquement des leçons et des quiz.
           </p>
+          </div>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab}>

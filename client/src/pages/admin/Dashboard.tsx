@@ -63,7 +63,7 @@ export default function AdminDashboard() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold">Tableau de bord</h1>
+            <h1 className="text-3xl font-bold font-heading">Tableau de bord</h1>
             <p className="text-muted-foreground mt-1">
               Vue d'ensemble de votre plateforme d'apprentissage
             </p>

@@ -43,7 +43,9 @@ import {
   Star,
   Flame,
   CheckCircle,
+  ArrowLeft,
 } from "lucide-react";
+import { Link } from "wouter";
 import { useState, useMemo } from "react";
 
 function StatCard({
@@ -291,11 +293,16 @@ export default function AdminUserProgress() {
       <div className="space-y-8">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <div>
-            <h1 className="text-3xl font-bold font-['Lexend']">Suivi de progression</h1>
-            <p className="text-muted-foreground mt-1">
-              Analysez la progression de tous les utilisateurs
-            </p>
+          <div className="flex items-center gap-3">
+            <Link href="/admin">
+              <Button variant="ghost" size="icon"><ArrowLeft className="h-5 w-5" /></Button>
+            </Link>
+            <div>
+              <h1 className="text-3xl font-bold font-heading">Suivi de progression</h1>
+              <p className="text-muted-foreground mt-1">
+                Analysez la progression de tous les utilisateurs
+              </p>
+            </div>
           </div>
           <Button onClick={exportToCSV} variant="outline" className="gap-2">
             <Download className="h-4 w-4" />

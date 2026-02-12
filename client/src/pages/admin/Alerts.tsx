@@ -15,7 +15,9 @@ import {
   AlertCircle,
   Check,
   Trash2,
+  ArrowLeft,
 } from "lucide-react";
+import { Link } from "wouter";
 import { toast } from "sonner";
 
 export default function AdminAlerts() {
@@ -102,11 +104,16 @@ export default function AdminAlerts() {
       <div className="space-y-6">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <div>
-            <h1 className="text-3xl font-bold">Alertes</h1>
+          <div className="flex items-center gap-3">
+            <Link href="/admin">
+              <Button variant="ghost" size="icon"><ArrowLeft className="h-5 w-5" /></Button>
+            </Link>
+            <div>
+              <h1 className="text-3xl font-bold font-heading">Alertes</h1>
             <p className="text-muted-foreground mt-1">
               {unreadAlerts.length} alertes non lues
             </p>
+          </div>
           </div>
           {unreadAlerts.length > 0 && (
             <Button

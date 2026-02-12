@@ -20,7 +20,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Users, Search, MoreHorizontal, Shield, ShieldOff, Star, Flame } from "lucide-react";
+import { Users, Search, MoreHorizontal, Shield, ShieldOff, Star, Flame, ArrowLeft } from "lucide-react";
+import { Link } from "wouter";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -63,11 +64,16 @@ export default function AdminUsers() {
     <AdminLayout>
       <div className="space-y-6">
         {/* Header */}
-        <div>
-          <h1 className="text-3xl font-bold">Utilisateurs</h1>
-          <p className="text-muted-foreground mt-1">
-            Gérez les utilisateurs de la plateforme
-          </p>
+        <div className="flex items-center gap-3">
+          <Link href="/admin">
+            <Button variant="ghost" size="icon"><ArrowLeft className="h-5 w-5" /></Button>
+          </Link>
+          <div>
+            <h1 className="text-3xl font-bold font-heading">Utilisateurs</h1>
+            <p className="text-muted-foreground mt-1">
+              Gérez les utilisateurs de la plateforme
+            </p>
+          </div>
         </div>
 
         {/* Search */}

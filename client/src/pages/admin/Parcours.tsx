@@ -29,7 +29,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { BookOpen, Plus, Search, MoreHorizontal, Edit, Trash2, Eye, EyeOff } from "lucide-react";
+import { BookOpen, Plus, Search, MoreHorizontal, Edit, Trash2, Eye, EyeOff, ArrowLeft } from "lucide-react";
 import { Link } from "wouter";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -79,12 +79,17 @@ export default function AdminParcours() {
     <AdminLayout>
       <div className="space-y-6">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <div>
-            <h1 className="text-3xl font-bold">Parcours</h1>
+         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <Link href="/admin">
+              <Button variant="ghost" size="icon"><ArrowLeft className="h-5 w-5" /></Button>
+            </Link>
+            <div>
+            <h1 className="text-3xl font-bold font-heading">Parcours</h1>
             <p className="text-muted-foreground mt-1">
               Gérez vos parcours de formation
             </p>
+          </div>
           </div>
           <Link href="/admin/parcours/new">
             <Button className="gap-2">

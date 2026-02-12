@@ -29,7 +29,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Layers, Plus, Search, MoreHorizontal, Edit, Trash2, Eye, EyeOff } from "lucide-react";
+import { Layers, Plus, Search, MoreHorizontal, Edit, Trash2, Eye, EyeOff, ArrowLeft } from "lucide-react";
 import { Link } from "wouter";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -80,11 +80,16 @@ export default function AdminModules() {
       <div className="space-y-6">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <div>
-            <h1 className="text-3xl font-bold">Modules</h1>
-            <p className="text-muted-foreground mt-1">
-              Gérez les modules de vos parcours
-            </p>
+          <div className="flex items-center gap-3">
+            <Link href="/admin">
+              <Button variant="ghost" size="icon"><ArrowLeft className="h-5 w-5" /></Button>
+            </Link>
+            <div>
+              <h1 className="text-3xl font-bold font-heading">Modules</h1>
+              <p className="text-muted-foreground mt-1">
+                Gérez les modules de vos parcours
+              </p>
+            </div>
           </div>
           <Link href="/admin/modules/new">
             <Button className="gap-2">

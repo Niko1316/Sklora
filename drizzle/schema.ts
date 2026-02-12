@@ -102,6 +102,17 @@ export const lessons = mysqlTable("lessons", {
   contentHtml: text("contentHtml"),
   contentMarkdown: text("contentMarkdown"),
   
+  // Structured JSON content (from imported JSON)
+  contentJson: json("contentJson"), // Full structured lesson data
+  objectifsApprentissage: json("objectifsApprentissage"), // Learning objectives array
+  objectifs: json("objectifs"), // Learning objectives (alt)
+  prerequis: json("prerequis"), // Prerequisites array
+  vocabulaireCle: json("vocabulaireCle"), // Key vocabulary [{terme, definition}]
+  contenuPrincipal: json("contenuPrincipal"), // Main content sections
+  resume: text("resume"), // Summary
+  exercicePratique: json("exercicePratique"), // Practical exercise
+  pourAllerPlusLoin: json("pourAllerPlusLoin"), // Further reading
+  
   // Media
   videoUrl: text("videoUrl"),
   imageUrl: text("imageUrl"),

@@ -68,3 +68,11 @@
 
 ## Bug Fixes
 - [x] Corriger l'erreur DialogTitle manquant dans les composants Dialog
+
+
+## Import JSON et Navigation Admin
+- [x] Adapter le schéma de leçons pour le format JSON enrichi (contentJson, objectifsApprentissage, prerequis, vocabulaireCle, etc.)
+- [x] Créer l'interface d'import JSON pour les leçons (upload fichier + coller)
+- [x] Conversion automatique JSON → Markdown
+- [x] Onglet "Données structurées" pour éditer objectifs, prérequis, vocabulaire
+- [x] Ajouter des flèches de retour dans toutes les pages admin (Parcours, Modules, Leçons, Quiz, Users, Alerts, IA, Progression)

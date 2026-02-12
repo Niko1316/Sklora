@@ -1,0 +1,210 @@
+{
+  "query": "SHOW COLUMNS FROM lessons;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4WA98XgAjb3fPJV.9cf61e3b6676 --database fGKHXRJ67dBegdhFNFcDpA --execute SHOW COLUMNS FROM lessons;",
+  "rows": [
+    {
+      "Field": "id",
+      "Type": "int(11)",
+      "Null": "NO",
+      "Key": "PRI",
+      "Default": "NULL",
+      "Extra": "auto_increment"
+    },
+    {
+      "Field": "moduleId",
+      "Type": "int(11)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "title",
+      "Type": "varchar(255)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "contentHtml",
+      "Type": "text",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "contentMarkdown",
+      "Type": "text",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "videoUrl",
+      "Type": "text",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "imageUrl",
+      "Type": "text",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "duration",
+      "Type": "int(11)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "5",
+      "Extra": ""
+    },
+    {
+      "Field": "xpReward",
+      "Type": "int(11)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "10",
+      "Extra": ""
+    },
+    {
+      "Field": "difficulty",
+      "Type": "enum('facile','moyen','difficile')",
+      "Null": "NO",
+      "Key": "",
+      "Default": "facile",
+      "Extra": ""
+    },
+    {
+      "Field": "orderIndex",
+      "Type": "int(11)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "0",
+      "Extra": ""
+    },
+    {
+      "Field": "prerequisiteLessonId",
+      "Type": "int(11)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "isFree",
+      "Type": "tinyint(1)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "0",
+      "Extra": ""
+    },
+    {
+      "Field": "isPublished",
+      "Type": "tinyint(1)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "0",
+      "Extra": ""
+    },
+    {
+      "Field": "createdAt",
+      "Type": "timestamp",
+      "Null": "NO",
+      "Key": "",
+      "Default": "CURRENT_TIMESTAMP",
+      "Extra": ""
+    },
+    {
+      "Field": "updatedAt",
+      "Type": "timestamp",
+      "Null": "NO",
+      "Key": "",
+      "Default": "CURRENT_TIMESTAMP",
+      "Extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP"
+    },
+    {
+      "Field": "objectifsApprentissage",
+      "Type": "json",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "prerequis",
+      "Type": "json",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "vocabulaireCle",
+      "Type": "json",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "contenuPrincipal",
+      "Type": "json",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "resume",
+      "Type": "text",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "exercicePratique",
+      "Type": "json",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "pourAllerPlusLoin",
+      "Type": "json",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "contentJson",
+      "Type": "json",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "objectifs",
+      "Type": "json",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    }
+  ],
+  "messages": [],
+  "stdout": "Field\tType\tNull\tKey\tDefault\tExtra\nid\tint(11)\tNO\tPRI\tNULL\tauto_increment\nmoduleId\tint(11)\tNO\t\tNULL\t\ntitle\tvarchar(255)\tNO\t\tNULL\t\ncontentHtml\ttext\tYES\t\tNULL\t\ncontentMarkdown\ttext\tYES\t\tNULL\t\nvideoUrl\ttext\tYES\t\tNULL\t\nimageUrl\ttext\tYES\t\tNULL\t\nduration\tint(11)\tNO\t\t5\t\nxpReward\tint(11)\tNO\t\t10\t\ndifficulty\tenum('facile','moyen','difficile')\tNO\t\tfacile\t\norderIndex\tint(11)\tNO\t\t0\t\nprerequisiteLessonId\tint(11)\tYES\t\tNULL\t\nisFree\ttinyint(1)\tNO\t\t0\t\nisPublished\ttinyint(1)\tNO\t\t0\t\ncreatedAt\ttimestamp\tNO\t\tCURRENT_TIMESTAMP\t\nupdatedAt\ttimestamp\tNO\t\tCURRENT_TIMESTAMP\tDEFAULT_GENERATED on update CURRENT_TIMESTAMP\nobjectifsApprentissage\tjson\tYES\t\tNULL\t\nprerequis\tjson\tYES\t\tNULL\t\nvocabulaireCle\tjson\tYES\t\tNULL\t\ncontenuPrincipal\tjson\tYES\t\tNULL\t\nresume\ttext\tYES\t\tNULL\t\nexercicePratique\tjson\tYES\t\tNULL\t\npourAllerPlusLoin\tjson\tYES\t\tNULL\t\ncontentJson\tjson\tYES\t\tNULL\t\nobjectifs\tjson\tYES\t\tNULL\t\n",
+  "stderr": "",
+  "execution_time_ms": 95
+}
