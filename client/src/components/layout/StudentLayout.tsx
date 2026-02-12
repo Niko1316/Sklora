@@ -98,7 +98,7 @@ export default function StudentLayout({ children }: { children: React.ReactNode 
 
             <Link href="/dashboard" className="flex items-center gap-2">
               <Sparkles className="h-7 w-7 text-primary" />
-              <span className="font-bold hidden sm:inline">Pépites Mondiales</span>
+              <span className="font-bold hidden sm:inline font-heading">Sklora</span>
             </Link>
           </div>
 

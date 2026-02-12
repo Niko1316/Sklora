@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, boolean, json, float } from "drizzle-orm/mysql-core";
+import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, boolean, json, float, index, uniqueIndex } from "drizzle-orm/mysql-core";
 
 // ==================== USERS & AUTH ====================
 
@@ -433,10 +433,10 @@ export const subscriptions = mysqlTable("subscriptions", {
   billingPeriod: mysqlEnum("billingPeriod", ["monthly", "yearly"]).default("monthly").notNull(),
   paymentMethod: mysqlEnum("paymentMethod", ["card", "crypto"]).default("card").notNull(),
   
-  // Stripe info
-  stripeCustomerId: varchar("stripeCustomerId", { length: 255 }),
-  stripeSubscriptionId: varchar("stripeSubscriptionId", { length: 255 }),
-  stripePriceId: varchar("stripePriceId", { length: 255 }),
+  // Creem info
+  creemCustomerId: varchar("creemCustomerId", { length: 255 }),
+  creemSubscriptionId: varchar("creemSubscriptionId", { length: 255 }),
+  creemProductId: varchar("creemProductId", { length: 255 }),
   
   // Crypto payment info
   cryptoWalletAddress: varchar("cryptoWalletAddress", { length: 255 }),

@@ -1,51 +1,61 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { useAuth } from "./_core/hooks/useAuth";
+import { lazy, Suspense } from "react";
+import { Loader2 } from "lucide-react";
 
-// Public pages
+// Loading spinner for lazy-loaded pages
+function PageLoader() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="text-center space-y-4">
+        <Loader2 className="h-10 w-10 animate-spin text-primary mx-auto" />
+        <p className="text-muted-foreground text-sm">Chargement...</p>
+      </div>
+    </div>
+  );
+}
+
+// Public pages (Home loaded eagerly for fast first paint)
 import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Pricing from "./pages/Pricing";
+const Login = lazy(() => import("./pages/Login"));
+const Pricing = lazy(() => import("./pages/Pricing"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
-// Student pages
-import StudentDashboard from "./pages/student/Dashboard";
-import ParcoursList from "./pages/student/ParcoursList";
-import ParcoursDetail from "./pages/student/ParcoursDetail";
-import LessonView from "./pages/student/LessonView";
-import QuizView from "./pages/student/QuizView";
-import Profile from "./pages/student/Profile";
-import Chatbot from "./pages/student/Chatbot";
-import Progress from "./pages/student/Progress";
+// Student pages (lazy loaded)
+const StudentDashboard = lazy(() => import("./pages/student/Dashboard"));
+const ParcoursList = lazy(() => import("./pages/student/ParcoursList"));
+const ParcoursDetail = lazy(() => import("./pages/student/ParcoursDetail"));
+const LessonView = lazy(() => import("./pages/student/LessonView"));
+const QuizView = lazy(() => import("./pages/student/QuizView"));
+const Profile = lazy(() => import("./pages/student/Profile"));
+const Chatbot = lazy(() => import("./pages/student/Chatbot"));
+const Progress = lazy(() => import("./pages/student/Progress"));
 
-// Admin pages
-import AdminDashboard from "./pages/admin/Dashboard";
-import AdminParcours from "./pages/admin/Parcours";
-import AdminParcoursEdit from "./pages/admin/ParcoursEdit";
-import AdminModules from "./pages/admin/Modules";
-import AdminModuleEdit from "./pages/admin/ModuleEdit";
-import AdminLessons from "./pages/admin/Lessons";
-import AdminLessonEdit from "./pages/admin/LessonEdit";
-import AdminQuizzes from "./pages/admin/Quizzes";
-import AdminQuizEdit from "./pages/admin/QuizEdit";
-import AdminUsers from "./pages/admin/Users";
-import AdminAlerts from "./pages/admin/Alerts";
-import AdminAiGeneration from "./pages/admin/AiGeneration";
-import AdminUserProgress from "./pages/admin/UserProgress";
+// Admin pages (lazy loaded)
+const AdminDashboard = lazy(() => import("./pages/admin/Dashboard"));
+const AdminParcours = lazy(() => import("./pages/admin/Parcours"));
+const AdminParcoursEdit = lazy(() => import("./pages/admin/ParcoursEdit"));
+const AdminModules = lazy(() => import("./pages/admin/Modules"));
+const AdminModuleEdit = lazy(() => import("./pages/admin/ModuleEdit"));
+const AdminLessons = lazy(() => import("./pages/admin/Lessons"));
+const AdminLessonEdit = lazy(() => import("./pages/admin/LessonEdit"));
+const AdminQuizzes = lazy(() => import("./pages/admin/Quizzes"));
+const AdminQuizEdit = lazy(() => import("./pages/admin/QuizEdit"));
+const AdminUsers = lazy(() => import("./pages/admin/Users"));
+const AdminAlerts = lazy(() => import("./pages/admin/Alerts"));
+const AdminAiGeneration = lazy(() => import("./pages/admin/AiGeneration"));
+const AdminUserProgress = lazy(() => import("./pages/admin/UserProgress"));
 
 // Protected route wrapper
 function ProtectedRoute({ children, adminOnly = false }: { children: React.ReactNode; adminOnly?: boolean }) {
   const { user, loading, isAuthenticated } = useAuth();
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-      </div>
-    );
+    return <PageLoader />;
   }
 
   if (!isAuthenticated) {
@@ -55,10 +65,10 @@ function ProtectedRoute({ children, adminOnly = false }: { children: React.React
 
   if (adminOnly && user?.role !== "admin") {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-destructive">Accès refusé</h1>
-          <p className="text-muted-foreground mt-2">Vous n'avez pas les permissions nécessaires.</p>
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="text-center space-y-3">
+          <h1 className="text-2xl font-heading font-bold text-destructive">Accès refusé</h1>
+          <p className="text-muted-foreground">Vous n'avez pas les permissions nécessaires.</p>
         </div>
       </div>
     );
@@ -69,159 +79,161 @@ function ProtectedRoute({ children, adminOnly = false }: { children: React.React
 
 function Router() {
   return (
-    <Switch>
-      {/* Public routes */}
-      <Route path="/" component={Home} />
-      <Route path="/login" component={Login} />
-      <Route path="/pricing" component={Pricing} />
+    <Suspense fallback={<PageLoader />}>
+      <Switch>
+        {/* Public routes */}
+        <Route path="/" component={Home} />
+        <Route path="/login" component={Login} />
+        <Route path="/pricing" component={Pricing} />
 
-      {/* Student routes */}
-      <Route path="/dashboard">
-        <ProtectedRoute>
-          <StudentDashboard />
-        </ProtectedRoute>
-      </Route>
-      <Route path="/parcours">
-        <ProtectedRoute>
-          <ParcoursList />
-        </ProtectedRoute>
-      </Route>
-      <Route path="/parcours/:slug">
-        {(params) => (
+        {/* Student routes */}
+        <Route path="/dashboard">
           <ProtectedRoute>
-            <ParcoursDetail slug={params.slug} />
+            <StudentDashboard />
           </ProtectedRoute>
-        )}
-      </Route>
-      <Route path="/lesson/:id">
-        {(params) => (
+        </Route>
+        <Route path="/parcours">
           <ProtectedRoute>
-            <LessonView lessonId={parseInt(params.id)} />
+            <ParcoursList />
           </ProtectedRoute>
-        )}
-      </Route>
-      <Route path="/quiz/:id">
-        {(params) => (
+        </Route>
+        <Route path="/parcours/:slug">
+          {(params) => (
+            <ProtectedRoute>
+              <ParcoursDetail slug={params.slug} />
+            </ProtectedRoute>
+          )}
+        </Route>
+        <Route path="/lesson/:id">
+          {(params) => (
+            <ProtectedRoute>
+              <LessonView lessonId={parseInt(params.id)} />
+            </ProtectedRoute>
+          )}
+        </Route>
+        <Route path="/quiz/:id">
+          {(params) => (
+            <ProtectedRoute>
+              <QuizView quizId={parseInt(params.id)} />
+            </ProtectedRoute>
+          )}
+        </Route>
+        <Route path="/profile">
           <ProtectedRoute>
-            <QuizView quizId={parseInt(params.id)} />
+            <Profile />
           </ProtectedRoute>
-        )}
-      </Route>
-      <Route path="/profile">
-        <ProtectedRoute>
-          <Profile />
-        </ProtectedRoute>
-      </Route>
-      <Route path="/chatbot">
-        <ProtectedRoute>
-          <Chatbot />
-        </ProtectedRoute>
-      </Route>
-      <Route path="/progress">
-        <ProtectedRoute>
-          <Progress />
-        </ProtectedRoute>
-      </Route>
+        </Route>
+        <Route path="/chatbot">
+          <ProtectedRoute>
+            <Chatbot />
+          </ProtectedRoute>
+        </Route>
+        <Route path="/progress">
+          <ProtectedRoute>
+            <Progress />
+          </ProtectedRoute>
+        </Route>
 
-      {/* Admin routes */}
-      <Route path="/admin">
-        <ProtectedRoute adminOnly>
-          <AdminDashboard />
-        </ProtectedRoute>
-      </Route>
-      <Route path="/admin/parcours">
-        <ProtectedRoute adminOnly>
-          <AdminParcours />
-        </ProtectedRoute>
-      </Route>
-      <Route path="/admin/parcours/new">
-        <ProtectedRoute adminOnly>
-          <AdminParcoursEdit />
-        </ProtectedRoute>
-      </Route>
-      <Route path="/admin/parcours/:id">
-        {(params) => (
+        {/* Admin routes */}
+        <Route path="/admin">
           <ProtectedRoute adminOnly>
-            <AdminParcoursEdit parcoursId={parseInt(params.id)} />
+            <AdminDashboard />
           </ProtectedRoute>
-        )}
-      </Route>
-      <Route path="/admin/modules">
-        <ProtectedRoute adminOnly>
-          <AdminModules />
-        </ProtectedRoute>
-      </Route>
-      <Route path="/admin/modules/new">
-        <ProtectedRoute adminOnly>
-          <AdminModuleEdit />
-        </ProtectedRoute>
-      </Route>
-      <Route path="/admin/modules/:id">
-        {(params) => (
+        </Route>
+        <Route path="/admin/parcours">
           <ProtectedRoute adminOnly>
-            <AdminModuleEdit moduleId={parseInt(params.id)} />
+            <AdminParcours />
           </ProtectedRoute>
-        )}
-      </Route>
-      <Route path="/admin/lessons">
-        <ProtectedRoute adminOnly>
-          <AdminLessons />
-        </ProtectedRoute>
-      </Route>
-      <Route path="/admin/lessons/new">
-        <ProtectedRoute adminOnly>
-          <AdminLessonEdit />
-        </ProtectedRoute>
-      </Route>
-      <Route path="/admin/lessons/:id">
-        {(params) => (
+        </Route>
+        <Route path="/admin/parcours/new">
           <ProtectedRoute adminOnly>
-            <AdminLessonEdit lessonId={parseInt(params.id)} />
+            <AdminParcoursEdit />
           </ProtectedRoute>
-        )}
-      </Route>
-      <Route path="/admin/quizzes">
-        <ProtectedRoute adminOnly>
-          <AdminQuizzes />
-        </ProtectedRoute>
-      </Route>
-      <Route path="/admin/quizzes/new">
-        <ProtectedRoute adminOnly>
-          <AdminQuizEdit />
-        </ProtectedRoute>
-      </Route>
-      <Route path="/admin/quizzes/:id">
-        {(params) => (
+        </Route>
+        <Route path="/admin/parcours/:id">
+          {(params) => (
+            <ProtectedRoute adminOnly>
+              <AdminParcoursEdit parcoursId={parseInt(params.id)} />
+            </ProtectedRoute>
+          )}
+        </Route>
+        <Route path="/admin/modules">
           <ProtectedRoute adminOnly>
-            <AdminQuizEdit quizId={parseInt(params.id)} />
+            <AdminModules />
           </ProtectedRoute>
-        )}
-      </Route>
-      <Route path="/admin/users">
-        <ProtectedRoute adminOnly>
-          <AdminUsers />
-        </ProtectedRoute>
-      </Route>
-      <Route path="/admin/alerts">
-        <ProtectedRoute adminOnly>
-          <AdminAlerts />
-        </ProtectedRoute>
-      </Route>
-      <Route path="/admin/progress">
-        <ProtectedRoute adminOnly>
-          <AdminUserProgress />
-        </ProtectedRoute>
-      </Route>
-      <Route path="/admin/ai-generation">
-        <ProtectedRoute adminOnly>
-          <AdminAiGeneration />
-        </ProtectedRoute>
-      </Route>
+        </Route>
+        <Route path="/admin/modules/new">
+          <ProtectedRoute adminOnly>
+            <AdminModuleEdit />
+          </ProtectedRoute>
+        </Route>
+        <Route path="/admin/modules/:id">
+          {(params) => (
+            <ProtectedRoute adminOnly>
+              <AdminModuleEdit moduleId={parseInt(params.id)} />
+            </ProtectedRoute>
+          )}
+        </Route>
+        <Route path="/admin/lessons">
+          <ProtectedRoute adminOnly>
+            <AdminLessons />
+          </ProtectedRoute>
+        </Route>
+        <Route path="/admin/lessons/new">
+          <ProtectedRoute adminOnly>
+            <AdminLessonEdit />
+          </ProtectedRoute>
+        </Route>
+        <Route path="/admin/lessons/:id">
+          {(params) => (
+            <ProtectedRoute adminOnly>
+              <AdminLessonEdit lessonId={parseInt(params.id)} />
+            </ProtectedRoute>
+          )}
+        </Route>
+        <Route path="/admin/quizzes">
+          <ProtectedRoute adminOnly>
+            <AdminQuizzes />
+          </ProtectedRoute>
+        </Route>
+        <Route path="/admin/quizzes/new">
+          <ProtectedRoute adminOnly>
+            <AdminQuizEdit />
+          </ProtectedRoute>
+        </Route>
+        <Route path="/admin/quizzes/:id">
+          {(params) => (
+            <ProtectedRoute adminOnly>
+              <AdminQuizEdit quizId={parseInt(params.id)} />
+            </ProtectedRoute>
+          )}
+        </Route>
+        <Route path="/admin/users">
+          <ProtectedRoute adminOnly>
+            <AdminUsers />
+          </ProtectedRoute>
+        </Route>
+        <Route path="/admin/alerts">
+          <ProtectedRoute adminOnly>
+            <AdminAlerts />
+          </ProtectedRoute>
+        </Route>
+        <Route path="/admin/progress">
+          <ProtectedRoute adminOnly>
+            <AdminUserProgress />
+          </ProtectedRoute>
+        </Route>
+        <Route path="/admin/ai-generation">
+          <ProtectedRoute adminOnly>
+            <AdminAiGeneration />
+          </ProtectedRoute>
+        </Route>
 
-      {/* Fallback routes */}
-      <Route path="/404" component={NotFound} />
-      <Route component={NotFound} />
-    </Switch>
+        {/* Fallback routes */}
+        <Route path="/404" component={NotFound} />
+        <Route component={NotFound} />
+      </Switch>
+    </Suspense>
   );
 }
 

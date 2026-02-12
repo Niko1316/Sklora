@@ -1,0 +1,138 @@
+{
+  "query": "DESCRIBE parcours;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4WA98XgAjb3fPJV.9cf61e3b6676 --database fGKHXRJ67dBegdhFNFcDpA --execute DESCRIBE parcours;",
+  "rows": [
+    {
+      "Field": "id",
+      "Type": "int(11)",
+      "Null": "NO",
+      "Key": "PRI",
+      "Default": "NULL",
+      "Extra": "auto_increment"
+    },
+    {
+      "Field": "slug",
+      "Type": "varchar(255)",
+      "Null": "NO",
+      "Key": "UNI",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "title",
+      "Type": "varchar(255)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "description",
+      "Type": "text",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "imageUrl",
+      "Type": "text",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "totalModules",
+      "Type": "int(11)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "0",
+      "Extra": ""
+    },
+    {
+      "Field": "totalHours",
+      "Type": "int(11)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "0",
+      "Extra": ""
+    },
+    {
+      "Field": "difficulty",
+      "Type": "enum('debutant','intermediaire','avance')",
+      "Null": "NO",
+      "Key": "",
+      "Default": "debutant",
+      "Extra": ""
+    },
+    {
+      "Field": "isActive",
+      "Type": "tinyint(1)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "1",
+      "Extra": ""
+    },
+    {
+      "Field": "isPublished",
+      "Type": "tinyint(1)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "0",
+      "Extra": ""
+    },
+    {
+      "Field": "isFree",
+      "Type": "tinyint(1)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "0",
+      "Extra": ""
+    },
+    {
+      "Field": "displayOrder",
+      "Type": "int(11)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "0",
+      "Extra": ""
+    },
+    {
+      "Field": "xpReward",
+      "Type": "int(11)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "100",
+      "Extra": ""
+    },
+    {
+      "Field": "createdBy",
+      "Type": "int(11)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "createdAt",
+      "Type": "timestamp",
+      "Null": "NO",
+      "Key": "",
+      "Default": "CURRENT_TIMESTAMP",
+      "Extra": ""
+    },
+    {
+      "Field": "updatedAt",
+      "Type": "timestamp",
+      "Null": "NO",
+      "Key": "",
+      "Default": "CURRENT_TIMESTAMP",
+      "Extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP"
+    }
+  ],
+  "messages": [],
+  "stdout": "Field\tType\tNull\tKey\tDefault\tExtra\nid\tint(11)\tNO\tPRI\tNULL\tauto_increment\nslug\tvarchar(255)\tNO\tUNI\tNULL\t\ntitle\tvarchar(255)\tNO\t\tNULL\t\ndescription\ttext\tYES\t\tNULL\t\nimageUrl\ttext\tYES\t\tNULL\t\ntotalModules\tint(11)\tNO\t\t0\t\ntotalHours\tint(11)\tNO\t\t0\t\ndifficulty\tenum('debutant','intermediaire','avance')\tNO\t\tdebutant\t\nisActive\ttinyint(1)\tNO\t\t1\t\nisPublished\ttinyint(1)\tNO\t\t0\t\nisFree\ttinyint(1)\tNO\t\t0\t\ndisplayOrder\tint(11)\tNO\t\t0\t\nxpReward\tint(11)\tNO\t\t100\t\ncreatedBy\tint(11)\tYES\t\tNULL\t\ncreatedAt\ttimestamp\tNO\t\tCURRENT_TIMESTAMP\t\nupdatedAt\ttimestamp\tNO\t\tCURRENT_TIMESTAMP\tDEFAULT_GENERATED on update CURRENT_TIMESTAMP\n",
+  "stderr": "",
+  "execution_time_ms": 51
+}

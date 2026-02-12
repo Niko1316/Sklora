@@ -76,3 +76,44 @@
 - [x] Conversion automatique JSON → Markdown
 - [x] Onglet "Données structurées" pour éditer objectifs, prérequis, vocabulaire
 - [x] Ajouter des flèches de retour dans toutes les pages admin (Parcours, Modules, Leçons, Quiz, Users, Alerts, IA, Progression)
+
+
+## V2 - Remplacement Stripe par Creem
+- [x] Supprimer toutes les dépendances Stripe du package.json
+- [x] Supprimer les fichiers/imports liés à Stripe (server/stripe.ts, products.ts)
+- [x] Retirer les routes/endpoints Stripe
+- [x] Intégrer Creem API REST avec clé test
+- [x] Créer le service de paiement Creem
+- [x] Implémenter POST /api/creem/create-checkout
+- [x] Implémenter POST /api/creem/webhook
+- [x] Créer les composants frontend pour le checkout Creem
+- [x] Mettre à jour la page de tarification avec Creem
+
+## V2 - Corrections Critiques
+- [x] Ajouter les index en base de données (userProgress, lessonProgress, etc.)
+- [x] Corriger les requêtes N+1 dans getDetailedParcoursProgress
+- [x] Corriger la race condition sur les XP (UPDATE atomique avec incrementUserXp)
+- [ ] Implémenter le middleware de vérification des permissions par tier
+- [ ] Ajouter le rate limiting global et pour endpoints sensibles
+- [x] Sanitiser les messages du chatbot (injection de prompts)
+- [ ] Ajouter la protection CSRF pour tRPC
+
+## V2 - Refactoring Architecture
+- [ ] Découper routers.ts en modules par feature
+- [ ] Découper db.ts en repositories par feature
+- [x] Implémenter le lazy loading des pages React
+- [ ] Réduire les fichiers à moins de 300 lignes
+
+## V2 - Structure 120 Leçons
+- [x] Créer la structure des 4 phases (parcours)
+- [x] Créer les 24 modules avec mapping aux phases
+- [x] Créer les 120 leçons avec titres et structure
+- [x] Mapper les compétences (DEP, Sceau Rouge, CAP, BAC)
+- [x] Script d'import pour insérer les données
+
+## V2 - Améliorations UX
+- [x] Breadcrumbs de navigation (Parcours > Phase > Module > Leçon)
+- [x] Carte de progression visuelle avec timeline des 4 phases
+- [x] Dashboard étudiant amélioré (carte de progression, prochaine leçon)
+- [x] Page de tarification Creem avec design moderne
+- [x] Interface admin de gestion des 120 leçons avec filtres par Phase/Module

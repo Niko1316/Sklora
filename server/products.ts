@@ -1,5 +1,6 @@
-// Sklora Subscription Plans
-// Prices are in cents (USD)
+// Sklora Subscription Plans - Creem Integration
+// Products must be created in the Creem dashboard first
+// Then reference their product IDs here
 
 export const PLANS = {
   free: {
@@ -21,8 +22,8 @@ export const PLANS = {
     },
     monthlyPrice: 0,
     yearlyPrice: 0,
-    stripePriceIdMonthly: null,
-    stripePriceIdYearly: null,
+    creemProductIdMonthly: null as string | null,
+    creemProductIdYearly: null as string | null,
   },
   basic: {
     id: "basic",
@@ -37,16 +38,16 @@ export const PLANS = {
       "Sans publicité",
     ],
     limitations: {
-      maxLessons: -1, // unlimited
-      chatbotMessagesPerDay: -1, // unlimited
+      maxLessons: -1,
+      chatbotMessagesPerDay: -1,
       hasAds: false,
       hasCertifications: false,
       hasAiTutor: false,
     },
-    monthlyPrice: 1499, // $14.99
-    yearlyPrice: 14390, // $143.90 (20% discount from $179.88)
-    stripePriceIdMonthly: "price_basic_monthly", // To be created in Stripe
-    stripePriceIdYearly: "price_basic_yearly",
+    monthlyPrice: 1499,
+    yearlyPrice: 14390,
+    creemProductIdMonthly: process.env.CREEM_BASIC_MONTHLY_ID || "prod_basic_monthly",
+    creemProductIdYearly: process.env.CREEM_BASIC_YEARLY_ID || "prod_basic_yearly",
   },
   pro: {
     id: "pro",
@@ -67,23 +68,21 @@ export const PLANS = {
       hasCertifications: true,
       hasAiTutor: true,
     },
-    monthlyPrice: 2999, // $29.99
-    yearlyPrice: 28790, // $287.90 (20% discount from $359.88)
-    stripePriceIdMonthly: "price_pro_monthly",
-    stripePriceIdYearly: "price_pro_yearly",
+    monthlyPrice: 2999,
+    yearlyPrice: 28790,
+    creemProductIdMonthly: process.env.CREEM_PRO_MONTHLY_ID || "prod_pro_monthly",
+    creemProductIdYearly: process.env.CREEM_PRO_YEARLY_ID || "prod_pro_yearly",
   },
 } as const;
 
 export type PlanId = keyof typeof PLANS;
-export type Plan = typeof PLANS[PlanId];
+export type Plan = (typeof PLANS)[PlanId];
 
-// Discount rates
 export const DISCOUNTS = {
-  annual: 0.20, // 20% off for yearly billing
-  crypto: 0.10, // 10% off for crypto payments
+  annual: 0.20,
+  crypto: 0.10,
 } as const;
 
-// Calculate final price with discounts
 export function calculatePrice(
   planId: string,
   isYearly: boolean,
@@ -91,48 +90,47 @@ export function calculatePrice(
 ): number {
   const plan = PLANS[planId as PlanId];
   if (!plan) return 0;
-
   let price: number = isYearly ? plan.yearlyPrice : plan.monthlyPrice;
-  
-  // Apply crypto discount (annual discount already applied in yearlyPrice)
   if (isCrypto && price > 0) {
     price = Math.round(price * (1 - DISCOUNTS.crypto));
   }
-
   return price;
 }
 
-// Format price for display
 export function formatPrice(cents: number): string {
   if (cents === 0) return "Gratuit";
   return `$${(cents / 100).toFixed(2)}`;
 }
 
-// Get plan by ID
 export function getPlan(planId: string): Plan | null {
   return PLANS[planId as PlanId] || null;
 }
 
-// Check if user can access content based on plan
 export function canAccessContent(
   userPlanId: string,
   lessonsCompleted: number
 ): boolean {
   const plan = PLANS[userPlanId as PlanId];
   if (!plan) return false;
-  
   if (plan.limitations.maxLessons === -1) return true;
   return lessonsCompleted < plan.limitations.maxLessons;
 }
 
-// Check if user can use chatbot
 export function canUseChatbot(
   userPlanId: string,
   messagesUsedToday: number
 ): boolean {
   const plan = PLANS[userPlanId as PlanId];
   if (!plan) return false;
-  
   if (plan.limitations.chatbotMessagesPerDay === -1) return true;
   return messagesUsedToday < plan.limitations.chatbotMessagesPerDay;
+}
+
+export function getCreemProductId(
+  planId: string,
+  isYearly: boolean
+): string | null {
+  const plan = PLANS[planId as PlanId];
+  if (!plan) return null;
+  return isYearly ? plan.creemProductIdYearly : plan.creemProductIdMonthly;
 }

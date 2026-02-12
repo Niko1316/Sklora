@@ -177,7 +177,7 @@ export default function Pricing() {
                     Payez en Crypto, Économisez 10%
                   </h3>
                   <p className="text-sm text-amber-700 dark:text-amber-300">
-                    Bitcoin (BTC) & USDC acceptés via Stripe
+                    Bitcoin (BTC) & USDC acceptés via Creem
                   </p>
                 </div>
               </div>

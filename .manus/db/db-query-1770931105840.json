@@ -1,0 +1,64 @@
+{
+  "query": "SHOW TABLES;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4WA98XgAjb3fPJV.9cf61e3b6676 --database fGKHXRJ67dBegdhFNFcDpA --execute SHOW TABLES;",
+  "rows": [
+    {
+      "Tables_in_fGKHXRJ67dBegdhFNFcDpA": "__drizzle_migrations"
+    },
+    {
+      "Tables_in_fGKHXRJ67dBegdhFNFcDpA": "admin_alerts"
+    },
+    {
+      "Tables_in_fGKHXRJ67dBegdhFNFcDpA": "ai_generated_content"
+    },
+    {
+      "Tables_in_fGKHXRJ67dBegdhFNFcDpA": "audit_logs"
+    },
+    {
+      "Tables_in_fGKHXRJ67dBegdhFNFcDpA": "badges"
+    },
+    {
+      "Tables_in_fGKHXRJ67dBegdhFNFcDpA": "chatbot_messages"
+    },
+    {
+      "Tables_in_fGKHXRJ67dBegdhFNFcDpA": "lesson_embeddings"
+    },
+    {
+      "Tables_in_fGKHXRJ67dBegdhFNFcDpA": "lessons"
+    },
+    {
+      "Tables_in_fGKHXRJ67dBegdhFNFcDpA": "modules"
+    },
+    {
+      "Tables_in_fGKHXRJ67dBegdhFNFcDpA": "parcours"
+    },
+    {
+      "Tables_in_fGKHXRJ67dBegdhFNFcDpA": "quiz_answers"
+    },
+    {
+      "Tables_in_fGKHXRJ67dBegdhFNFcDpA": "quiz_questions"
+    },
+    {
+      "Tables_in_fGKHXRJ67dBegdhFNFcDpA": "quizzes"
+    },
+    {
+      "Tables_in_fGKHXRJ67dBegdhFNFcDpA": "subscriptions"
+    },
+    {
+      "Tables_in_fGKHXRJ67dBegdhFNFcDpA": "user_badges"
+    },
+    {
+      "Tables_in_fGKHXRJ67dBegdhFNFcDpA": "user_progress"
+    },
+    {
+      "Tables_in_fGKHXRJ67dBegdhFNFcDpA": "user_quiz_attempts"
+    },
+    {
+      "Tables_in_fGKHXRJ67dBegdhFNFcDpA": "users"
+    }
+  ],
+  "messages": [],
+  "stdout": "Tables_in_fGKHXRJ67dBegdhFNFcDpA\n__drizzle_migrations\nadmin_alerts\nai_generated_content\naudit_logs\nbadges\nchatbot_messages\nlesson_embeddings\nlessons\nmodules\nparcours\nquiz_answers\nquiz_questions\nquizzes\nsubscriptions\nuser_badges\nuser_progress\nuser_quiz_attempts\nusers\n",
+  "stderr": "",
+  "execution_time_ms": 48
+}

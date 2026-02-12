@@ -18,6 +18,7 @@ import { Link, useLocation } from "wouter";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Streamdown } from "streamdown";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function LessonView({ lessonId }: { lessonId: number }) {
   const [, setLocation] = useLocation();
@@ -74,6 +75,12 @@ export default function LessonView({ lessonId }: { lessonId: number }) {
   return (
     <StudentLayout>
       <div className="max-w-4xl mx-auto space-y-6">
+        {/* Breadcrumbs */}
+        <Breadcrumbs items={[
+          { label: "Parcours", href: "/parcours" },
+          { label: lesson.title },
+        ]} />
+
         {/* Header */}
         <div className="flex items-center justify-between">
           <Button variant="ghost" size="sm" className="gap-2" onClick={() => window.history.back()}>

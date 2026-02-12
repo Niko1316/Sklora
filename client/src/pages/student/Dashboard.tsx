@@ -258,6 +258,71 @@ export default function StudentDashboard() {
           )}
         </div>
 
+        {/* Progression Map - Visual Journey */}
+        <Card className="bento-card overflow-hidden">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <CardTitle className="font-['Lexend']">Ma carte de progression</CardTitle>
+              <Link href="/progress">
+                <Button variant="ghost" size="sm" className="gap-1 btn-squishy">
+                  Détails <ArrowRight className="h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
+            <CardDescription>Votre parcours d'apprentissage en un coup d'œil</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {parcoursLoading ? (
+              <Skeleton className="h-32 w-full rounded-xl" />
+            ) : parcours && parcours.length > 0 ? (
+              <div className="space-y-4">
+                {parcours.slice(0, 4).map((p, idx) => {
+                  const progressPct = (p as any).userProgress || 0;
+                  const isActive = progressPct > 0 && progressPct < 100;
+                  const isCompleted = progressPct === 100;
+                  return (
+                    <Link key={p.id} href={`/parcours/${p.slug}`}>
+                      <div className={`flex items-center gap-4 p-4 rounded-xl border transition-all cursor-pointer hover:shadow-md ${
+                        isActive ? 'border-primary/50 bg-primary/5' : isCompleted ? 'border-emerald-500/50 bg-emerald-50 dark:bg-emerald-950/20' : 'border-border hover:border-primary/30'
+                      }`}>
+                        <div className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold ${
+                          isCompleted ? 'bg-emerald-500 text-white' : isActive ? 'bg-primary text-white' : 'bg-muted text-muted-foreground'
+                        }`}>
+                          {isCompleted ? <CheckCircle className="h-5 w-5" /> : idx + 1}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className={`font-medium text-sm truncate font-['Lexend'] ${
+                            isActive ? 'text-primary' : isCompleted ? 'text-emerald-600 dark:text-emerald-400' : ''
+                          }`}>{p.title}</p>
+                          <div className="flex items-center gap-2 mt-1">
+                            <div className="flex-1 h-2 rounded-full bg-muted overflow-hidden">
+                              <div 
+                                className={`h-full rounded-full transition-all duration-500 ${
+                                  isCompleted ? 'bg-emerald-500' : 'bg-gradient-to-r from-primary to-teal-500'
+                                }`}
+                                style={{ width: `${progressPct}%` }}
+                              />
+                            </div>
+                            <span className="text-xs text-muted-foreground font-medium w-10 text-right">{progressPct}%</span>
+                          </div>
+                        </div>
+                        {isActive && (
+                          <Badge className="bg-primary/10 text-primary border-0 text-xs">En cours</Badge>
+                        )}
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="text-center py-8 text-muted-foreground">
+                <Target className="h-10 w-10 mx-auto mb-3 opacity-50" />
+                <p className="text-sm">Commencez un parcours pour voir votre progression ici</p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
         {/* Badges Section */}
         {badges && badges.length > 0 && (
           <div>

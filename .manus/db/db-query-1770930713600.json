@@ -1,0 +1,64 @@
+{
+  "query": "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = DATABASE();",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4WA98XgAjb3fPJV.9cf61e3b6676 --database fGKHXRJ67dBegdhFNFcDpA --execute SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = DATABASE();",
+  "rows": [
+    {
+      "TABLE_NAME": "__drizzle_migrations"
+    },
+    {
+      "TABLE_NAME": "users"
+    },
+    {
+      "TABLE_NAME": "admin_alerts"
+    },
+    {
+      "TABLE_NAME": "audit_logs"
+    },
+    {
+      "TABLE_NAME": "badges"
+    },
+    {
+      "TABLE_NAME": "chatbot_messages"
+    },
+    {
+      "TABLE_NAME": "lesson_embeddings"
+    },
+    {
+      "TABLE_NAME": "parcours"
+    },
+    {
+      "TABLE_NAME": "quizzes"
+    },
+    {
+      "TABLE_NAME": "user_badges"
+    },
+    {
+      "TABLE_NAME": "user_quiz_attempts"
+    },
+    {
+      "TABLE_NAME": "ai_generated_content"
+    },
+    {
+      "TABLE_NAME": "subscriptions"
+    },
+    {
+      "TABLE_NAME": "user_progress"
+    },
+    {
+      "TABLE_NAME": "modules"
+    },
+    {
+      "TABLE_NAME": "lessons"
+    },
+    {
+      "TABLE_NAME": "quiz_questions"
+    },
+    {
+      "TABLE_NAME": "quiz_answers"
+    }
+  ],
+  "messages": [],
+  "stdout": "TABLE_NAME\n__drizzle_migrations\nusers\nadmin_alerts\naudit_logs\nbadges\nchatbot_messages\nlesson_embeddings\nparcours\nquizzes\nuser_badges\nuser_quiz_attempts\nai_generated_content\nsubscriptions\nuser_progress\nmodules\nlessons\nquiz_questions\nquiz_answers\n",
+  "stderr": "",
+  "execution_time_ms": 58
+}

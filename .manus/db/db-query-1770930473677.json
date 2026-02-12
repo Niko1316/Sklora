@@ -1,0 +1,9 @@
+{
+  "query": "ALTER TABLE subscriptions CHANGE COLUMN stripeCustomerId creemCustomerId VARCHAR(255); ALTER TABLE subscriptions CHANGE COLUMN stripeSubscriptionId creemSubscriptionId VARCHAR(255); ALTER TABLE subscriptions CHANGE COLUMN stripePriceId creemProductId VARCHAR(255);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4WA98XgAjb3fPJV.9cf61e3b6676 --database fGKHXRJ67dBegdhFNFcDpA --execute ALTER TABLE subscriptions CHANGE COLUMN stripeCustomerId creemCustomerId VARCHAR(255); ALTER TABLE subscriptions CHANGE COLUMN stripeSubscriptionId creemSubscriptionId VARCHAR(255); ALTER TABLE subscriptions CHANGE COLUMN stripePriceId creemProductId VARCHAR(255);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 620
+}

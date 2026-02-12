@@ -126,6 +126,19 @@ export async function updateUserGamification(userId: number, data: {
   await db.update(users).set(data).where(eq(users.id, userId));
 }
 
+// Atomic XP increment to prevent race conditions
+export async function incrementUserXp(userId: number, xpAmount: number) {
+  const db = await getDb();
+  if (!db) return;
+  await db.execute(
+    sql`UPDATE users SET totalXp = totalXp + ${xpAmount}, lastActivityDate = NOW() WHERE id = ${userId}`
+  );
+  // Auto-level calculation: level = floor(sqrt(totalXp / 100)) + 1
+  await db.execute(
+    sql`UPDATE users SET currentLevel = FLOOR(SQRT(totalXp / 100)) + 1 WHERE id = ${userId}`
+  );
+}
+
 export async function updateUserRole(userId: number, role: "user" | "admin") {
   const db = await getDb();
   if (!db) return;

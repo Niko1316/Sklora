@@ -19,6 +19,7 @@ import {
   Star,
 } from "lucide-react";
 import { Link } from "wouter";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function ParcoursDetail({ slug }: { slug: string }) {
   const { data: parcours, isLoading, error } = trpc.parcours.getBySlug.useQuery({ slug });
@@ -63,6 +64,12 @@ export default function ParcoursDetail({ slug }: { slug: string }) {
   return (
     <StudentLayout>
       <div className="space-y-6">
+        {/* Breadcrumbs */}
+        <Breadcrumbs items={[
+          { label: "Parcours", href: "/parcours" },
+          { label: parcours.title },
+        ]} />
+
         {/* Back Button */}
         <Link href="/parcours">
           <Button variant="ghost" size="sm" className="gap-2">

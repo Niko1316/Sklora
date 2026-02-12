@@ -21,6 +21,7 @@ import {
 import { Link, useLocation } from "wouter";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 interface QuizAnswer {
   questionId: number;
@@ -281,6 +282,10 @@ export default function QuizView({ quizId }: { quizId: number }) {
 
   // Quiz in progress
   const question = quiz.questions[currentQuestion];
+  const quizBreadcrumbs = [
+    { label: "Parcours", href: "/parcours" },
+    { label: quiz.title },
+  ];
   const selectedAnswer = answers.find((a) => a.questionId === question.id)?.answerId;
   const progress = ((currentQuestion + 1) / quiz.questions.length) * 100;
 
