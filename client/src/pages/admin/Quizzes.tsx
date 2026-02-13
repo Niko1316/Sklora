@@ -29,16 +29,37 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { HelpCircle, Plus, Search, MoreHorizontal, Edit, Trash2, Eye, EyeOff, ArrowLeft } from "lucide-react";
+import { HelpCircle, Plus, Search, MoreHorizontal, Edit, Trash2, Eye, EyeOff, ArrowLeft, Sparkles } from "lucide-react";
 import { Link } from "wouter";
 import { useState } from "react";
 import { toast } from "sonner";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 
 export default function AdminQuizzes() {
   const utils = trpc.useUtils();
   const { data: quizzes, isLoading } = trpc.quiz.adminList.useQuery();
   const [search, setSearch] = useState("");
   const [deleteId, setDeleteId] = useState<number | null>(null);
+  const [generateDialogOpen, setGenerateDialogOpen] = useState(false);
+  const [selectedLesson, setSelectedLesson] = useState<string>("");
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string>("moyen");
+
+  const { data: lessons } = trpc.lesson.adminList.useQuery();
 
   const deleteMutation = trpc.quiz.delete.useMutation({
     onSuccess: () => {
@@ -60,6 +81,19 @@ export default function AdminQuizzes() {
     },
   });
 
+  const generateQuizMutation = trpc.quiz.generateAuto.useMutation({
+    onSuccess: () => {
+      toast.success("Quiz généré automatiquement avec succès!");
+      utils.quiz.adminList.invalidate();
+      setGenerateDialogOpen(false);
+      setSelectedLesson("");
+      setSelectedDifficulty("moyen");
+    },
+    onError: (error) => {
+      toast.error(`Erreur lors de la génération: ${error.message}`);
+    },
+  });
+
   const filteredQuizzes = quizzes?.filter((q) =>
     q.title.toLowerCase().includes(search.toLowerCase())
   );
@@ -73,6 +107,17 @@ export default function AdminQuizzes() {
       await deleteMutation.mutateAsync({ id: deleteId });
       setDeleteId(null);
     }
+  };
+
+  const handleGenerateQuiz = async () => {
+    if (!selectedLesson) {
+      toast.error("Veuillez sélectionner une leçon");
+      return;
+    }
+    await generateQuizMutation.mutateAsync({
+      lessonId: parseInt(selectedLesson),
+      difficulty: selectedDifficulty as "facile" | "moyen" | "difficile",
+    });
   };
 
   return (
@@ -91,11 +136,20 @@ export default function AdminQuizzes() {
               </p>
             </div>
           </div>
-          <Link href="/admin/quizzes/new">
-            <Button className="gap-2">
-              <Plus className="h-4 w-4" /> Nouveau quiz
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              className="gap-2"
+              onClick={() => setGenerateDialogOpen(true)}
+            >
+              <Sparkles className="h-4 w-4" /> Générer avec IA
             </Button>
-          </Link>
+            <Link href="/admin/quizzes/new">
+              <Button className="gap-2">
+                <Plus className="h-4 w-4" /> Nouveau quiz
+              </Button>
+            </Link>
+          </div>
         </div>
 
         {/* Search */}
@@ -208,6 +262,69 @@ export default function AdminQuizzes() {
             )}
           </CardContent>
         </Card>
+
+        {/* Generate Quiz Dialog */}
+        <Dialog open={generateDialogOpen} onOpenChange={setGenerateDialogOpen}>
+          <DialogContent className="sm:max-w-[500px]">
+            <DialogHeader>
+              <DialogTitle>Générer un quiz automatiquement</DialogTitle>
+              <DialogDescription>
+                L'IA créera automatiquement des questions basées sur le contenu de la leçon sélectionnée.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid gap-2">
+                <Label htmlFor="lesson">Leçon</Label>
+                <Select value={selectedLesson} onValueChange={setSelectedLesson}>
+                  <SelectTrigger id="lesson">
+                    <SelectValue placeholder="Sélectionner une leçon" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {lessons?.map((lesson) => (
+                      <SelectItem key={lesson.id} value={lesson.id.toString()}>
+                        {lesson.title}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="difficulty">Difficulté</Label>
+                <Select value={selectedDifficulty} onValueChange={setSelectedDifficulty}>
+                  <SelectTrigger id="difficulty">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="facile">Facile</SelectItem>
+                    <SelectItem value="moyen">Moyen</SelectItem>
+                    <SelectItem value="difficile">Difficile</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <DialogFooter>
+              <Button
+                variant="outline"
+                onClick={() => setGenerateDialogOpen(false)}
+              >
+                Annuler
+              </Button>
+              <Button
+                onClick={handleGenerateQuiz}
+                disabled={generateQuizMutation.isPending || !selectedLesson}
+                className="gap-2"
+              >
+                {generateQuizMutation.isPending ? (
+                  <>Génération en cours...</>
+                ) : (
+                  <>
+                    <Sparkles className="h-4 w-4" /> Générer le quiz
+                  </>
+                )}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
 
         {/* Delete Dialog */}
         <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>

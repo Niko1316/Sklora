@@ -814,6 +814,139 @@ const quizRouter = router({
       await db.deleteQuizAnswer(input.id);
       return { success: true };
     }),
+
+  // Admin - generate quiz automatically with AI
+  generateAuto: adminProcedure
+    .input(z.object({
+      lessonId: z.number(),
+      difficulty: z.enum(["facile", "moyen", "difficile"]).default("moyen"),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      // Get the lesson content
+      const lesson = await db.getLessonById(input.lessonId);
+      if (!lesson) {
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'Leçon introuvable' });
+      }
+
+      // Prepare content for AI
+      const lessonContent = lesson.contentMarkdown || lesson.contentHtml || '';
+      const objectifs = typeof lesson.objectifsApprentissage === 'string'
+        ? lesson.objectifsApprentissage
+        : JSON.stringify(lesson.objectifsApprentissage);
+      const vocabulaire = typeof lesson.vocabulaireCle === 'string'
+        ? lesson.vocabulaireCle
+        : JSON.stringify(lesson.vocabulaireCle);
+
+      const difficultyMap = {
+        facile: { numQuestions: 5, passingScore: 60, description: "Questions simples basées sur les définitions et concepts de base" },
+        moyen: { numQuestions: 10, passingScore: 70, description: "Questions d'application et de compréhension" },
+        difficile: { numQuestions: 15, passingScore: 80, description: "Questions d'analyse et de synthèse avancées" }
+      };
+
+      const config = difficultyMap[input.difficulty];
+
+      // Call LLM API to generate quiz
+      const llmResponse = await invokeLLM({
+        messages: [{
+          role: 'system',
+          content: `Tu es un expert pédagogue spécialisé en coiffure professionnelle québécoise. Tu crées des quiz éducatifs de haute qualité.`
+        }, {
+          role: 'user',
+          content: `Génère un quiz de difficulté "${input.difficulty}" avec ${config.numQuestions} questions à choix multiples basé sur le contenu suivant:
+
+TITRE: ${lesson.title}
+
+OBJECTIFS D'APPRENTISSAGE:
+${objectifs}
+
+VOCABULAIRE CLÉ:
+${vocabulaire}
+
+CONTENU:
+${lessonContent.substring(0, 4000)}
+
+Pour chaque question:
+- Fournis 4 choix de réponse (A, B, C, D)
+- Une seule réponse correcte
+- ${config.description}
+- Ajoute une explication courte (2-3 lignes) pour la bonne réponse
+
+Format JSON attendu:
+{
+  "title": "Quiz sur [titre de la leçon]",
+  "questions": [
+    {
+      "questionText": "Question ici?",
+      "explanation": "Explication de la bonne réponse",
+      "answers": [
+        {"text": "Choix A", "isCorrect": false},
+        {"text": "Choix B", "isCorrect": true},
+        {"text": "Choix C", "isCorrect": false},
+        {"text": "Choix D", "isCorrect": false}
+      ]
+    }
+  ]
+}`
+        }],
+        responseFormat: { type: "json_object" },
+      });
+
+      const generatedQuiz = JSON.parse(llmResponse.choices[0].message.content as string);
+
+      // Create the quiz
+      const quizResult = await db.createQuiz({
+        moduleId: lesson.moduleId,
+        lessonId: lesson.id,
+        title: generatedQuiz.title || `Quiz: ${lesson.title}`,
+        description: `Quiz généré automatiquement - Difficulté: ${input.difficulty}`,
+        passingScore: config.passingScore,
+        timeLimit: null,
+        maxAttempts: 3,
+        shuffleQuestions: true,
+        showCorrectAnswers: true,
+        xpReward: input.difficulty === 'facile' ? 15 : input.difficulty === 'moyen' ? 25 : 40,
+        orderIndex: 0,
+        isPublished: false, // Admin must review before publishing
+      });
+
+      // Add questions and answers
+      for (let i = 0; i < generatedQuiz.questions.length; i++) {
+        const q = generatedQuiz.questions[i];
+        const questionResult = await db.createQuizQuestion({
+          quizId: quizResult.id,
+          questionText: q.questionText,
+          questionType: 'multiple_choice',
+          explanation: q.explanation || null,
+          points: 1,
+          orderIndex: i,
+        });
+
+        // Add answers
+        for (let j = 0; j < q.answers.length; j++) {
+          await db.createQuizAnswer({
+            questionId: questionResult.id,
+            answerText: q.answers[j].text,
+            isCorrect: q.answers[j].isCorrect,
+            orderIndex: j,
+          });
+        }
+      }
+
+      // Create audit log
+      await db.createAuditLog({
+        userId: ctx.user.id,
+        action: 'create',
+        entityType: 'quiz',
+        entityId: quizResult.id,
+        changes: { generatedByAI: true, difficulty: input.difficulty },
+      });
+
+      return {
+        success: true,
+        quizId: quizResult.id,
+        questionsGenerated: generatedQuiz.questions.length
+      };
+    }),
 });
 
 // ==================== CHATBOT ROUTER ====================
