@@ -1,0 +1,121 @@
+{
+  "lot": 3,
+  "lecons": [
+    {
+      "numero": 16,
+      "titre": "Outils et équipements : sélection québécoise",
+      "module_target": 4,
+      "objectifs_apprentissage": [
+        "Au terme de cette leçon, l'apprenant sera capable de sélectionner les outils et équipements adaptés au contexte québécois",
+        "Au terme de cette leçon, l'apprenant sera capable d'évaluer la qualité et la durabilité des outils selon les normes professionnelles",
+        "Au terme de cette leçon, l'apprenant sera capable d'entretenir et stériliser les outils selon les protocoles québécois",
+        "Au terme de cette leçon, l'apprenant sera capable de documenter l'inventaire et la maintenance selon les exigences"
+      ],
+      "prerequis": [
+        "Leçon 1: Hygiène et salubrité en salon",
+        "Leçon 2: Sécurité avec les produits chimiques : normes CNESST et classification DGD"
+      ],
+      "vocabulaire_cle": [
+        {"terme": "Ciseaux ergonomiques nordiques", "definition": "Ciseaux de coiffure conçus spécifiquement pour les mains québécoises, avec un poids réduit (<55g), des anneaux anatomiques chauffants, et une résistance accrue au froid extrême."},
+        {"terme": "Équipement thermorésistant", "definition": "Outils et appareils capables de fonctionner de façon optimale dans les variations de température extrêmes du Québec (-30°C à +35°C) sans perte de performance ni dommage."},
+        {"terme": "Protocole d'entretien hivernal", "definition": "Procédure d'entretien spécifique aux outils exposés aux conditions hivernales québécoises."},
+        {"terme": "Fiche inventaire I-384376", "definition": "Document officiel détaillant chaque outil et équipement du salon."}
+      ],
+      "xp_suggere": 65,
+      "duree_minutes": 30
+    },
+    {
+      "numero": 17,
+      "titre": "Analyse du cuir chevelu : diagnostic québécois",
+      "module_target": 2,
+      "objectifs_apprentissage": [
+        "Au terme de cette leçon, l'apprenant sera capable d'identifier les conditions courantes du cuir chevelu observées au Québec",
+        "Au terme de cette leçon, l'apprenant sera capable d'effectuer un diagnostic visuel et tactile selon les protocoles québécois",
+        "Au terme de cette leçon, l'apprenant sera capable de reconnaître les signes nécessitant une référence à un professionnel de la santé",
+        "Au terme de cette leçon, l'apprenant sera capable de documenter les observations selon les normes professionnelles"
+      ],
+      "prerequis": [
+        "Leçon 4: Anatomie du cheveu et du cuir chevelu",
+        "Leçon 6: Anatomie du cheveu et du cuir chevelu"
+      ],
+      "vocabulaire_cle": [
+        {"terme": "Dermite hivernale québécoise", "definition": "Condition fréquente du cuir chevelu causée par le dessèchement extrême dû au contraste thermique entre l'extérieur froid et l'intérieur chauffé."},
+        {"terme": "Protocole d'exclusion professionnelle", "definition": "Ensemble des critères déterminant quand un coiffeur doit refuser un service et orienter le client vers un dermatologue."},
+        {"terme": "Loupes diagnostiques nordiques", "definition": "Loupes grossissantes (5-10x) avec éclairage LED adapté à l'examen du cuir chevelu."},
+        {"terme": "Fiche diagnostic D-384377", "definition": "Document confidentiel détaillant les observations du cuir chevelu."}
+      ],
+      "xp_suggere": 70,
+      "duree_minutes": 35
+    },
+    {
+      "numero": 18,
+      "titre": "Consultation client : méthode québécoise",
+      "module_target": 3,
+      "objectifs_apprentissage": [
+        "Au terme de cette leçon, l'apprenant sera capable de mener une consultation structurée selon la méthode québécoise",
+        "Au terme de cette leçon, l'apprenant sera capable d'identifier les besoins explicites et implicites du client",
+        "Au terme de cette leçon, l'apprenant sera capable de proposer des solutions réalistes adaptées au contexte québécois",
+        "Au terme de cette leçon, l'apprenant sera capable de documenter la consultation selon les normes professionnelles"
+      ],
+      "prerequis": [
+        "Leçon 3: Accueil client selon les normes québécoises de courtoisie",
+        "Leçon 7: Évaluation des besoins client : écoute active québécoise",
+        "Leçon 10: Gestion des attentes irréalistes : techniques québécoises"
+      ],
+      "vocabulaire_cle": [
+        {"terme": "Méthode COPAR", "definition": "Protocole de consultation structuré selon 5 étapes : Contexte, Objectifs, Possibilités réalistes, Alternatives, et Résultat attendu."},
+        {"terme": "Carte capillaire saisonnière", "definition": "Document visuel montrant l'évolution prévisible de la coupe/couleur selon les saisons québécoises."},
+        {"terme": "Contrat de réalisme", "definition": "Accord verbal ou écrit entre le coiffeur et le client définissant clairement les limites réalistes du service."},
+        {"terme": "Fiche consultation C-384378", "definition": "Document officiel détaillant chaque étape de la consultation."}
+      ],
+      "xp_suggere": 65,
+      "duree_minutes": 40
+    },
+    {
+      "numero": 19,
+      "titre": "Communication non verbale : codes québécois",
+      "module_target": 3,
+      "objectifs_apprentissage": [
+        "Au terme de cette leçon, l'apprenant sera capable d'identifier les codes de communication non verbale spécifiques à la culture québécoise",
+        "Au terme de cette leçon, l'apprenant sera capable d'adapter son langage corporel pour créer une relation de confiance authentique",
+        "Au terme de cette leçon, l'apprenant sera capable de décoder les signaux non verbaux des clients pour ajuster son approche",
+        "Au terme de cette leçon, l'apprenant sera capable d'éviter les faux pas culturels dans la communication non verbale"
+      ],
+      "prerequis": [
+        "Leçon 3: Accueil client selon les normes québécoises de courtoisie",
+        "Leçon 7: Évaluation des besoins client : écoute active québécoise"
+      ],
+      "vocabulaire_cle": [
+        {"terme": "Proxémie québécoise", "definition": "Distance interpersonnelle confortable dans les interactions québécoises, variant entre 60 et 90 cm pour les premiers contacts."},
+        {"terme": "Regard horizontal", "definition": "Technique de contact visuel qui évite le regard dominant au profit d'un regard qui alterne entre les yeux et d'autres points du visage."},
+        {"terme": "Toucher professionnel contextualisé", "definition": "Usage approprié du contact physique dans la relation coiffeur-client."},
+        {"terme": "Fiche observation O-384379", "definition": "Document confidentiel notant les signaux non verbaux observés chez un client."}
+      ],
+      "xp_suggere": 60,
+      "duree_minutes": 30
+    },
+    {
+      "numero": 20,
+      "titre": "Gestion du temps en salon : efficacité québécoise",
+      "module_target": 1,
+      "objectifs_apprentissage": [
+        "Au terme de cette leçon, l'apprenant sera capable d'optimiser son emploi du temps selon les réalités du marché québécois",
+        "Au terme de cette leçon, l'apprenant sera capable de gérer les imprévus climatiques sans compromettre la qualité",
+        "Au terme de cette leçon, l'apprenant sera capable d'équilibrer rapidité et qualité selon les attentes québécoises",
+        "Au terme de cette leçon, l'apprenant sera capable de documenter son temps de travail selon les normes professionnelles"
+      ],
+      "prerequis": [
+        "Leçon 1: Hygiène et salubrité en salon",
+        "Leçon 13: Gestion du stress professionnel : résilience québécoise"
+      ],
+      "vocabulaire_cle": [
+        {"terme": "Rythme de travail nordique", "definition": "Approche de gestion du temps qui respecte les limites physiologiques du corps humain en hiver québécois."},
+        {"terme": "Tampon climatique", "definition": "Marge de temps (15-30 minutes) systématiquement ajoutée entre les rendez-vous pendant la saison hivernale."},
+        {"terme": "Qualité-temps équilibré", "definition": "Principe québécois refusant le choix binaire entre rapidité et qualité."},
+        {"terme": "Fiche temps T-384380", "definition": "Document détaillant le temps réel passé sur chaque service."}
+      ],
+      "xp_suggere": 65,
+      "duree_minutes": 35
+    }
+  ]
+}

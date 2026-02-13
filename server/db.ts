@@ -1,7 +1,7 @@
 import { eq, and, desc, asc, sql, like, or, inArray, isNull, gte, lte } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { 
-  InsertUser, users, 
+import {
+  InsertUser, users,
   parcours, InsertParcours, Parcours,
   modules, InsertModule, Module,
   lessons, InsertLesson, Lesson,
@@ -18,6 +18,7 @@ import {
   auditLogs, InsertAuditLog
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
+import { PaginationParams, createPaginatedResult, PaginatedResult } from "../shared/pagination";
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
@@ -552,11 +553,11 @@ export async function awardBadge(userId: number, badgeId: number) {
   
   if (existing.length === 0) {
     await db.insert(userBadges).values({ userId, badgeId });
-    
-    // Add XP bonus
+
+    // Add XP bonus using atomic function
     const badge = await db.select().from(badges).where(eq(badges.id, badgeId)).limit(1);
     if (badge[0]?.xpBonus) {
-      await db.execute(sql`UPDATE users SET totalXp = totalXp + ${badge[0].xpBonus} WHERE id = ${userId}`);
+      await incrementUserXp(userId, badge[0].xpBonus);
     }
   }
 }
@@ -1040,4 +1041,171 @@ export async function getUserProgressTimeline(userId: number, days = 30) {
     date,
     ...data
   }));
+}
+
+// ==================== PAGINATED QUERIES ====================
+
+export async function getPaginatedLessons(params: PaginationParams = {}): Promise<PaginatedResult<Lesson>> {
+  const db = await getDb();
+  if (!db) return createPaginatedResult([], 0, 1, 10);
+
+  const page = Math.max(1, params.page || 1);
+  const limit = Math.min(100, Math.max(1, params.limit || 20));
+  const offset = (page - 1) * limit;
+  const search = params.search?.trim() || "";
+
+  // Count total
+  let countQuery = db.select({ count: sql<number>`count(*)` }).from(lessons);
+  if (search) {
+    countQuery = countQuery.where(like(lessons.title, `%${search}%`));
+  }
+  const [{ count: total }] = await countQuery;
+
+  // Get data
+  let dataQuery = db.select().from(lessons);
+  if (search) {
+    dataQuery = dataQuery.where(like(lessons.title, `%${search}%`));
+  }
+
+  // Apply sorting
+  const sortBy = params.sortBy || "orderIndex";
+  const sortOrder = params.sortOrder || "asc";
+  const sortFn = sortOrder === "desc" ? desc : asc;
+
+  if (sortBy === "title") {
+    dataQuery = dataQuery.orderBy(sortFn(lessons.title));
+  } else if (sortBy === "createdAt") {
+    dataQuery = dataQuery.orderBy(sortFn(lessons.createdAt));
+  } else {
+    dataQuery = dataQuery.orderBy(sortFn(lessons.orderIndex));
+  }
+
+  const data = await dataQuery.limit(limit).offset(offset);
+
+  return createPaginatedResult(data, total, page, limit);
+}
+
+export async function getPaginatedModules(params: PaginationParams = {}): Promise<PaginatedResult<Module>> {
+  const db = await getDb();
+  if (!db) return createPaginatedResult([], 0, 1, 10);
+
+  const page = Math.max(1, params.page || 1);
+  const limit = Math.min(100, Math.max(1, params.limit || 20));
+  const offset = (page - 1) * limit;
+  const search = params.search?.trim() || "";
+
+  // Count total
+  let countQuery = db.select({ count: sql<number>`count(*)` }).from(modules);
+  if (search) {
+    countQuery = countQuery.where(like(modules.title, `%${search}%`));
+  }
+  const [{ count: total }] = await countQuery;
+
+  // Get data
+  let dataQuery = db.select().from(modules);
+  if (search) {
+    dataQuery = dataQuery.where(like(modules.title, `%${search}%`));
+  }
+
+  const sortBy = params.sortBy || "orderIndex";
+  const sortOrder = params.sortOrder || "asc";
+  const sortFn = sortOrder === "desc" ? desc : asc;
+
+  if (sortBy === "title") {
+    dataQuery = dataQuery.orderBy(sortFn(modules.title));
+  } else if (sortBy === "createdAt") {
+    dataQuery = dataQuery.orderBy(sortFn(modules.createdAt));
+  } else {
+    dataQuery = dataQuery.orderBy(sortFn(modules.orderIndex));
+  }
+
+  const data = await dataQuery.limit(limit).offset(offset);
+
+  return createPaginatedResult(data, total, page, limit);
+}
+
+export async function getPaginatedQuizzes(params: PaginationParams = {}): Promise<PaginatedResult<Quiz>> {
+  const db = await getDb();
+  if (!db) return createPaginatedResult([], 0, 1, 10);
+
+  const page = Math.max(1, params.page || 1);
+  const limit = Math.min(100, Math.max(1, params.limit || 20));
+  const offset = (page - 1) * limit;
+  const search = params.search?.trim() || "";
+
+  // Count total
+  let countQuery = db.select({ count: sql<number>`count(*)` }).from(quizzes);
+  if (search) {
+    countQuery = countQuery.where(like(quizzes.title, `%${search}%`));
+  }
+  const [{ count: total }] = await countQuery;
+
+  // Get data
+  let dataQuery = db.select().from(quizzes);
+  if (search) {
+    dataQuery = dataQuery.where(like(quizzes.title, `%${search}%`));
+  }
+
+  const sortBy = params.sortBy || "createdAt";
+  const sortOrder = params.sortOrder || "desc";
+  const sortFn = sortOrder === "desc" ? desc : asc;
+
+  if (sortBy === "title") {
+    dataQuery = dataQuery.orderBy(sortFn(quizzes.title));
+  } else {
+    dataQuery = dataQuery.orderBy(sortFn(quizzes.createdAt));
+  }
+
+  const data = await dataQuery.limit(limit).offset(offset);
+
+  return createPaginatedResult(data, total, page, limit);
+}
+
+export async function getPaginatedUsers(params: PaginationParams = {}) {
+  const db = await getDb();
+  if (!db) return createPaginatedResult([], 0, 1, 10);
+
+  const page = Math.max(1, params.page || 1);
+  const limit = Math.min(100, Math.max(1, params.limit || 20));
+  const offset = (page - 1) * limit;
+  const search = params.search?.trim() || "";
+
+  // Count total
+  let countQuery = db.select({ count: sql<number>`count(*)` }).from(users);
+  if (search) {
+    countQuery = countQuery.where(
+      or(
+        like(users.name, `%${search}%`),
+        like(users.email, `%${search}%`)
+      )
+    );
+  }
+  const [{ count: total }] = await countQuery;
+
+  // Get data
+  let dataQuery = db.select().from(users);
+  if (search) {
+    dataQuery = dataQuery.where(
+      or(
+        like(users.name, `%${search}%`),
+        like(users.email, `%${search}%`)
+      )
+    );
+  }
+
+  const sortBy = params.sortBy || "createdAt";
+  const sortOrder = params.sortOrder || "desc";
+  const sortFn = sortOrder === "desc" ? desc : asc;
+
+  if (sortBy === "name") {
+    dataQuery = dataQuery.orderBy(sortFn(users.name));
+  } else if (sortBy === "totalXp") {
+    dataQuery = dataQuery.orderBy(sortFn(users.totalXp));
+  } else {
+    dataQuery = dataQuery.orderBy(sortFn(users.createdAt));
+  }
+
+  const data = await dataQuery.limit(limit).offset(offset);
+
+  return createPaginatedResult(data, total, page, limit);
 }

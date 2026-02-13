@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import {
   Table,
   TableBody,
@@ -99,7 +100,7 @@ function UserDetailDialog({
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+      <DialogContent className="max-w-[95vw] sm:max-w-3xl max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="font-['Lexend']">Progression de {userName}</DialogTitle>
           <DialogDescription>
@@ -142,7 +143,7 @@ function UserDetailDialog({
                       <Progress value={progress?.overallProgress || 0} className="h-2" />
                     </div>
                     
-                    <div className="grid grid-cols-4 gap-4 text-center">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
                       <div className="p-3 rounded-lg bg-muted/50">
                         <p className="text-lg font-bold">{progress?.completedLessons}</p>
                         <p className="text-xs text-muted-foreground">Leçons</p>
@@ -404,19 +405,19 @@ export default function AdminUserProgress() {
                 ))}
               </div>
             ) : (
-              <div className="overflow-x-auto">
+              <ScrollArea className="w-full">
                 <Table>
                   <TableHeader>
                     <TableRow>
                       <TableHead>Utilisateur</TableHead>
-                      <TableHead className="text-center">Niveau</TableHead>
-                      <TableHead className="text-center">XP</TableHead>
-                      <TableHead className="text-center">Série</TableHead>
-                      <TableHead className="text-center">Parcours</TableHead>
+                      <TableHead className="text-center hidden sm:table-cell">Niveau</TableHead>
+                      <TableHead className="text-center hidden md:table-cell">XP</TableHead>
+                      <TableHead className="text-center hidden lg:table-cell">Série</TableHead>
+                      <TableHead className="text-center hidden lg:table-cell">Parcours</TableHead>
                       <TableHead className="text-center">Leçons</TableHead>
-                      <TableHead className="text-center">Quiz</TableHead>
-                      <TableHead className="text-center">Temps</TableHead>
-                      <TableHead className="text-center">Dernière activité</TableHead>
+                      <TableHead className="text-center hidden md:table-cell">Quiz</TableHead>
+                      <TableHead className="text-center hidden lg:table-cell">Temps</TableHead>
+                      <TableHead className="text-center hidden md:table-cell">Dernière activité</TableHead>
                       <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
@@ -425,28 +426,28 @@ export default function AdminUserProgress() {
                       <TableRow key={user.userId}>
                         <TableCell>
                           <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                               <span className="text-sm font-medium text-primary">
                                 {user.userName?.charAt(0)?.toUpperCase() || "?"}
                               </span>
                             </div>
-                            <div>
-                              <p className="font-medium">{user.userName || "Sans nom"}</p>
-                              <p className="text-xs text-muted-foreground">{user.userEmail}</p>
+                            <div className="min-w-0">
+                              <p className="font-medium truncate">{user.userName || "Sans nom"}</p>
+                              <p className="text-xs text-muted-foreground truncate">{user.userEmail}</p>
                             </div>
                             {user.role === "admin" && (
-                              <Badge variant="secondary" className="text-xs">Admin</Badge>
+                              <Badge variant="secondary" className="text-xs hidden sm:inline-flex">Admin</Badge>
                             )}
                           </div>
                         </TableCell>
-                        <TableCell className="text-center">
+                        <TableCell className="text-center hidden sm:table-cell">
                           <div className="flex items-center justify-center gap-1">
                             <Star className="h-4 w-4 text-amber-500" />
                             <span className="font-medium">{user.currentLevel || 1}</span>
                           </div>
                         </TableCell>
-                        <TableCell className="text-center font-medium">{user.totalXp || 0}</TableCell>
-                        <TableCell className="text-center">
+                        <TableCell className="text-center font-medium hidden md:table-cell">{user.totalXp || 0}</TableCell>
+                        <TableCell className="text-center hidden lg:table-cell">
                           {(user.currentStreak || 0) > 0 ? (
                             <div className="flex items-center justify-center gap-1">
                               <Flame className="h-4 w-4 text-orange-500" />
@@ -456,7 +457,7 @@ export default function AdminUserProgress() {
                             <span className="text-muted-foreground">-</span>
                           )}
                         </TableCell>
-                        <TableCell className="text-center">
+                        <TableCell className="text-center hidden lg:table-cell">
                           <div className="flex items-center justify-center gap-2">
                             <span className="text-emerald-600">{user.completedParcours || 0}</span>
                             <span className="text-muted-foreground">/</span>
@@ -464,12 +465,12 @@ export default function AdminUserProgress() {
                           </div>
                         </TableCell>
                         <TableCell className="text-center">{user.completedLessons || 0}</TableCell>
-                        <TableCell className="text-center">{user.passedQuizzes || 0}</TableCell>
-                        <TableCell className="text-center">
+                        <TableCell className="text-center hidden md:table-cell">{user.passedQuizzes || 0}</TableCell>
+                        <TableCell className="text-center hidden lg:table-cell">
                           {Math.round((user.totalTimeSpentMinutes || 0) / 60)}h
                         </TableCell>
-                        <TableCell className="text-center text-sm text-muted-foreground">
-                          {user.lastActivity 
+                        <TableCell className="text-center text-sm text-muted-foreground hidden md:table-cell">
+                          {user.lastActivity
                             ? new Date(user.lastActivity).toLocaleDateString('fr-FR')
                             : "-"
                           }
@@ -482,14 +483,15 @@ export default function AdminUserProgress() {
                             className="gap-1"
                           >
                             <Eye className="h-4 w-4" />
-                            Détails
+                            <span className="hidden sm:inline">Détails</span>
                           </Button>
                         </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
                 </Table>
-              </div>
+                <ScrollBar orientation="horizontal" />
+              </ScrollArea>
             )}
           </CardContent>
         </Card>

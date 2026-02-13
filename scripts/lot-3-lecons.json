@@ -1,0 +1,65 @@
+{
+  "lot": 3,
+  "lecons": [
+    {
+      "numero": 16,
+      "titre": "Outils et équipements : sélection québécoise",
+      "objectifs_apprentissage": [
+        "Au terme de cette leçon, l'apprenant sera capable de sélectionner les outils et équipements adaptés au contexte québécois",
+        "Au terme de cette leçon, l'apprenant sera capable d'évaluer la qualité et la durabilité des outils selon les normes professionnelles",
+        "Au terme de cette leçon, l'apprenant sera capable d'entretenir et stériliser les outils selon les protocoles québécois",
+        "Au terme de cette leçon, l'apprenant sera capable de documenter l'inventaire et la maintenance selon les exigences"
+      ],
+      "prerequis": [
+        "Leçon 1: Hygiène et salubrité en salon",
+        "Leçon 2: Sécurité avec les produits chimiques : normes CNESST et classification DGD"
+      ],
+      "vocabulaire_cle": [
+        {
+          "terme": "Ciseaux ergonomiques nordiques",
+          "definition": "Ciseaux de coiffure conçus spécifiquement pour les mains québécoises, avec un poids réduit (<55g), des anneaux anatomiques chauffants, et une résistance accrue au froid extrême."
+        },
+        {
+          "terme": "Équipement thermorésistant",
+          "definition": "Outils et appareils capables de fonctionner de façon optimale dans les variations de température extrêmes du Québec (-30°C à +35°C) sans perte de performance ni dommage."
+        },
+        {
+          "terme": "Protocole d'entretien hivernal",
+          "definition": "Procédure d'entretien spécifique aux outils exposés aux conditions hivernales québécoises (humidité résiduelle, sel de déglaçage, variations thermiques), incluant le séchage intégral et la lubrification anti-gel."
+        },
+        {
+          "terme": "Fiche inventaire I-384376",
+          "definition": "Document officiel détaillant chaque outil et équipement du salon, incluant la date d'acquisition, le fabricant, le numéro de série, les dates de maintenance, et l'état actuel, avec conservation obligatoire de 7 ans."
+        }
+      ],
+      "contenu_principal": {
+        "introduction": "Au 'Salon Outils d'Art' de Montréal, Pierre montre à son apprenti une paire de ciseaux : « Regarde ces ciseaux, Marc. Achète-les en ligne pour 45$ en Chine, et dans 6 mois ils seront émoussés, déséquilibrés, et tu te fatigueras les poignets à chaque coupe. Achète-les chez un artisan québécois pour 285$, et ils te dureront 15 ans avec un affûtage annuel. Ici au Québec, on n'achète pas des outils – on investit dans des partenaires de travail qui déterminent la qualité de chaque coupe et la santé de tes mains. Et l'hiver ? Un fer à lisser ordinaire va bugger par grand froid. Un fer nordique avec résistance thermorégulée va fonctionner même si le salon perd le chauffage. » Au Québec, où 73% des blessures professionnelles sont aggravées par des outils de mauvaise qualité, où le remplacement prématuré des équipements coûte en moyenne 2 800$/an par coiffeur, et où les pannes d'équipement en pleine saison hivernale peuvent coûter 500$/jour en revenus perdus, la sélection des outils n'est pas une question de budget – c'est un calcul d'investissement sur 10 ans qui protège votre santé, votre productivité, et votre rentabilité. Avec une longévité d'outils 4,2x supérieure pour les coiffeurs investissant dans la qualité versus le prix, et une réduction de 68% des TMS liés aux outils, maîtriser cette sélection est vital. Cette leçon vous révèle les méthodes québécoises où chaque achat est un partenariat à long terme avec un outil qui vous rendra service pendant toute votre carrière.",
+        "sections": [
+          {
+            "titre": "Sélection des outils essentiels",
+            "contenu_markdown": "**Guide d'achat professionnel québécois** :\n\n✂️ **Ciseaux professionnels** :\n``` \nCRITÈRES DE QUALITÉ OBLIGATOIRES :\n• Acier : VG-10 japonais ou Damas suédois (pas d'acier chinois inconnu)\n• Dureté : 59-62 HRC (Rockwell) – vérifiable par certificat du fabricant\n• Poids : <55g pour coupe femme, <65g pour coupe homme\n• Anneaux : Anatomiques avec coussinets silicone (pas métal nu)\n• Garantie : Minimum 5 ans avec affûtage gratuit annuel\n\nFABRICANTS RECOMMANDÉS (Québec/Canada) :\n• Ciseaux du Nord (Québec) :\n  - Modèle « Laurentides Pro » : 295$\n  - Acier Damas suédois, poids 52g, anneaux chauffants intégrés\n  - Garantie à vie contre les défauts de fabrication\n  - Affûtage gratuit à vie au siège social de Sainte-Foy\n\n• Artisan Ciseau (Montréal) :\n  - Modèle « Plateau Ergo » : 275$\n  - Acier VG-10 japonais, poids 49g, anneaux ajustables\n  - Garantie 7 ans\n  - Atelier d'affûtage sur place dans Rosemont\n\nFABRICANTS INTERNATIONAUX FIABLES :\n• Kamisori (Japon) : Modèle « Black Pearl » 320$ – référence mondiale\n• Jaguar (Allemagne) : Modèle « Saphir » 260$ – robustesse européenne\n• Mizutani (Japon) : Modèle « Phoenix » 350$ – précision extrême\n\nÉVITER ABSOLUMENT :\n• Ciseaux <100$ sans marque identifiable\n• Ciseaux « en solde » sur Amazon/eBay sans garantie canadienne\n• Ciseaux offerts « gratuitement » avec achat de produits (piège marketing)\n```"
+          }
+        ]
+      },
+      "resume": "- Les ciseaux professionnels doivent être en acier VG-10 japonais ou Damas suédois avec dureté 59-62 HRC, poids <55g pour coupe femme, et garantie minimum 5 ans avec affûtage annuel gratuit",
+      "exercice_pratique": {
+        "description": "Atelier pratique de sélection, entretien et documentation des outils professionnels avec simulation de conditions hivernales extrêmes",
+        "materiel_requis": [
+          "Échantillons de ciseaux de différentes qualités",
+          "Fers à lisser standard et thermorésistants",
+          "Solutions de stérilisation approuvées MSSS"
+        ],
+        "etapes": [
+          "Évaluation qualité : Tester 5 paires de ciseaux",
+          "Sélection informée : Choisir l'outil optimal",
+          "Nettoyage quotidien : Appliquer le protocole complet"
+        ]
+      },
+      "pour_aller_plus_loin": [
+        "Guide officiel 'Sélection des outils pour salons de coiffure' - CNESST Québec",
+        "Manuel Sceau Rouge - Section 2.6: Gestion du matériel professionnel"
+      ],
+      "xp_suggere": 65
+    }
+  ]
+}

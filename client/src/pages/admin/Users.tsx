@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import {
   Table,
   TableBody,
@@ -97,84 +98,87 @@ export default function AdminUsers() {
                 ))}
               </div>
             ) : filteredUsers && filteredUsers.length > 0 ? (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Utilisateur</TableHead>
-                    <TableHead>Niveau</TableHead>
-                    <TableHead>XP</TableHead>
-                    <TableHead>Streak</TableHead>
-                    <TableHead>Inscription</TableHead>
-                    <TableHead>Rôle</TableHead>
-                    <TableHead className="w-[100px]">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredUsers.map((user) => (
-                    <TableRow key={user.id}>
-                      <TableCell>
-                        <div className="flex items-center gap-3">
-                          <Avatar className="h-10 w-10">
-                            <AvatarImage src={user.avatarUrl || undefined} />
-                            <AvatarFallback>
-                              {user.name?.charAt(0)?.toUpperCase() || "U"}
-                            </AvatarFallback>
-                          </Avatar>
-                          <div>
-                            <p className="font-medium">{user.name || "Sans nom"}</p>
-                            <p className="text-xs text-muted-foreground">{user.email}</p>
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-1">
-                          <Star className="h-4 w-4 text-gold" />
-                          <span>{user.currentLevel}</span>
-                        </div>
-                      </TableCell>
-                      <TableCell>{user.totalXp} XP</TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-1">
-                          <Flame className="h-4 w-4 text-orange-500" />
-                          <span>{user.currentStreak}</span>
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-muted-foreground">
-                        {formatDate(user.createdAt)}
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant={user.role === "admin" ? "default" : "secondary"}>
-                          {user.role === "admin" ? "Admin" : "Étudiant"}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon">
-                              <MoreHorizontal className="h-4 w-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuItem
-                              onClick={() => handleToggleRole(user.id, user.role)}
-                            >
-                              {user.role === "admin" ? (
-                                <>
-                                  <ShieldOff className="h-4 w-4 mr-2" /> Retirer admin
-                                </>
-                              ) : (
-                                <>
-                                  <Shield className="h-4 w-4 mr-2" /> Promouvoir admin
-                                </>
-                              )}
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </TableCell>
+              <ScrollArea className="w-full">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Utilisateur</TableHead>
+                      <TableHead className="hidden sm:table-cell">Niveau</TableHead>
+                      <TableHead className="hidden md:table-cell">XP</TableHead>
+                      <TableHead className="hidden lg:table-cell">Streak</TableHead>
+                      <TableHead className="hidden lg:table-cell">Inscription</TableHead>
+                      <TableHead>Rôle</TableHead>
+                      <TableHead className="w-[100px]">Actions</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {filteredUsers.map((user) => (
+                      <TableRow key={user.id}>
+                        <TableCell>
+                          <div className="flex items-center gap-3">
+                            <Avatar className="h-10 w-10 flex-shrink-0">
+                              <AvatarImage src={user.avatarUrl || undefined} />
+                              <AvatarFallback>
+                                {user.name?.charAt(0)?.toUpperCase() || "U"}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div className="min-w-0">
+                              <p className="font-medium truncate">{user.name || "Sans nom"}</p>
+                              <p className="text-xs text-muted-foreground truncate">{user.email}</p>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell className="hidden sm:table-cell">
+                          <div className="flex items-center gap-1">
+                            <Star className="h-4 w-4 text-gold" />
+                            <span>{user.currentLevel}</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="hidden md:table-cell">{user.totalXp} XP</TableCell>
+                        <TableCell className="hidden lg:table-cell">
+                          <div className="flex items-center gap-1">
+                            <Flame className="h-4 w-4 text-orange-500" />
+                            <span>{user.currentStreak}</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-muted-foreground hidden lg:table-cell">
+                          {formatDate(user.createdAt)}
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant={user.role === "admin" ? "default" : "secondary"}>
+                            {user.role === "admin" ? "Admin" : "Étudiant"}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem
+                                onClick={() => handleToggleRole(user.id, user.role)}
+                              >
+                                {user.role === "admin" ? (
+                                  <>
+                                    <ShieldOff className="h-4 w-4 mr-2" /> Retirer admin
+                                  </>
+                                ) : (
+                                  <>
+                                    <Shield className="h-4 w-4 mr-2" /> Promouvoir admin
+                                  </>
+                                )}
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+                <ScrollBar orientation="horizontal" />
+              </ScrollArea>
             ) : (
               <div className="p-12 text-center">
                 <Users className="h-12 w-12 mx-auto text-muted-foreground mb-4" />

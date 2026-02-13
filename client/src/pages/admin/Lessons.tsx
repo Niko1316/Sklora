@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import {
   Table,
   TableBody,
@@ -119,86 +120,89 @@ export default function AdminLessons() {
                 ))}
               </div>
             ) : filteredLessons && filteredLessons.length > 0 ? (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Titre</TableHead>
-                    <TableHead>Module</TableHead>
-                    <TableHead>Type</TableHead>
-                    <TableHead>XP</TableHead>
-                    <TableHead>Statut</TableHead>
-                    <TableHead className="w-[100px]">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredLessons.map((l) => (
-                    <TableRow key={l.id}>
-                      <TableCell>
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded bg-muted flex items-center justify-center">
-                            <FileText className="h-5 w-5 text-muted-foreground" />
-                          </div>
-                          <div>
-                            <p className="font-medium">{l.title}</p>
-                            <p className="text-xs text-muted-foreground">
-                              {l.duration} min
-                            </p>
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-muted-foreground">
-                        Module #{l.moduleId}
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant="outline" className="capitalize">
-                          {l.videoUrl ? "Vidéo" : "Texte"}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>{l.xpReward} XP</TableCell>
-                      <TableCell>
-                        <Badge variant={l.isPublished ? "default" : "secondary"}>
-                          {l.isPublished ? "Publié" : "Brouillon"}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon">
-                              <MoreHorizontal className="h-4 w-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuItem asChild>
-                              <Link href={`/admin/lessons/${l.id}`}>
-                                <Edit className="h-4 w-4 mr-2" /> Modifier
-                              </Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
-                              onClick={() => handleTogglePublish(l.id, l.isPublished)}
-                            >
-                              {l.isPublished ? (
-                                <>
-                                  <EyeOff className="h-4 w-4 mr-2" /> Dépublier
-                                </>
-                              ) : (
-                                <>
-                                  <Eye className="h-4 w-4 mr-2" /> Publier
-                                </>
-                              )}
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
-                              className="text-destructive"
-                              onClick={() => setDeleteId(l.id)}
-                            >
-                              <Trash2 className="h-4 w-4 mr-2" /> Supprimer
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </TableCell>
+              <ScrollArea className="w-full">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Titre</TableHead>
+                      <TableHead className="hidden md:table-cell">Module</TableHead>
+                      <TableHead className="hidden lg:table-cell">Type</TableHead>
+                      <TableHead className="hidden sm:table-cell">XP</TableHead>
+                      <TableHead>Statut</TableHead>
+                      <TableHead className="w-[100px]">Actions</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {filteredLessons.map((l) => (
+                      <TableRow key={l.id}>
+                        <TableCell>
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded bg-muted flex items-center justify-center flex-shrink-0">
+                              <FileText className="h-5 w-5 text-muted-foreground" />
+                            </div>
+                            <div className="min-w-0">
+                              <p className="font-medium truncate">{l.title}</p>
+                              <p className="text-xs text-muted-foreground">
+                                {l.duration} min
+                              </p>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-muted-foreground hidden md:table-cell">
+                          Module #{l.moduleId}
+                        </TableCell>
+                        <TableCell className="hidden lg:table-cell">
+                          <Badge variant="outline" className="capitalize">
+                            {l.videoUrl ? "Vidéo" : "Texte"}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="hidden sm:table-cell">{l.xpReward} XP</TableCell>
+                        <TableCell>
+                          <Badge variant={l.isPublished ? "default" : "secondary"}>
+                            {l.isPublished ? "Publié" : "Brouillon"}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem asChild>
+                                <Link href={`/admin/lessons/${l.id}`}>
+                                  <Edit className="h-4 w-4 mr-2" /> Modifier
+                                </Link>
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={() => handleTogglePublish(l.id, l.isPublished)}
+                              >
+                                {l.isPublished ? (
+                                  <>
+                                    <EyeOff className="h-4 w-4 mr-2" /> Dépublier
+                                  </>
+                                ) : (
+                                  <>
+                                    <Eye className="h-4 w-4 mr-2" /> Publier
+                                  </>
+                                )}
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                className="text-destructive"
+                                onClick={() => setDeleteId(l.id)}
+                              >
+                                <Trash2 className="h-4 w-4 mr-2" /> Supprimer
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+                <ScrollBar orientation="horizontal" />
+              </ScrollArea>
             ) : (
               <div className="p-12 text-center">
                 <FileText className="h-12 w-12 mx-auto text-muted-foreground mb-4" />

@@ -8,6 +8,15 @@ import * as db from "./db";
 import { invokeLLM } from "./_core/llm";
 import { notifyOwner } from "./_core/notification";
 
+// Pagination schema
+const paginationSchema = z.object({
+  page: z.number().min(1).optional(),
+  limit: z.number().min(1).max(100).optional(),
+  search: z.string().optional(),
+  sortBy: z.string().optional(),
+  sortOrder: z.enum(["asc", "desc"]).optional(),
+});
+
 // Admin procedure - only allows admin users
 const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
   if (ctx.user.role !== 'admin') {
@@ -201,10 +210,12 @@ const moduleRouter = router({
       return db.getModulesByParcoursId(input.parcoursId, true);
     }),
   
-  // Admin - get all modules
-  adminList: adminProcedure.query(async () => {
-    return db.getAllModules();
-  }),
+  // Admin - get all modules (paginated)
+  adminList: adminProcedure
+    .input(paginationSchema.optional())
+    .query(async ({ input }) => {
+      return db.getPaginatedModules(input || {});
+    }),
   
   // Admin - get single module
   adminGet: adminProcedure
@@ -353,10 +364,12 @@ const lessonRouter = router({
       return { success: true, xpEarned: lesson.xpReward };
     }),
   
-  // Admin - get all lessons
-  adminList: adminProcedure.query(async () => {
-    return db.getAllLessons();
-  }),
+  // Admin - get all lessons (paginated)
+  adminList: adminProcedure
+    .input(paginationSchema.optional())
+    .query(async ({ input }) => {
+      return db.getPaginatedLessons(input || {});
+    }),
   
   // Admin - get single lesson
   adminGet: adminProcedure
@@ -604,10 +617,12 @@ const quizRouter = router({
       };
     }),
   
-  // Admin - get all quizzes
-  adminList: adminProcedure.query(async () => {
-    return db.getAllQuizzes();
-  }),
+  // Admin - get all quizzes (paginated)
+  adminList: adminProcedure
+    .input(paginationSchema.optional())
+    .query(async ({ input }) => {
+      return db.getPaginatedQuizzes(input || {});
+    }),
   
   // Admin - get single quiz with all details
   adminGet: adminProcedure
@@ -1055,10 +1070,12 @@ const adminRouter = router({
     return db.getAdminStats();
   }),
   
-  // Users management
-  getUsers: adminProcedure.query(async () => {
-    return db.getAllUsers();
-  }),
+  // Users management (paginated)
+  getUsers: adminProcedure
+    .input(paginationSchema.optional())
+    .query(async ({ input }) => {
+      return db.getPaginatedUsers(input || {});
+    }),
   
   updateUserRole: adminProcedure
     .input(z.object({
