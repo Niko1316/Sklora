@@ -25,6 +25,7 @@ import {
   Star,
   Settings,
   TrendingUp,
+  Award,
 } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { useState } from "react";
@@ -33,6 +34,7 @@ const navItems = [
   { href: "/dashboard", icon: Home, label: "Tableau de bord" },
   { href: "/parcours", icon: BookOpen, label: "Parcours" },
   { href: "/progress", icon: TrendingUp, label: "Ma progression" },
+  { href: "/certificates", icon: Award, label: "Mes certificats" },
   { href: "/chatbot", icon: MessageCircle, label: "Assistant IA" },
   { href: "/profile", icon: User, label: "Mon profil" },
 ];

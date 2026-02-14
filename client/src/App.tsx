@@ -25,6 +25,7 @@ const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
 const Onboarding = lazy(() => import("./pages/Onboarding"));
 const Pricing = lazy(() => import("./pages/Pricing"));
+const VerifyCertificate = lazy(() => import("./pages/VerifyCertificate"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Student pages (lazy loaded)
@@ -36,6 +37,8 @@ const QuizView = lazy(() => import("./pages/student/QuizView"));
 const Profile = lazy(() => import("./pages/student/Profile"));
 const Chatbot = lazy(() => import("./pages/student/Chatbot"));
 const Progress = lazy(() => import("./pages/student/Progress"));
+const Certificates = lazy(() => import("./pages/student/Certificates"));
+const CertificateView = lazy(() => import("./pages/student/CertificateView"));
 
 // Admin pages (lazy loaded)
 const AdminDashboard = lazy(() => import("./pages/admin/Dashboard"));
@@ -88,6 +91,10 @@ function Router() {
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/pricing" component={Pricing} />
+        <Route path="/verify-certificate" component={VerifyCertificate} />
+        <Route path="/verify-certificate/:credentialId">
+          {(params) => <VerifyCertificate credentialId={params.credentialId} />}
+        </Route>
 
         {/* Onboarding (protected) */}
         <Route path="/onboarding">
@@ -142,6 +149,18 @@ function Router() {
           <ProtectedRoute>
             <Progress />
           </ProtectedRoute>
+        </Route>
+        <Route path="/certificates">
+          <ProtectedRoute>
+            <Certificates />
+          </ProtectedRoute>
+        </Route>
+        <Route path="/certificates/:id">
+          {(params) => (
+            <ProtectedRoute>
+              <CertificateView certificateId={parseInt(params.id)} />
+            </ProtectedRoute>
+          )}
         </Route>
 
         {/* Admin routes */}

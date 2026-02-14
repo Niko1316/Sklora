@@ -496,3 +496,40 @@ export const aiGeneratedContent = mysqlTable("ai_generated_content", {
 
 export type AiGeneratedContent = typeof aiGeneratedContent.$inferSelect;
 export type InsertAiGeneratedContent = typeof aiGeneratedContent.$inferInsert;
+
+// ==================== CERTIFICATES ====================
+
+export const certificates = mysqlTable("certificates", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  parcoursId: int("parcoursId").notNull(),
+
+  // Certificate details
+  certificateNumber: varchar("certificateNumber", { length: 50 }).notNull().unique(), // e.g., SKL-2026-001234
+  studentName: varchar("studentName", { length: 255 }).notNull(),
+  parcoursTitle: varchar("parcoursTitle", { length: 255 }).notNull(),
+
+  // Completion info
+  completionDate: timestamp("completionDate").notNull(),
+  totalHoursCompleted: int("totalHoursCompleted").default(0).notNull(),
+  finalScore: int("finalScore"), // Average quiz score percentage
+
+  // Metadata
+  issuer: varchar("issuer", { length: 255 }).default("Sklora").notNull(),
+  credentialId: varchar("credentialId", { length: 100 }).notNull().unique(), // UUID for verification
+
+  // Status
+  isValid: boolean("isValid").default(true).notNull(),
+  revokedAt: timestamp("revokedAt"),
+  revokedReason: text("revokedReason"),
+
+  // Share tracking
+  sharedCount: int("sharedCount").default(0).notNull(),
+  viewCount: int("viewCount").default(0).notNull(),
+
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Certificate = typeof certificates.$inferSelect;
+export type InsertCertificate = typeof certificates.$inferInsert;

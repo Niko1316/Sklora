@@ -15,7 +15,8 @@ import {
   lessonEmbeddings, InsertLessonEmbedding,
   chatbotMessages, InsertChatbotMessage,
   adminAlerts, InsertAdminAlert,
-  auditLogs, InsertAuditLog
+  auditLogs, InsertAuditLog,
+  certificates, InsertCertificate, Certificate
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 import { PaginationParams, createPaginatedResult, PaginatedResult } from "../shared/pagination";
@@ -1214,4 +1215,97 @@ export async function getPaginatedUsers(params: PaginationParams = {}) {
   const data = await dataQuery.limit(limit).offset(offset);
 
   return createPaginatedResult(data, total, page, limit);
+}
+
+// ==================== CERTIFICATE HELPERS ====================
+
+export async function createCertificate(data: InsertCertificate): Promise<{ id: number }> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(certificates).values(data);
+  return { id: result[0].insertId };
+}
+
+export async function getUserCertificates(userId: number): Promise<Certificate[]> {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(certificates)
+    .where(and(eq(certificates.userId, userId), eq(certificates.isValid, true)))
+    .orderBy(desc(certificates.completionDate));
+}
+
+export async function getCertificateById(id: number): Promise<Certificate | undefined> {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(certificates)
+    .where(eq(certificates.id, id))
+    .limit(1);
+  return result[0];
+}
+
+export async function getCertificateByCredentialId(credentialId: string): Promise<Certificate | undefined> {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(certificates)
+    .where(eq(certificates.credentialId, credentialId))
+    .limit(1);
+  return result[0];
+}
+
+export async function getCertificateByParcours(userId: number, parcoursId: number): Promise<Certificate | undefined> {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(certificates)
+    .where(and(
+      eq(certificates.userId, userId),
+      eq(certificates.parcoursId, parcoursId),
+      eq(certificates.isValid, true)
+    ))
+    .limit(1);
+  return result[0];
+}
+
+export async function incrementCertificateShare(certificateId: number): Promise<void> {
+  const db = await getDb();
+  if (!db) return;
+  await db.execute(
+    sql`UPDATE certificates SET sharedCount = sharedCount + 1 WHERE id = ${certificateId}`
+  );
+}
+
+export async function incrementCertificateView(certificateId: number): Promise<void> {
+  const db = await getDb();
+  if (!db) return;
+  await db.execute(
+    sql`UPDATE certificates SET viewCount = viewCount + 1 WHERE id = ${certificateId}`
+  );
+}
+
+export async function revokeCertificate(certificateId: number, reason: string): Promise<void> {
+  const db = await getDb();
+  if (!db) return;
+  await db.update(certificates).set({
+    isValid: false,
+    revokedAt: new Date(),
+    revokedReason: reason
+  }).where(eq(certificates.id, certificateId));
+}
+
+export async function getAllCertificates(): Promise<Certificate[]> {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(certificates)
+    .orderBy(desc(certificates.createdAt));
+}
+
+// Generate unique certificate number
+export function generateCertificateNumber(): string {
+  const year = new Date().getFullYear();
+  const random = Math.floor(Math.random() * 999999).toString().padStart(6, '0');
+  return `SKL-${year}-${random}`;
+}
+
+// Generate UUID for credential verification
+export function generateCredentialId(): string {
+  return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 }

@@ -1698,6 +1698,117 @@ const subscriptionRouter = router({
   }),
 });
 
+// ==================== CERTIFICATE ROUTER ====================
+const certificateRouter = router({
+  // Get user's certificates
+  getMyCertificates: protectedProcedure.query(async ({ ctx }) => {
+    return db.getUserCertificates(ctx.user.id);
+  }),
+
+  // Get specific certificate
+  getById: protectedProcedure
+    .input(z.object({ id: z.number() }))
+    .query(async ({ ctx, input }) => {
+      const certificate = await db.getCertificateById(input.id);
+      if (!certificate) {
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'Certificat non trouvé' });
+      }
+      // Only owner or certificate holder can view
+      if (certificate.userId !== ctx.user.id && ctx.user.role !== 'admin') {
+        throw new TRPCError({ code: 'FORBIDDEN', message: 'Accès non autorisé' });
+      }
+      return certificate;
+    }),
+
+  // Get certificate by credential ID (public for verification)
+  getByCredentialId: publicProcedure
+    .input(z.object({ credentialId: z.string() }))
+    .query(async ({ input }) => {
+      const certificate = await db.getCertificateByCredentialId(input.credentialId);
+      if (!certificate) {
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'Certificat non trouvé' });
+      }
+      // Increment view count
+      await db.incrementCertificateView(certificate.id);
+      return certificate;
+    }),
+
+  // Generate certificate for completed parcours
+  generateForParcours: protectedProcedure
+    .input(z.object({ parcoursId: z.number() }))
+    .mutation(async ({ ctx, input }) => {
+      // Check if user has Pro subscription
+      const subscription = await db.getUserSubscription(ctx.user.id);
+      if (!subscription || subscription.planId !== 'pro') {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: 'Vous devez avoir un abonnement Pro pour obtenir des certificats'
+        });
+      }
+
+      // Check if certificate already exists
+      const existing = await db.getCertificateByParcours(ctx.user.id, input.parcoursId);
+      if (existing) {
+        return existing;
+      }
+
+      // Get parcours progress
+      const progress = await db.getDetailedParcoursProgress(ctx.user.id, input.parcoursId);
+      if (!progress) {
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'Parcours non trouvé' });
+      }
+
+      // Check if parcours is completed
+      if (progress.status !== 'completed' || progress.overallProgress < 100) {
+        throw new TRPCError({
+          code: 'PRECONDITION_FAILED',
+          message: 'Vous devez terminer le parcours à 100% pour obtenir le certificat'
+        });
+      }
+
+      // Calculate average quiz score
+      const avgScore = progress.modules.reduce((acc, m) => {
+        const moduleAvg = m.quizAttempts.reduce((sum, q) => sum + (q.bestScore || 0), 0) / (m.quizAttempts.length || 1);
+        return acc + moduleAvg;
+      }, 0) / (progress.modules.length || 1);
+
+      // Create certificate
+      const certificateNumber = db.generateCertificateNumber();
+      const credentialId = db.generateCredentialId();
+
+      const result = await db.createCertificate({
+        userId: ctx.user.id,
+        parcoursId: input.parcoursId,
+        certificateNumber,
+        studentName: ctx.user.name || 'Étudiant',
+        parcoursTitle: progress.parcoursTitle,
+        completionDate: progress.completedAt || new Date(),
+        totalHoursCompleted: Math.round(progress.totalTimeSpentMinutes / 60),
+        finalScore: Math.round(avgScore),
+        credentialId,
+        issuer: 'Sklora',
+        isValid: true,
+        sharedCount: 0,
+        viewCount: 0,
+      });
+
+      // Get the created certificate
+      return db.getCertificateById(result.id);
+    }),
+
+  // Increment share count
+  incrementShare: protectedProcedure
+    .input(z.object({ certificateId: z.number() }))
+    .mutation(async ({ ctx, input }) => {
+      const certificate = await db.getCertificateById(input.certificateId);
+      if (!certificate || certificate.userId !== ctx.user.id) {
+        throw new TRPCError({ code: 'FORBIDDEN' });
+      }
+      await db.incrementCertificateShare(input.certificateId);
+      return { success: true };
+    }),
+});
+
 // ==================== MAIN ROUTER ====================
 export const appRouter = router({
   system: systemRouter,
@@ -1710,6 +1821,7 @@ export const appRouter = router({
   chatbot: chatbotRouter,
   admin: adminRouter,
   subscription: subscriptionRouter,
+  certificate: certificateRouter,
 });
 
 export type AppRouter = typeof appRouter;

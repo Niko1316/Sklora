@@ -17,13 +17,28 @@ import {
   FileText,
   HelpCircle,
   Star,
+  Award,
 } from "lucide-react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import { toast } from "sonner";
 
 export default function ParcoursDetail({ slug }: { slug: string }) {
+  const [, setLocation] = useLocation();
   const { data: parcours, isLoading, error } = trpc.parcours.getBySlug.useQuery({ slug });
   const { data: userProgress } = trpc.user.getProgress.useQuery();
+  const { data: subscription } = trpc.subscription.getMySubscription.useQuery();
+  const { data: existingCertificate } = trpc.certificate.getMyCertificates.useQuery();
+
+  const generateCertificateMutation = trpc.certificate.generateForParcours.useMutation({
+    onSuccess: (certificate) => {
+      toast.success("Certificat généré avec succès!");
+      setLocation(`/certificates/${certificate?.id}`);
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
 
   // Get lessons for each module with their quizzes
   const moduleLessonsQueries = (parcours?.modules || []).map(module =>
@@ -151,6 +166,43 @@ export default function ParcoursDetail({ slug }: { slug: string }) {
                   {completedLessons} / {totalLessons} leçons complétées
                 </p>
               </div>
+
+              {/* Certificate Button - Show when completed */}
+              {progressPercent === 100 && (
+                <div className="pt-4 border-t">
+                  {existingCertificate?.find(c => c.parcoursId === parcours.id) ? (
+                    <Button
+                      variant="outline"
+                      className="w-full gap-2 border-primary/50 bg-gradient-to-r from-primary/5 to-purple-500/5 hover:from-primary/10 hover:to-purple-500/10"
+                      onClick={() => {
+                        const cert = existingCertificate.find(c => c.parcoursId === parcours.id);
+                        if (cert) setLocation(`/certificates/${cert.id}`);
+                      }}
+                    >
+                      <Award className="h-4 w-4" />
+                      Voir mon certificat
+                    </Button>
+                  ) : subscription?.planId === 'pro' ? (
+                    <Button
+                      className="w-full gap-2 bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90"
+                      onClick={() => generateCertificateMutation.mutate({ parcoursId: parcours.id })}
+                      disabled={generateCertificateMutation.isPending}
+                    >
+                      <Award className="h-4 w-4" />
+                      {generateCertificateMutation.isPending ? "Génération..." : "Obtenir mon certificat"}
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="outline"
+                      className="w-full gap-2 border-primary/50"
+                      onClick={() => setLocation("/pricing")}
+                    >
+                      <Lock className="h-4 w-4" />
+                      Débloquer le certificat (Plan Pro)
+                    </Button>
+                  )}
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
