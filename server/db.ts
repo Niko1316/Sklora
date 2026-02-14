@@ -601,12 +601,18 @@ export async function getUserChatHistory(userId: number, limit = 10) {
     .limit(limit);
 }
 
+export async function clearUserChatHistory(userId: number) {
+  const db = await getDb();
+  if (!db) return;
+  await db.delete(chatbotMessages).where(eq(chatbotMessages.userId, userId));
+}
+
 export async function getTodayMessageCount(userId: number) {
   const db = await getDb();
   if (!db) return 0;
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-  
+
   const result = await db.select({ count: sql<number>`count(*)` })
     .from(chatbotMessages)
     .where(and(

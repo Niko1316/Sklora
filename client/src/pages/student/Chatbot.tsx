@@ -117,7 +117,7 @@ export default function Chatbot() {
               </div>
               <div>
                 <CardTitle className="flex items-center gap-2">
-                  Assistant Pépites
+                  Assistant Sklora
                   <Sparkles className="h-4 w-4 text-gold" />
                 </CardTitle>
                 <CardDescription>
@@ -142,7 +142,7 @@ export default function Chatbot() {
               <div className="h-full flex flex-col items-center justify-center text-center p-8">
                 <Bot className="h-16 w-16 text-primary/30 mb-4" />
                 <h3 className="text-lg font-semibold mb-2">
-                  Bienvenue sur l'assistant Pépites !
+                  Bienvenue sur l'assistant Sklora !
                 </h3>
                 <p className="text-muted-foreground max-w-md mb-6">
                   Je suis là pour vous aider dans votre apprentissage. Posez-moi des questions sur les cours, demandez des explications ou des conseils.

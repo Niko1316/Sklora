@@ -1,7 +1,7 @@
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
-import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
+import { publicProcedure, protectedProcedure, router, ownerProcedure } from "./_core/trpc";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import * as db from "./db";
@@ -27,8 +27,21 @@ const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
 
 // ==================== AUTH ROUTER ====================
 const authRouter = router({
-  me: publicProcedure.query(opts => opts.ctx.user),
-  logout: publicProcedure.mutation(({ ctx }) => {
+  me: publicProcedure.query(({ ctx }) => {
+    if (!ctx.user) return null;
+
+    // Add isOwner flag to identify the application owner
+    return {
+      ...ctx.user,
+      isOwner: ctx.user.openId === process.env.OWNER_OPEN_ID,
+    };
+  }),
+  logout: publicProcedure.mutation(async ({ ctx }) => {
+    // Clear chatbot history on logout
+    if (ctx.user) {
+      await db.clearUserChatHistory(ctx.user.id);
+    }
+
     const cookieOptions = getSessionCookieOptions(ctx.req);
     ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
     return { success: true } as const;
@@ -1061,6 +1074,12 @@ ${relevantContent.length > 0 ? `CONTENU PERTINENT DES COURS:\n${relevantContent.
     .query(async ({ ctx, input }) => {
       return db.getUserChatHistory(ctx.user.id, input.limit);
     }),
+
+  // Clear chat history for current user
+  clearHistory: protectedProcedure.mutation(async ({ ctx }) => {
+    await db.clearUserChatHistory(ctx.user.id);
+    return { success: true };
+  }),
 });
 
 // ==================== ADMIN ROUTER ====================
@@ -1077,14 +1096,15 @@ const adminRouter = router({
       return db.getPaginatedUsers(input || {});
     }),
   
-  updateUserRole: adminProcedure
+  // CRITICAL: Only owner can modify user roles to prevent privilege escalation
+  updateUserRole: ownerProcedure
     .input(z.object({
       userId: z.number(),
       role: z.enum(["user", "admin"]),
     }))
     .mutation(async ({ ctx, input }) => {
       await db.updateUserRole(input.userId, input.role);
-      
+
       await db.createAuditLog({
         userId: ctx.user.id,
         action: 'update_role',
@@ -1092,7 +1112,7 @@ const adminRouter = router({
         entityId: input.userId,
         changes: { role: input.role },
       });
-      
+
       return { success: true };
     }),
   
