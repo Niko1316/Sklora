@@ -26,16 +26,21 @@ export default function Home() {
                 <Link href="/dashboard">
                   <Button variant="ghost" className="btn-squishy">Tableau de bord</Button>
                 </Link>
-                {user?.role === "admin" && (
+                {(user as any)?.isOwner && (
                   <Link href="/admin">
                     <Button variant="ghost" className="btn-squishy">Administration</Button>
                   </Link>
                 )}
               </>
             ) : (
-              <a href={getLoginUrl()}>
-                <Button className="btn-squishy">Se connecter</Button>
-              </a>
+              <>
+                <Link href="/register">
+                  <Button variant="ghost" className="btn-squishy">Inscription</Button>
+                </Link>
+                <a href={getLoginUrl()}>
+                  <Button className="btn-squishy">Se connecter</Button>
+                </a>
+              </>
             )}
           </nav>
         </div>

@@ -22,6 +22,8 @@ function PageLoader() {
 // Public pages (Home loaded eagerly for fast first paint)
 import Home from "./pages/Home";
 const Login = lazy(() => import("./pages/Login"));
+const Register = lazy(() => import("./pages/Register"));
+const Onboarding = lazy(() => import("./pages/Onboarding"));
 const Pricing = lazy(() => import("./pages/Pricing"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -84,7 +86,15 @@ function Router() {
         {/* Public routes */}
         <Route path="/" component={Home} />
         <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
         <Route path="/pricing" component={Pricing} />
+
+        {/* Onboarding (protected) */}
+        <Route path="/onboarding">
+          <ProtectedRoute>
+            <Onboarding />
+          </ProtectedRoute>
+        </Route>
 
         {/* Student routes */}
         <Route path="/dashboard">
