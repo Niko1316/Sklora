@@ -25,6 +25,19 @@ export default function ParcoursDetail({ slug }: { slug: string }) {
   const { data: parcours, isLoading, error } = trpc.parcours.getBySlug.useQuery({ slug });
   const { data: userProgress } = trpc.user.getProgress.useQuery();
 
+  // Get lessons for each module with their quizzes
+  const moduleLessonsQueries = (parcours?.modules || []).map(module =>
+    trpc.lesson.getByModule.useQuery(
+      { moduleId: module.id },
+      { enabled: !!parcours }
+    )
+  );
+
+  // Helper to check if user has access to content
+  const hasAccess = (isFree: boolean) => {
+    return isFree || parcours?.isFree || false; // TODO: Check subscription status
+  };
+
   if (isLoading) {
     return (
       <StudentLayout>
@@ -191,18 +204,83 @@ export default function ParcoursDetail({ slug }: { slug: string }) {
                             {module.description}
                           </p>
                         )}
-                        
-                        {/* Placeholder for lessons - would need separate query */}
-                        <div className="text-sm text-muted-foreground">
-                          <p>Les leçons de ce module seront affichées ici.</p>
-                          {!isLocked && (
-                            <Link href={`/parcours/${slug}`}>
-                              <Button size="sm" className="mt-2 gap-2">
-                                <Play className="h-4 w-4" /> Commencer
-                              </Button>
-                            </Link>
-                          )}
-                        </div>
+
+                        {/* Lessons List */}
+                        {moduleLessonsQueries[index]?.isLoading ? (
+                          <div className="space-y-2">
+                            {[1, 2, 3].map(i => (
+                              <Skeleton key={i} className="h-12 w-full" />
+                            ))}
+                          </div>
+                        ) : moduleLessonsQueries[index]?.data && moduleLessonsQueries[index].data.length > 0 ? (
+                          <div className="space-y-2">
+                            {moduleLessonsQueries[index].data.map((lesson: any) => {
+                              const lessonProgress = userProgress?.find(
+                                p => p.lessonId === lesson.id
+                              );
+                              const isLessonCompleted = lessonProgress?.status === "completed";
+                              const isLessonLocked = !lesson.isFree && !parcours.isFree && isLocked;
+
+                              return (
+                                <div
+                                  key={lesson.id}
+                                  className={`flex items-center justify-between p-3 rounded-lg border transition-colors ${
+                                    isLessonLocked
+                                      ? "bg-muted/30"
+                                      : "hover:bg-muted/50 cursor-pointer"
+                                  }`}
+                                >
+                                  <Link
+                                    href={isLessonLocked ? "#" : `/lesson/${lesson.id}`}
+                                    className="flex items-center gap-3 flex-1"
+                                  >
+                                    <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
+                                      isLessonCompleted
+                                        ? "bg-emerald-100 dark:bg-emerald-900/30"
+                                        : isLessonLocked
+                                        ? "bg-muted"
+                                        : "bg-primary/10"
+                                    }`}>
+                                      {isLessonCompleted ? (
+                                        <CheckCircle className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                                      ) : isLessonLocked ? (
+                                        <Lock className="h-4 w-4 text-muted-foreground" />
+                                      ) : (
+                                        <BookOpen className="h-4 w-4 text-primary" />
+                                      )}
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                      <h4 className="font-medium text-sm truncate">{lesson.title}</h4>
+                                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                                        <span className="flex items-center gap-1">
+                                          <Clock className="h-3 w-3" />
+                                          {lesson.dureeMinutes || 30} min
+                                        </span>
+                                        <span className="flex items-center gap-1">
+                                          <Star className="h-3 w-3 text-amber-500" />
+                                          {lesson.xpRecompense || 10} XP
+                                        </span>
+                                        {lesson.isFree && (
+                                          <Badge variant="secondary" className="text-xs px-1.5 py-0">
+                                            Gratuit
+                                          </Badge>
+                                        )}
+                                      </div>
+                                    </div>
+                                    {!isLessonLocked && (
+                                      <ArrowRight className="h-4 w-4 text-muted-foreground" />
+                                    )}
+                                  </Link>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        ) : (
+                          <div className="text-sm text-muted-foreground text-center py-4">
+                            <FileText className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                            <p>Aucune leçon disponible dans ce module.</p>
+                          </div>
+                        )}
                       </div>
                     </AccordionContent>
                   </AccordionItem>
