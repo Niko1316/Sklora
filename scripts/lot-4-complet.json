@@ -1,0 +1,190 @@
+{
+  "lot": 4,
+  "moduleId": 3,
+  "lecons": [
+    {
+      "numero": 21,
+      "titre": "Lavage professionnel : techniques québécoises",
+      "objectifs_apprentissage": [
+        "Au terme de cette leçon, l'apprenant sera capable d'exécuter un lavage professionnel respectueux du cuir chevelu selon les normes québécoises",
+        "Au terme de cette leçon, l'apprenant sera capable d'adapter la technique de lavage aux conditions hivernales extrêmes",
+        "Au terme de cette leçon, l'apprenant sera capable de choisir les produits adaptés au type de cheveux et aux besoins saisonniers québécois",
+        "Au terme de cette leçon, l'apprenant sera capable de documenter les observations faites pendant le lavage selon les normes professionnelles"
+      ],
+      "prerequis": [
+        "Leçon 4: Anatomie du cheveu et du cuir chevelu",
+        "Leçon 17: Analyse du cuir chevelu : diagnostic québécois"
+      ],
+      "vocabulaire_cle": [
+        {
+          "terme": "Technique des deux bols",
+          "definition": "Méthode de lavage québécoise en deux étapes distinctes : premier shampoing pour éliminer les impuretés (sel de déglaçage, pollution hivernale), deuxième shampoing pour nettoyer le cuir chevelu en profondeur, optimisant l'efficacité tout en préservant les lipides naturels."
+        },
+        {
+          "terme": "Massage capillaire nordique",
+          "definition": "Ensemble de gestes digitaux spécifiques appliqués pendant le lavage pour stimuler la microcirculation du cuir chevelu affaiblie par le froid hivernal, tout en évitant les pressions excessives qui aggraveraient les TMS du coiffeur."
+        },
+        {
+          "terme": "Rinçage thermique contrôlé",
+          "definition": "Technique de rinçage utilisant une eau à température précise (38-40°C) pour éviter le choc thermique sur des cheveux déjà stressés par les variations climatiques extrêmes du Québec, avec durée minimale de 90 secondes pour éliminer tous les résidus."
+        },
+        {
+          "terme": "Fiche lavage L-384381",
+          "definition": "Document confidentiel notant les observations du cuir chevelu pendant le lavage, les produits utilisés avec quantités, les réactions du client, et les recommandations d'entretien, utilisé pour personnaliser les services futurs."
+        }
+      ],
+      "dureeMinutes": 45,
+      "xpRecompense": 50,
+      "isFree": false,
+      "isPublished": true
+    },
+    {
+      "numero": 22,
+      "titre": "Séchage et brushing de base : méthodes hivernales",
+      "objectifs_apprentissage": [
+        "Au terme de cette leçon, l'apprenant sera capable d'exécuter un séchage professionnel respectueux de la fibre capillaire selon les normes québécoises",
+        "Au terme de cette leçon, l'apprenant sera capable d'adapter les techniques de brushing aux conditions hivernales extrêmes",
+        "Au terme de cette leçon, l'apprenant sera capable de choisir les outils et produits adaptés pour maximiser la tenue sous tuque",
+        "Au terme de cette leçon, l'apprenant sera capable de documenter les techniques utilisées selon les normes professionnelles"
+      ],
+      "prerequis": [
+        "Leçon 21: Lavage professionnel : techniques québécoises",
+        "Leçon 16: Outils et équipements : sélection québécoise"
+      ],
+      "vocabulaire_cle": [
+        {
+          "terme": "Séchage en trois phases",
+          "definition": "Méthode québécoise structurée en trois étapes successives : phase 1 élimination de l'excès d'eau (80% d'humidité), phase 2 pré-séchage directionnel (20% d'humidité résiduelle), phase 3 brushing final avec brosse pour la forme et la brillance."
+        },
+        {
+          "terme": "Brushing résistant au froid",
+          "definition": "Technique de brushing spécialement conçue pour maintenir la forme et le volume pendant au moins 3 heures sous une tuque par des températures inférieures à -15°C, utilisant des produits thermoactivateurs et des gestes de tension contrôlée."
+        },
+        {
+          "terme": "Tension capillaire contrôlée",
+          "definition": "Niveau de traction appliqué sur les cheveux pendant le brushing, mesuré subjectivement sur une échelle de 1 à 5, adapté à la porosité hivernale accrue pour éviter la casse tout en assurant la tenue."
+        },
+        {
+          "terme": "Fiche brushing B-384382",
+          "definition": "Document détaillant les techniques de séchage et brushing utilisées, les produits appliqués avec quantités, les outils employés, la durée totale, et les recommandations d'entretien pour tenue optimale en conditions hivernales."
+        }
+      ],
+      "dureeMinutes": 50,
+      "xpRecompense": 55,
+      "isFree": false,
+      "isPublished": true
+    },
+    {
+      "numero": 23,
+      "titre": "Coupe homme traditionnelle : techniques québécoises",
+      "objectifs_apprentissage": [
+        "Au terme de cette leçon, l'apprenant sera capable d'exécuter une coupe homme traditionnelle selon les normes québécoises",
+        "Au terme de cette leçon, l'apprenant sera capable d'adapter les techniques aux différents types de cheveux québécois",
+        "Au terme de cette leçon, l'apprenant sera capable de choisir les outils et produits adaptés à chaque coupe homme",
+        "Au terme de cette leçon, l'apprenant sera capable de documenter les coupes réalisées selon les normes professionnelles"
+      ],
+      "prerequis": [
+        "Leçon 21: Lavage professionnel : techniques québécoises",
+        "Leçon 22: Séchage et brushing de base : méthodes hivernales",
+        "Leçon 16: Outils et équipements : sélection québécoise"
+      ],
+      "vocabulaire_cle": [
+        {
+          "terme": "Méthode des trois niveaux",
+          "definition": "Technique québécoise de coupe homme structurée en trois zones distinctes : niveau 1 (arrière de la tête et nuque), niveau 2 (côtés et tempes), niveau 3 (dessus et couronne), avec transitions progressives pour un résultat naturel."
+        },
+        {
+          "terme": "Dégradé nordique",
+          "definition": "Technique de transition entre les longueurs des côtés et du dessus spécialement adaptée aux cheveux québécois plus épais et rêches, utilisant des tondeuses à réglages fins et des ciseaux pour un dégradé invisible même par vent fort."
+        },
+        {
+          "terme": "Ligne de nuque architecturale",
+          "definition": "Forme précise de la ligne de nuque taillée selon l'anatomie du client (ronde, carrée, pointue) avec une netteté absolue qui résiste au port du col montant et des tuques serrées en hiver."
+        },
+        {
+          "terme": "Fiche coupe homme H-384383",
+          "definition": "Document détaillant chaque étape de la coupe homme traditionnelle, les longueurs choisies par zone, les outils utilisés, les adaptations au type de cheveux, et les conseils d'entretien à domicile."
+        }
+      ],
+      "dureeMinutes": 60,
+      "xpRecompense": 60,
+      "isFree": false,
+      "isPublished": true
+    },
+    {
+      "numero": 24,
+      "titre": "Coupe femme structurée : fondamentaux québécois",
+      "objectifs_apprentissage": [
+        "Au terme de cette leçon, l'apprenant sera capable d'exécuter une coupe femme structurée selon les normes québécoises",
+        "Au terme de cette leçon, l'apprenant sera capable d'adapter les techniques aux différents types de cheveux et morphologies québécoises",
+        "Au terme de cette leçon, l'apprenant sera capable de créer des formes qui résistent aux conditions climatiques hivernales",
+        "Au terme de cette leçon, l'apprenant sera capable de documenter les coupes réalisées selon les normes professionnelles"
+      ],
+      "prerequis": [
+        "Leçon 21: Lavage professionnel : techniques québécoises",
+        "Leçon 22: Séchage et brushing de base : méthodes hivernales",
+        "Leçon 16: Outils et équipements : sélection québécoise"
+      ],
+      "vocabulaire_cle": [
+        {
+          "terme": "Méthode des quatre angles",
+          "definition": "Technique québécoise de coupe femme structurée basée sur quatre points d'ancrage anatomiques (front, tempes, oreilles, nuque) pour créer une forme qui épouse naturellement l'ovale du visage québécois souvent plus anguleux que les standards européens."
+        },
+        {
+          "terme": "Porté naturel hivernal",
+          "definition": "Concept de coupe conçue pour retomber élégamment après avoir été compressée sous une tuque pendant plusieurs heures, avec des longueurs stratégiquement calculées pour éviter l'effet « écrasé » ou « fouillis »."
+        },
+        {
+          "terme": "Dégradé invisible québécois",
+          "definition": "Technique de transition entre les longueurs utilisant des ciseaux effileurs à dents fines et des gestes de torsion pour créer une fluidité parfaite même sur les cheveux épais et rêches typiques des Québécoises."
+        },
+        {
+          "terme": "Fiche coupe femme F-384384",
+          "definition": "Document détaillant chaque étape de la coupe femme structurée, les longueurs choisies par zone, les techniques utilisées, les adaptations à la morphologie et au type de cheveux, et les conseils d'entretien saisonnier."
+        }
+      ],
+      "dureeMinutes": 65,
+      "xpRecompense": 65,
+      "isFree": false,
+      "isPublished": true
+    },
+    {
+      "numero": 25,
+      "titre": "Coiffage événementiel : préparation hivernale",
+      "objectifs_apprentissage": [
+        "Au terme de cette leçon, l'apprenant sera capable de préparer les cheveux pour un événement spécial selon les normes québécoises",
+        "Au terme de cette leçon, l'apprenant sera capable d'adapter les techniques de coiffage aux conditions hivernales extrêmes",
+        "Au terme de cette leçon, l'apprenant sera capable de choisir les produits et outils adaptés pour une tenue maximale en extérieur",
+        "Au terme de cette leçon, l'apprenant sera capable de documenter les services événementiels selon les normes professionnelles"
+      ],
+      "prerequis": [
+        "Leçon 21: Lavage professionnel : techniques québécoises",
+        "Leçon 22: Séchage et brushing de base : méthodes hivernales",
+        "Leçon 23: Coupe homme traditionnelle : techniques québécoises",
+        "Leçon 24: Coupe femme structurée : fondamentaux québécois"
+      ],
+      "vocabulaire_cle": [
+        {
+          "terme": "Protocole triple-barrière",
+          "definition": "Méthode québécoise de préparation capillaire pour événements en extérieur hivernal utilisant trois couches de protection successives : barrière 1 hydratation profonde, barrière 2 protection thermique, barrière 3 fixateur résistant à l'humidité."
+        },
+        {
+          "terme": "Tenue extrême nordique",
+          "definition": "Technique de coiffage événementiel garantissant une tenue minimale de 6 heures en conditions hivernales extrêmes (-25°C, vent 40 km/h, humidité sous tuque) grâce à une combinaison de produits thermoactivateurs, de gestes de tension calculés, et de structures internes renforcées."
+        },
+        {
+          "terme": "Kit urgence événementiel",
+          "definition": "Trousse compacte remise à la cliente contenant les produits et outils essentiels pour retouches rapides en milieu d'événement (mini-laque, pinces de secours, lingettes anti-humidité, baume à lèvres)."
+        },
+        {
+          "terme": "Fiche événementiel E-384385",
+          "definition": "Document détaillant chaque étape de la préparation et du coiffage événementiel, les produits utilisés avec quantités, les conditions météorologiques prévues, les adaptations effectuées, et les conseils de retouche."
+        }
+      ],
+      "dureeMinutes": 75,
+      "xpRecompense": 70,
+      "isFree": false,
+      "isPublished": true
+    }
+  ]
+}

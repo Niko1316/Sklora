@@ -49,32 +49,32 @@ export default function Profile() {
     <StudentLayout>
       <div className="space-y-6">
         {/* Profile Header */}
-        <Card>
+        <Card className="bento-card">
           <CardContent className="pt-6">
             <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-              <Avatar className="h-24 w-24">
+              <Avatar className="h-24 w-24 shrink-0">
                 <AvatarImage src={user?.avatarUrl || undefined} alt={user?.name || "User"} />
                 <AvatarFallback className="text-2xl">
                   {user?.name?.charAt(0)?.toUpperCase() || "U"}
                 </AvatarFallback>
               </Avatar>
-              
-              <div className="flex-1 text-center md:text-left">
-                <h1 className="text-2xl font-bold">{user?.name || "Utilisateur"}</h1>
-                <p className="text-muted-foreground">{user?.email}</p>
+
+              <div className="flex-1 text-center md:text-left min-w-0">
+                <h1 className="text-2xl font-bold font-['Lexend'] truncate">{user?.name || "Utilisateur"}</h1>
+                <p className="text-muted-foreground truncate">{user?.email}</p>
                 <p className="text-sm text-muted-foreground mt-1">
                   Membre depuis {formatDate(user?.createdAt || null)}
                 </p>
-                
+
                 {/* Level Progress */}
-                <div className="mt-4 max-w-md">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
+                <div className="mt-4 w-full max-w-md">
+                  <div className="flex items-center justify-between mb-2 gap-2">
+                    <div className="flex items-center gap-2 shrink-0">
                       <Star className="h-5 w-5 text-gold" />
-                      <span className="font-semibold">Niveau {user?.currentLevel || 1}</span>
+                      <span className="font-semibold whitespace-nowrap">Niveau {user?.currentLevel || 1}</span>
                     </div>
-                    <span className="text-sm text-muted-foreground">
-                      {xpToNextLevel} XP pour le niveau suivant
+                    <span className="text-sm text-muted-foreground text-right truncate">
+                      {xpToNextLevel} XP restants
                     </span>
                   </div>
                   <Progress value={levelProgress} className="h-3" />
@@ -85,13 +85,13 @@ export default function Profile() {
               </div>
 
               {/* Streak */}
-              <div className="flex flex-col items-center p-4 bg-orange-500/10 rounded-lg">
+              <div className="flex flex-col items-center p-5 bg-gradient-to-br from-orange-50 to-amber-50 dark:from-orange-950/30 dark:to-amber-950/30 rounded-xl border border-orange-200 dark:border-orange-800 shrink-0">
                 <Flame className="h-10 w-10 text-orange-500 streak-flame" />
-                <p className="text-2xl font-bold text-orange-500 mt-1">
+                <p className="text-2xl font-bold text-orange-600 dark:text-orange-400 mt-1">
                   {user?.currentStreak || 0}
                 </p>
-                <p className="text-sm text-muted-foreground">jours de suite</p>
-                <p className="text-xs text-muted-foreground mt-1">
+                <p className="text-sm text-muted-foreground whitespace-nowrap">jours de suite</p>
+                <p className="text-xs text-muted-foreground mt-1 whitespace-nowrap">
                   Record : {user?.longestStreak || 0} jours
                 </p>
               </div>
@@ -121,35 +121,43 @@ export default function Profile() {
               </div>
             ) : (
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <Card className="dashboard-card">
+                <Card className="bento-card">
                   <CardContent className="pt-6 text-center">
-                    <BookOpen className="h-8 w-8 mx-auto text-primary mb-2" />
-                    <p className="text-3xl font-bold">{stats?.completedLessons || 0}</p>
-                    <p className="text-sm text-muted-foreground">Leçons terminées</p>
+                    <div className="p-3 rounded-xl bg-primary/10 w-fit mx-auto mb-3">
+                      <BookOpen className="h-6 w-6 text-primary" />
+                    </div>
+                    <p className="text-3xl font-bold font-['Lexend']">{stats?.completedLessons || 0}</p>
+                    <p className="text-sm text-muted-foreground mt-1">Leçons terminées</p>
                   </CardContent>
                 </Card>
-                
-                <Card className="dashboard-card">
+
+                <Card className="bento-card">
                   <CardContent className="pt-6 text-center">
-                    <CheckCircle className="h-8 w-8 mx-auto text-success mb-2" />
-                    <p className="text-3xl font-bold">{stats?.completedModules || 0}</p>
-                    <p className="text-sm text-muted-foreground">Modules terminés</p>
+                    <div className="p-3 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 w-fit mx-auto mb-3">
+                      <CheckCircle className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
+                    </div>
+                    <p className="text-3xl font-bold font-['Lexend']">{stats?.completedModules || 0}</p>
+                    <p className="text-sm text-muted-foreground mt-1">Modules terminés</p>
                   </CardContent>
                 </Card>
-                
-                <Card className="dashboard-card">
+
+                <Card className="bento-card">
                   <CardContent className="pt-6 text-center">
-                    <Target className="h-8 w-8 mx-auto text-accent mb-2" />
-                    <p className="text-3xl font-bold">{stats?.passedQuizzes || 0}</p>
-                    <p className="text-sm text-muted-foreground">Quiz réussis</p>
+                    <div className="p-3 rounded-xl bg-purple-100 dark:bg-purple-900/30 w-fit mx-auto mb-3">
+                      <Target className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+                    </div>
+                    <p className="text-3xl font-bold font-['Lexend']">{stats?.passedQuizzes || 0}</p>
+                    <p className="text-sm text-muted-foreground mt-1">Quiz réussis</p>
                   </CardContent>
                 </Card>
-                
-                <Card className="dashboard-card">
+
+                <Card className="bento-card">
                   <CardContent className="pt-6 text-center">
-                    <Award className="h-8 w-8 mx-auto text-gold mb-2" />
-                    <p className="text-3xl font-bold">{stats?.badgesEarned || 0}</p>
-                    <p className="text-sm text-muted-foreground">Badges obtenus</p>
+                    <div className="p-3 rounded-xl bg-amber-100 dark:bg-amber-900/30 w-fit mx-auto mb-3">
+                      <Award className="h-6 w-6 text-amber-600 dark:text-amber-400" />
+                    </div>
+                    <p className="text-3xl font-bold font-['Lexend']">{stats?.badgesEarned || 0}</p>
+                    <p className="text-sm text-muted-foreground mt-1">Badges obtenus</p>
                   </CardContent>
                 </Card>
               </div>
@@ -165,31 +173,33 @@ export default function Profile() {
                 ))}
               </div>
             ) : badges && badges.length > 0 ? (
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {badges.map((ub) => (
                   <Card
                     key={ub.badge.id}
-                    className={`dashboard-card text-center badge-${ub.badge.rarity}`}
+                    className={`bento-card text-center badge-${ub.badge.rarity}`}
                   >
                     <CardContent className="pt-6">
                       {ub.badge.iconUrl ? (
                         <img
                           src={ub.badge.iconUrl}
                           alt={ub.badge.name}
-                          className="w-16 h-16 mx-auto mb-2"
+                          className="w-16 h-16 mx-auto mb-3"
                         />
                       ) : (
-                        <Trophy className="w-16 h-16 mx-auto mb-2 text-gold" />
+                        <div className="p-3 rounded-xl bg-amber-100 dark:bg-amber-900/30 w-fit mx-auto mb-3">
+                          <Trophy className="h-8 w-8 text-amber-600 dark:text-amber-400" />
+                        </div>
                       )}
-                      <h3 className="font-semibold">{ub.badge.name}</h3>
-                      <p className="text-xs text-muted-foreground mt-1">
+                      <h3 className="font-semibold font-['Lexend'] line-clamp-2">{ub.badge.name}</h3>
+                      <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
                         {ub.badge.description}
                       </p>
-                      <Badge variant="outline" className="mt-2 capitalize">
+                      <Badge variant="outline" className="mt-3 capitalize text-xs">
                         {ub.badge.rarity}
                       </Badge>
                       <p className="text-xs text-muted-foreground mt-2">
-                        Obtenu le {formatDate(ub.earnedAt)}
+                        {formatDate(ub.earnedAt)}
                       </p>
                     </CardContent>
                   </Card>
@@ -221,22 +231,38 @@ export default function Profile() {
                 {progress
                   .filter((p) => p.parcoursId && !p.moduleId && !p.lessonId)
                   .map((p) => (
-                    <Card key={p.id} className="dashboard-card">
+                    <Card key={p.id} className="bento-card">
                       <CardContent className="py-4">
-                        <div className="flex items-center justify-between mb-2">
-                          <h3 className="font-semibold">Parcours #{p.parcoursId}</h3>
+                        <div className="flex items-center justify-between gap-3 mb-3">
+                          <h3 className="font-semibold font-['Lexend'] truncate">Parcours #{p.parcoursId}</h3>
                           <Badge
                             variant={p.status === "completed" ? "default" : "secondary"}
-                            className="capitalize"
+                            className={`capitalize shrink-0 ${
+                              p.status === "completed"
+                                ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 border-0"
+                                : ""
+                            }`}
                           >
                             {p.status === "completed" ? "Terminé" :
                              p.status === "in_progress" ? "En cours" : "Non commencé"}
                           </Badge>
                         </div>
-                        <Progress value={p.progressPercent} className="h-2" />
-                        <div className="flex justify-between text-sm text-muted-foreground mt-2">
+                        <div className="h-3 rounded-full bg-muted overflow-hidden mb-3">
+                          <div
+                            className={`h-full rounded-full transition-all duration-500 ${
+                              p.status === "completed"
+                                ? "bg-emerald-500"
+                                : "bg-gradient-to-r from-primary to-teal-500"
+                            }`}
+                            style={{ width: `${p.progressPercent}%` }}
+                          />
+                        </div>
+                        <div className="flex justify-between text-sm text-muted-foreground">
                           <span>{p.progressPercent}% complété</span>
-                          <span>{p.xpEarned} XP gagnés</span>
+                          <span className="flex items-center gap-1">
+                            <Star className="h-3.5 w-3.5 text-amber-500" />
+                            {p.xpEarned} XP
+                          </span>
                         </div>
                       </CardContent>
                     </Card>

@@ -30,7 +30,7 @@ export default function ParcoursList() {
       <div className="space-y-6">
         {/* Header */}
         <div>
-          <h1 className="text-3xl font-bold">Parcours de formation</h1>
+          <h1 className="text-3xl font-bold font-['Lexend']">Parcours de formation</h1>
           <p className="text-muted-foreground mt-1">
             Explorez nos parcours et commencez votre apprentissage.
           </p>
@@ -81,49 +81,47 @@ export default function ParcoursList() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredParcours.map((p) => (
               <Link key={p.id} href={`/parcours/${p.slug}`}>
-                <Card className="dashboard-card cursor-pointer h-full flex flex-col">
+                <Card className="bento-card cursor-pointer h-full flex flex-col overflow-hidden group">
                   {p.imageUrl ? (
-                    <div className="h-40 overflow-hidden rounded-t-lg">
+                    <div className="h-40 overflow-hidden">
                       <img
                         src={p.imageUrl}
                         alt={p.title}
-                        className="w-full h-full object-cover transition-transform hover:scale-105"
+                        className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-300"
                       />
                     </div>
                   ) : (
-                    <div className="h-40 bg-gradient-to-br from-primary/20 to-accent/20 rounded-t-lg flex items-center justify-center">
+                    <div className="h-40 bg-gradient-to-br from-primary/20 to-teal-500/20 flex items-center justify-center">
                       <BookOpen className="h-16 w-16 text-primary/50" />
                     </div>
                   )}
                   <CardHeader className="flex-1">
                     <div className="flex items-start justify-between gap-2">
-                      <CardTitle className="text-lg line-clamp-2">{p.title}</CardTitle>
+                      <CardTitle className="text-lg line-clamp-2 font-['Lexend'] group-hover:text-primary transition-colors">{p.title}</CardTitle>
                       {p.isFree && (
-                        <Badge variant="secondary" className="shrink-0">Gratuit</Badge>
+                        <Badge className="bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 border-0 shrink-0">Gratuit</Badge>
                       )}
                     </div>
-                    <CardDescription className="line-clamp-3">
+                    <CardDescription className="line-clamp-3 mt-2">
                       {p.description || "Découvrez ce parcours de formation complet."}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                        <span className="flex items-center gap-1">
-                          <BookOpen className="h-4 w-4" />
-                          {p.totalModules} modules
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Clock className="h-4 w-4" />
-                          {p.totalHours}h
-                        </span>
-                      </div>
-                      <Badge variant="outline" className="capitalize">
-                        {p.difficulty === "debutant" ? "Débutant" : 
+                    <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground mb-4">
+                      <span className="flex items-center gap-1.5 bg-muted px-2.5 py-1.5 rounded-lg">
+                        <BookOpen className="h-3.5 w-3.5" />
+                        <span className="whitespace-nowrap">{p.totalModules} modules</span>
+                      </span>
+                      <span className="flex items-center gap-1.5 bg-muted px-2.5 py-1.5 rounded-lg">
+                        <Clock className="h-3.5 w-3.5" />
+                        <span className="whitespace-nowrap">{p.totalHours}h</span>
+                      </span>
+                      <Badge variant="outline" className="capitalize text-xs">
+                        {p.difficulty === "debutant" ? "Débutant" :
                          p.difficulty === "intermediaire" ? "Intermédiaire" : "Avancé"}
                       </Badge>
                     </div>
-                    <Button className="w-full mt-4 gap-2" variant="outline">
+                    <Button className="w-full gap-2 btn-squishy" variant="outline">
                       Voir le parcours <ArrowRight className="h-4 w-4" />
                     </Button>
                   </CardContent>

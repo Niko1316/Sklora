@@ -201,9 +201,9 @@ export default function StudentDashboard() {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {parcours.slice(0, 3).map((p) => (
                 <Link key={p.id} href={`/parcours/${p.slug}`}>
-                  <Card className="bento-card cursor-pointer h-full group">
+                  <Card className="bento-card cursor-pointer h-full group overflow-hidden">
                     {p.imageUrl && (
-                      <div className="h-36 overflow-hidden rounded-t-xl -mx-5 -mt-5 mb-4">
+                      <div className="h-40 w-full overflow-hidden">
                         <img
                           src={p.imageUrl}
                           alt={p.title}
@@ -211,11 +211,11 @@ export default function StudentDashboard() {
                         />
                       </div>
                     )}
-                    <CardHeader className="p-0">
+                    <CardHeader>
                       <div className="flex items-start justify-between gap-2">
-                        <CardTitle className="text-lg font-['Lexend'] group-hover:text-primary transition-colors">{p.title}</CardTitle>
+                        <CardTitle className="text-lg font-['Lexend'] group-hover:text-primary transition-colors line-clamp-2">{p.title}</CardTitle>
                         {p.isFree && (
-                          <Badge className="bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 border-0">
+                          <Badge className="bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 border-0 shrink-0">
                             Gratuit
                           </Badge>
                         )}
@@ -224,15 +224,15 @@ export default function StudentDashboard() {
                         {p.description || "Découvrez ce parcours de formation."}
                       </CardDescription>
                     </CardHeader>
-                    <CardContent className="p-0 mt-4">
-                      <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                        <span className="flex items-center gap-1.5 bg-muted px-2 py-1 rounded-lg">
+                    <CardContent>
+                      <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+                        <span className="flex items-center gap-1.5 bg-muted px-2.5 py-1.5 rounded-lg">
                           <BookOpen className="h-3.5 w-3.5" />
-                          {p.totalModules} modules
+                          <span className="whitespace-nowrap">{p.totalModules} modules</span>
                         </span>
-                        <span className="flex items-center gap-1.5 bg-muted px-2 py-1 rounded-lg">
+                        <span className="flex items-center gap-1.5 bg-muted px-2.5 py-1.5 rounded-lg">
                           <Clock className="h-3.5 w-3.5" />
-                          {p.totalHours}h
+                          <span className="whitespace-nowrap">{p.totalHours}h</span>
                         </span>
                         <Badge variant="outline" className="capitalize text-xs">
                           {p.difficulty}
