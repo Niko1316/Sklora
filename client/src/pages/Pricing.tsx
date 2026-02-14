@@ -4,8 +4,10 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { getLoginUrl } from "@/const";
-import { Check, X, Zap, Crown, Shield, GraduationCap, Bitcoin, ArrowRight, Sparkles, Gift } from "lucide-react";
+import { Check, X, Zap, Crown, Shield, GraduationCap, Bitcoin, ArrowRight, Sparkles, Gift, Calculator, TrendingUp } from "lucide-react";
 import { Link } from "wouter";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -78,6 +80,7 @@ export default function Pricing() {
   const { isAuthenticated } = useAuth();
   const [isYearly, setIsYearly] = useState(false);
   const [isCrypto, setIsCrypto] = useState(false);
+  const [hoursPerWeek, setHoursPerWeek] = useState([5]);
 
   const createCheckoutMutation = trpc.subscription.createCheckout.useMutation({
     onSuccess: (data) => {
@@ -383,15 +386,119 @@ export default function Pricing() {
           </div>
         </div>
 
+        {/* ROI Calculator */}
+        <div className="mt-20">
+          <Card className="bento-card max-w-4xl mx-auto bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-teal-950/30 dark:to-cyan-950/30 border-teal-200 dark:border-teal-800">
+            <CardHeader className="text-center">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-100 dark:bg-teal-900/50 text-teal-700 dark:text-teal-300 text-sm font-medium mb-4 mx-auto w-fit">
+                <Calculator className="h-4 w-4" />
+                Calculateur d'économies
+              </div>
+              <CardTitle className="text-2xl md:text-3xl font-bold font-['Lexend']">
+                Calculez votre retour sur investissement
+              </CardTitle>
+              <CardDescription className="text-base">
+                Découvrez combien vous économisez avec Sklora par rapport aux formations traditionnelles
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <Label className="text-base font-medium">Heures d'apprentissage par semaine</Label>
+                  <span className="text-2xl font-bold text-primary">{hoursPerWeek[0]}h</span>
+                </div>
+                <Slider
+                  value={hoursPerWeek}
+                  onValueChange={setHoursPerWeek}
+                  min={1}
+                  max={20}
+                  step={1}
+                  className="w-full"
+                />
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6 pt-4">
+                <div className="p-6 rounded-2xl bg-background border-2 border-border">
+                  <p className="text-sm text-muted-foreground mb-2">Formation traditionnelle</p>
+                  <p className="text-3xl font-bold text-destructive mb-1">
+                    {(hoursPerWeek[0] * 50 * 12).toLocaleString()}$
+                  </p>
+                  <p className="text-xs text-muted-foreground">par an (50$/heure × {hoursPerWeek[0]}h/sem × 52 sem)</p>
+                </div>
+
+                <div className="p-6 rounded-2xl bg-gradient-to-br from-primary to-teal-600 text-white">
+                  <div className="flex items-center gap-2 mb-2">
+                    <TrendingUp className="h-4 w-4" />
+                    <p className="text-sm">Sklora Pro (annuel)</p>
+                  </div>
+                  <p className="text-3xl font-bold mb-1">
+                    {isCrypto ? "259$" : "288$"}
+                  </p>
+                  <p className="text-xs opacity-80">par an (accès illimité + certifications)</p>
+                </div>
+              </div>
+
+              <div className="p-6 rounded-2xl bg-emerald-100 dark:bg-emerald-900/30 border-2 border-emerald-500 text-center">
+                <p className="text-sm text-emerald-700 dark:text-emerald-300 mb-2 font-medium">
+                  💰 Vous économisez
+                </p>
+                <p className="text-4xl font-bold text-emerald-600 dark:text-emerald-400 mb-1">
+                  {((hoursPerWeek[0] * 50 * 52) - (isCrypto ? 259 : 288)).toLocaleString()}$
+                </p>
+                <p className="text-sm text-emerald-700 dark:text-emerald-300">
+                  soit {Math.round(((hoursPerWeek[0] * 50 * 52) - (isCrypto ? 259 : 288)) / (hoursPerWeek[0] * 50 * 52) * 100)}% d'économies par an
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
         {/* FAQ section */}
-        <div className="mt-20 text-center">
-          <h2 className="text-3xl font-bold mb-4 font-['Lexend']">Des questions ?</h2>
-          <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
-            Notre équipe est là pour vous aider à choisir le plan qui correspond le mieux à vos objectifs d'apprentissage.
-          </p>
-          <Button variant="outline" size="lg" className="btn-squishy">
-            Nous contacter
-          </Button>
+        <div className="mt-20">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4 font-['Lexend']">Questions fréquentes sur les tarifs</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Tout ce que vous devez savoir pour choisir le bon plan
+            </p>
+          </div>
+
+          <Accordion type="single" collapsible className="max-w-3xl mx-auto space-y-4">
+            {[
+              {
+                question: "Quelle est la différence entre l'abonnement mensuel et annuel ?",
+                answer: "L'abonnement annuel vous fait économiser 20% par rapport au mensuel. De plus, en payant en crypto, vous bénéficiez d'une réduction supplémentaire de 10%, soit 30% d'économies au total."
+              },
+              {
+                question: "Puis-je changer de plan à tout moment ?",
+                answer: "Oui ! Vous pouvez passer du plan Basic au Pro à tout moment. La différence de prix sera calculée au prorata pour la période restante. Le passage du Pro au Basic prendra effet à la fin de votre période de facturation en cours."
+              },
+              {
+                question: "Comment fonctionne la garantie de remboursement ?",
+                answer: "Nous offrons une garantie satisfait ou remboursé de 30 jours sur tous nos plans. Si Sklora ne répond pas à vos attentes, contactez-nous pour un remboursement complet, sans questions posées."
+              },
+              {
+                question: "Les certifications Pro sont-elles vraiment reconnues ?",
+                answer: "Absolument. Nos certifications sont reconnues par nos partenaires industriels et peuvent être vérifiées via notre plateforme. Elles apparaissent sur votre profil LinkedIn avec un badge officiel et sont prisées par les recruteurs."
+              },
+              {
+                question: "Que se passe-t-il si j'annule mon abonnement ?",
+                answer: "Vous conservez l'accès à tous les contenus jusqu'à la fin de votre période payée. Après annulation, votre compte passe automatiquement en mode gratuit avec accès aux 3 leçons gratuites. Vous pouvez réactiver à tout moment."
+              },
+              {
+                question: "Y a-t-il des frais cachés ?",
+                answer: "Aucun. Le prix affiché est le prix final. Pas de frais de setup, pas de frais par cours, pas de frais de certificat supplémentaires (inclus dans Pro). Total transparence."
+              },
+            ].map((faq, i) => (
+              <AccordionItem key={i} value={`faq-${i}`} className="bento-card px-6 border-0">
+                <AccordionTrigger className="text-left font-semibold hover:no-underline">
+                  {faq.question}
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground">
+                  {faq.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
       </main>
 
