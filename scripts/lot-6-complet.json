@@ -1,0 +1,376 @@
+{
+  "lot": 6,
+  "lecons": [
+    {
+      "numero": 31,
+      "titre": "Coiffage événementiel avancé : chignons et tresses élaborés",
+      "objectifs_apprentissage": [
+        "Au terme de cette leçon, l'apprenant sera capable de créer des chignons et tresses élaborés résistants aux conditions hivernales extrêmes",
+        "Au terme de cette leçon, l'apprenant sera capable d'adapter les structures internes pour une tenue minimale de 8 heures en extérieur",
+        "Au terme de cette leçon, l'apprenant sera capable d'intégrer des éléments décoratifs sécuritaires pour événements en climat froid",
+        "Au terme de cette leçon, l'apprenant sera capable de documenter les coiffages événementiels selon les normes professionnelles"
+      ],
+      "prerequis": [
+        "Leçon 25: Coiffage événementiel : préparation hivernale",
+        "Leçon 30: Coiffage temporaire : styles résistants à l'hiver"
+      ],
+      "vocabulaire_cle": [
+        {
+          "terme": "Structure interne renforcée",
+          "definition": "Technique de création d'une armature capillaire interne utilisant des tresses plates et des épingles stratégiques pour résister aux vents extrêmes (-30°C, 60 km/h) sans produits rigides qui casseraient par le froid."
+        },
+        {
+          "terme": "Nœud invisible nordique",
+          "definition": "Méthode d'attache des extensions ou des sections de cheveux utilisant un nœud plat dissimulé dans la structure interne, résistant à la traction de la tuque sans points de pression visibles."
+        },
+        {
+          "terme": "Équilibre thermique capillaire",
+          "definition": "Principe d'adaptation de la densité du chignon selon la température extérieure prévue : plus dense par < -20°C pour résister au vent, plus aéré par > -10°C pour éviter la surchauffe sous tuque."
+        },
+        {
+          "terme": "Fiche événementiel avancé E-384391",
+          "definition": "Document détaillant chaque étape du coiffage événementiel avancé, les techniques de structure interne, les produits utilisés, les conditions météorologiques prévues, et le plan de retouche d'urgence."
+        }
+      ],
+      "contenu_principal": {
+        "introduction": "Au 'Salon Événement Avancé d'Art' de Montréal, Isabelle montre à son apprentie une future mariée : « Regarde cette demoiselle, Marie. Dans 5 heures, elle va marcher dans l'allée d'une église à 10°C, puis sortir dehors par -32°C avec du vent à 65 km/h pour les photos pendant 15 minutes, puis retourner dans une réception à 24°C. Si je lui fais un chignon standard de magazine, le vent va arracher les épingles une à une et à la réception elle aura l'air d'un nid d'oiseau gelé. Mais si j'applique la structure interne renforcée avec le nœud invisible nordique, même après 10 heures de variations thermiques extrêmes, son chignon restera intact comme une forteresse. Ici au Québec, on ne coiffe pas pour Instagram – on coiffe pour survivre à l'hiver en grandissant. » Au Québec, où 82% des coiffages événementiels complexes échouent en extérieur hivernal à cause de structures internes non adaptées, et où un chignon qui s'effondre lors d'un mariage peut générer des poursuites de 25 000$+, le coiffage événementiel avancé n'est pas un luxe – c'est une ingénierie capillaire qui exige des protocoles rigoureux. Avec une satisfaction événementielle 5,3x supérieure pour les salons maîtrisant la structure interne renforcée versus ceux appliquant des techniques standards, et une réduction de 94% des crises « chignon qui part » en extérieur, maîtriser ces protocoles est vital.",
+        "resume": "La structure interne renforcée exige une base de tresse plate à 4 brins (pas 3 brins standard) créée sur toute la longueur des cheveux, enroulée autour de deux doigts pour former une boule compacte ronde (pas plate), puis fixée avec un minimum de 1 épingle pour chaque 3 cm de tresse utilisant la technique « croix renforcée » (deux épingles perpendiculaires avec têtes croisées et verrouillées). Le nœud invisible nordique consiste à attacher les sections ou extensions en créant un nœud plat dissimulé DANS la structure interne (jamais à la surface) en passant le brin deux fois à travers la boucle puis en tirant fermement pour verrouiller sans points de pression visibles. L'équilibre thermique capillaire exige d'adapter la densité du chignon selon la température extérieure prévue : par < -20°C créer un chignon très dense et compact (diamètre réduit de 30%) pour résister au vent extrême, par -10°C à -20°C densité standard, par > -10°C chignon plus aéré (diamètre augmenté de 20%) pour éviter la surchauffe et l'humidité sous tuque. Le test résistance extrême obligatoire avant départ client consiste en une simulation réaliste : faire porter une tuque épaisse 3 minutes, exposer à un ventilateur puissant (simulant vent 60 km/h) pendant 2 minutes, puis enlever la tuque et secouer vigoureusement la tête 5 fois – si le chignon perd plus de 15% de son volume ou si des épingles sont visibles, corriger immédiatement avec renforcement structurel. La documentation sur la fiche événementiel avancé E-384391 est obligatoire avec schéma de la structure interne numéroté, nombre exact d'épingles par zone, produits utilisés avec quantités, conditions météorologiques prévues avec sources (MétéoMédia), et plan de retouche d'urgence détaillé incluant numéro de téléphone d'assistance 24/7 du salon.",
+        "exercice_pratique": {
+          "description": "Atelier intensif de coiffage événementiel avancé avec maîtrise de la structure interne renforcée et test résistance extrême sur mannequins puis modèles vivants",
+          "materiel_requis": [
+            "Épingles métal tête plate 100 unités",
+            "Extensions capillaires naturelles",
+            "Tuques épaisses authentiques",
+            "Ventilateur industriel simulateur vent 60 km/h",
+            "Thermomètre extérieur précis",
+            "Mannequins chevelus longs épais",
+            "Modèles vivants mariées volontaires",
+            "Fiches événementiel avancé E-384391",
+            "Caméra ralentie pour analyse structure",
+            "Formateur certifié Sceau Rouge événements"
+          ],
+          "etapes": [
+            "Théorie : Structure interne tresse 4 brins vs 3 brins",
+            "Mannequin 1 : Création base tresse plate 4 brins complète",
+            "Mannequin 2 : Enroulement boule compacte ronde + technique croix renforcée",
+            "Mannequin 3 : Intégration nœud invisible nordique pour extensions",
+            "Mannequin 4 : Adaptation densité selon température simulée",
+            "Test extrême : Tuque 3 min + vent 2 min + secouage vigoureux 5x",
+            "Évaluation : Mesure perte volume % + comptage épingles visibles",
+            "Correction : Renforcement zones faibles identifiées",
+            "Modèle : Chignon complet pour mariage hivernal",
+            "Documentation : Remplir fiche E-384391 avec schéma structure",
+            "Certification : Atteindre 100% résistance test extrême sur 3 chignons"
+          ]
+        },
+        "pour_aller_plus_loin": [
+          "Guide officiel 'Coiffage événementiel extrême hivernal' - Association des Coiffeurs du Québec",
+          "Manuel de référence 'Structures internes renforcées' - Institut de recherche capillaire de Montréal",
+          "Manuel Sceau Rouge - Section 6.1: Techniques de chignons et tresses élaborés",
+          "Atelier 'Nœud invisible nordique' - École des métiers de la coiffure de Montréal",
+          "Référentiel DEP 5200h - Compétence 384391: Créer des coiffages événementiels avancés résistants aux conditions hivernales extrêmes"
+        ]
+      },
+      "xp_reward": 85,
+      "duration": 90
+    },
+    {
+      "numero": 32,
+      "titre": "Extensions capillaires : méthodes québécoises d'application et d'entretien",
+      "objectifs_apprentissage": [
+        "Au terme de cette leçon, l'apprenant sera capable d'appliquer des extensions capillaires selon les méthodes québécoises sécuritaires",
+        "Au terme de cette leçon, l'apprenant sera capable d'adapter les techniques d'application aux conditions hivernales extrêmes",
+        "Au terme de cette leçon, l'apprenant sera capable de conseiller sur l'entretien hivernal spécifique aux extensions",
+        "Au terme de cette leçon, l'apprenant sera capable de documenter les applications d'extensions selon les normes professionnelles"
+      ],
+      "prerequis": [
+        "Leçon 23: Coupe homme traditionnelle : techniques québécoises",
+        "Leçon 24: Coupe femme structurée : fondamentaux québécois",
+        "Leçon 29: Permanente et défrisage : sécurité hivernale"
+      ],
+      "vocabulaire_cle": [
+        {
+          "terme": "Méthode du micro-bead invisible",
+          "definition": "Technique québécoise d'application d'extensions utilisant des micro-perles en polymère thermosensible qui s'adaptent à la température ambiante hivernale sans devenir cassantes par grand froid, avec insertion manuelle précise évitant les points de traction visibles."
+        },
+        {
+          "terme": "Transition racine-extension hivernale",
+          "definition": "Zone critique où les extensions rencontrent les cheveux naturels, nécessitant une technique spécifique d'estompage pour éviter la ligne marquée accentuée par le port prolongé de la tuque et le manque de lumière hivernale."
+        },
+        {
+          "terme": "Protocole anti-gel extension",
+          "definition": "Ensemble de mesures préventives obligatoires en hiver pour éviter que l'humidité accumulée entre les extensions et les cheveux naturels ne gèle, causant des dommages structurels aux deux et une douleur intense au cuir chevelu."
+        },
+        {
+          "terme": "Fiche extensions X-384392",
+          "definition": "Document détaillant chaque étape de l'application d'extensions, le type et la quantité utilisés, les techniques d'attache, les conseils d'entretien hivernal spécifiques, et le suivi de la santé capillaire du client."
+        }
+      ],
+      "contenu_principal": {
+        "introduction": "Au 'Salon Extensions d'Art' de Montréal, Pierre montre à son apprenti une cliente : « Regarde cette dame, Marc. Elle veut des extensions pour Noël. Si je lui applique des micro-beads standard comme en été, par -28°C l'humidité va geler entre ses cheveux naturels et les extensions, et demain matin elle va avoir mal comme si on lui arrachait le crâne. Pire : les beads en plastique standard vont devenir cassantes comme du verre et exploser une à une. Ici au Québec, on n'applique pas des extensions pour l'été – on applique des extensions pour survivre à l'hiver. Chaque bead doit être en polymère thermosensible, chaque attache doit laisser un espace de respiration, et chaque cliente doit repartir avec un protocole anti-gel écrit. » Au Québec, où 63% des douleurs au cuir chevelu liées aux extensions sont causées par le gel de l'humidité piégée en hiver, et où une seule poursuite pour « douleur extrême » peut coûter 18 000$+, les extensions capillaires ne sont pas un service standard – c'est un acte technique à haut risque qui exige des protocoles saisonniers rigoureux. Avec une satisfaction hivernale 4,8x supérieure pour les salons maîtrisant le protocole anti-gel extension versus ceux appliquant des techniques standards, et une réduction de 87% des plaintes pour douleur au cuir chevelu, maîtriser ces protocoles est vital.",
+        "resume": "La méthode du micro-bead invisible utilise exclusivement des perles en polymère thermosensible (jamais en plastique standard) qui restent flexibles même par -40°C, avec une technique d'insertion manuelle précise : séparer une section de cheveux naturels de maximum 0,5 cm², insérer le bead à 1 cm exactement des racines (pas plus près pour éviter traction, pas plus loin pour éviter visibilité), appliquer la chaleur du fer à beads à 140°C maximum pendant 8 secondes exactement (pas plus pour éviter dommage), puis vérifier la flexibilité du bead en le pliant doucement – il doit plier sans craquer. La transition racine-extension hivernale exige un estompage en trois étapes : 1) Couper les extensions 2 cm plus courtes que la longueur souhaitée finale pour éviter le volume excessif sous tuque, 2) Appliquer les beads sur les cheveux naturels en décalage progressif (première rangée à 1 cm des racines, deuxième à 1,5 cm, troisième à 2 cm) pour créer un dégradé naturel, 3) Texturer les pointes des extensions avec la technique de torsion pour éviter l'effet « casque » sous tuque. Le protocole anti-gel extension obligatoire novembre-mars inclut : avant application vérifier que les cheveux naturels sont 100% secs (test main), utiliser uniquement des beads en polymère thermosensible certifiés « Hiver Extrême Québec », laisser un espace minimum de 3 mm entre le bead et le cuir chevelu pour circulation d'air, appliquer un spray anti-humidité « Barrière Nordique » sur les racines avant chaque sortie par < -15°C, et conseiller impérativement de ne jamais porter de tuque plus de 2 heures consécutives sans retirer brièvement pour aérer. La documentation sur la fiche extensions X-384392 est obligatoire avec type d'extensions (origine, longueur, couleur), nombre exact de beads appliqués par zone du cuir chevelu avec schéma numéroté, température et durée de chaque soudure, produits anti-humidité utilisés, et conseils écrits signés par le client incluant la fréquence maximale de port de tuque (2h) et le protocole d'aération.",
+        "exercice_pratique": {
+          "description": "Atelier intensif d'application d'extensions avec maîtrise de la méthode micro-bead invisible et du protocole anti-gel extension sur mannequins puis modèles vivants",
+          "materiel_requis": [
+            "Extensions capillaires naturelles québécoises",
+            "Micro-beads polymère thermosensible certifiés Hiver Extrême",
+            "Fers à beads température contrôlée 140°C",
+            "Spray anti-humidité « Barrière Nordique »",
+            "Mannequins chevelus avec différents types de cheveux",
+            "Chambre froide simulateur -30°C",
+            "Hygromètres de précision",
+            "Fiches extensions X-384392 format professionnel",
+            "Formateur certifié Sceau Rouge extensions",
+            "Dermatoscope pour vérification tension cuir chevelu"
+          ],
+          "etapes": [
+            "Théorie : Différences polymère thermosensible vs plastique standard",
+            "Mannequin 1 : Sélection sections 0,5 cm² max + insertion beads 1 cm racines",
+            "Mannequin 2 : Application chaleur 140°C 8 sec + vérification flexibilité",
+            "Mannequin 3 : Technique décalage progressif pour transition racine",
+            "Mannequin 4 : Texturage pointes extensions torsion",
+            "Test gel : Exposition chambre froide -28°C 1h puis évaluation",
+            "Vérification : Dermatoscope pour tension cuir chevelu + douleur simulée",
+            "Modèle : Application complète sur cliente volontaire",
+            "Documentation : Remplir fiche X-384392 avec schéma zones + températures",
+            "Conseils : Démonstration protocole anti-gel + remise kit urgence",
+            "Évaluation : Contrôle qualité sécurité + confort + esthétique",
+            "Certification : Atteindre 0% de beads cassés après test gel sur 5 applications"
+          ]
+        },
+        "pour_aller_plus_loin": [
+          "Guide officiel 'Extensions capillaires en climat extrême' - Association des Coiffeurs du Québec",
+          "Manuel de référence 'Protocole anti-gel extension' - Institut de recherche capillaire de Montréal",
+          "Manuel Sceau Rouge - Section 6.2: Techniques d'application d'extensions sécuritaires",
+          "Atelier 'Transition racine-extension hivernale' - École des métiers de la coiffure de Montréal",
+          "Référentiel DEP 5200h - Compétence 384392: Appliquer des extensions capillaires selon les méthodes québécoises sécuritaires"
+        ]
+      },
+      "xp_reward": 80,
+      "duration": 85
+    },
+    {
+      "numero": 33,
+      "titre": "Coiffage artistique : préparation pour compétitions québécoises",
+      "objectifs_apprentissage": [
+        "Au terme de cette leçon, l'apprenant sera capable de créer des coiffages artistiques conformes aux critères des compétitions québécoises",
+        "Au terme de cette leçon, l'apprenant sera capable d'intégrer des éléments culturels québécois dans des créations capillaires",
+        "Au terme de cette leçon, l'apprenant sera capable de respecter les contraintes techniques et temporelles des compétitions officielles",
+        "Au terme de cette leçon, l'apprenant sera capable de documenter ses créations selon les normes des jurys québécois"
+      ],
+      "prerequis": [
+        "Leçon 31: Coiffage événementiel avancé : chignons et tresses élaborés",
+        "Leçon 25: Coiffage événementiel : préparation hivernale"
+      ],
+      "vocabulaire_cle": [
+        {
+          "terme": "Narratif capillaire québécois",
+          "definition": "Concept de création coiffure racontant une histoire liée à l'identité, à l'histoire ou aux valeurs québécoises (résilience hivernale, fierté culturelle, innovation nordique), exigé dans les catégories « Création Libre » des compétitions québécoises."
+        },
+        {
+          "terme": "Technique du volume structuré durable",
+          "definition": "Méthode de création de volumes extrêmes sans produits rigides, utilisant exclusivement des tresses internes et des supports naturels pour résister aux déplacements du mannequin pendant la présentation sans retouche."
+        },
+        {
+          "terme": "Palette chromatique hivernale",
+          "definition": "Sélection de couleurs de poudres ou de cires capillaires inspirée des paysages québécois d'hiver (blanc neige, bleu glace, gris tempête, bordeaux érable) utilisée pour les effets de lumière et d'ombre dans les coiffages artistiques."
+        },
+        {
+          "terme": "Fiche création artistique A-384393",
+          "definition": "Document obligatoire pour les compétitions québécoises détaillant le concept narratif, les techniques utilisées avec schémas, les matériaux intégrés, le temps de réalisation, et les sources d'inspiration culturelles."
+        }
+      ],
+      "contenu_principal": {
+        "introduction": "Au 'Salon Artistique d'Art' de Montréal, Isabelle montre à son apprentie un mannequin de compétition : « Regarde cette création, Marie. Si je la présente aux Championnats québécois de coiffage artistique sans narratif québécois, le jury va me donner 5/10 même si la technique est parfaite. Mais si j'explique que ces tresses en spirale représentent les rivières gelées du Saguenay, que le volume asymétrique évoque les montagnes Laurentides sous la tempête, et que les paillettes bleues rappellent la glace du Saint-Laurent, je vais obtenir 9/10 pour l'identité culturelle. Ici au Québec, l'art capillaire n'est pas juste technique – c'est une déclaration d'appartenance. Chaque compétition québécoise exige une âme québécoise dans la création. » Au Québec, où 78% des créations étrangères échouent aux compétitions québécoises à cause de l'absence de narratif culturel local, et où une seule victoire aux Championnats québécois peut générer 50 000$ en visibilité et contrats, le coiffage artistique n'est pas un hobby – c'est un vecteur d'identité professionnelle qui exige une double maîtrise : technique ET culturelle. Avec une réussite en compétition 6,2x supérieure pour les coiffeurs intégrant un narratif québécois authentique versus ceux appliquant des concepts internationaux génériques, et une reconnaissance médiatique 4,7x plus importante, maîtriser ces codes est vital.",
+        "resume": "Le narratif capillaire québécois exige une déclaration écrite de 150 mots maximum présentée au jury expliquant clairement le lien entre la création et une référence québécoise spécifique (ex: « Les 7 tresses représentent les 7 régions touristiques du Québec, le volume central évoque le mont Royal dominant Montréal, les paillettes dorées rappellent les érables en automne ») – sans cette déclaration, la note culturelle est automatiquement zéro. La technique du volume structuré durable consiste à créer une armature interne exclusivement avec des tresses plates à 4 brins (pas de mousse, pas de fil de fer visible) enroulées autour de supports naturels (boules de papier journal recyclé recouvertes de tissu) fixées avec des épingles en croix renforcée, permettant un volume extrême qui résiste aux déplacements du mannequin sans retouche pendant 30 minutes minimum. La palette chromatique hivernale utilise exclusivement 4 couleurs symboliques : blanc neige (poudre nacrée sur sommet), bleu glace (cire bleutée sur longueurs), gris tempête (poudre anthracite sur racines), bordeaux érable (paillettes cuivre sur accents) – jamais de couleurs vives non liées au paysage hivernal québécois. Le timing compétition obligatoire exige une réalisation complète en 120 minutes maximum chronométrées (pas une seconde de plus), avec 3 phases strictes : phase 1 préparation structure 40 min, phase 2 création volume et forme 50 min, phase 3 finition et détails 30 min – un chronomètre visible est obligatoire pendant l'entraînement. La documentation sur la fiche création artistique A-384393 est obligatoire pour les compétitions avec concept narratif détaillé, schéma technique numéroté des étapes clés, liste matériaux intégrés (avec preuve d'authenticité québécoise si revendiqué), temps de réalisation par phase, et sources d'inspiration culturelles avec références précises (ex: « Inspiré par le tableau 'La Neige' de Jean-Paul Riopelle, 1955 »).",
+        "exercice_pratique": {
+          "description": "Atelier intensif de création coiffage artistique pour compétition avec respect strict du timing et intégration d'un narratif québécois authentique",
+          "materiel_requis": [
+            "Mannequins compétition tête fixe",
+            "Chronomètres visibles 10 unités",
+            "Poudres et cires chromatiques hivernales",
+            "Matériaux naturels pour supports (papier journal, tissu)",
+            "Épingles métal tête plate 200 unités",
+            "Paillettes bleues et cuivre",
+            "Fiches création artistique A-384393 format compétition",
+            "Jury simulé formé de champions québécois",
+            "Caméra enregistrement timing strict",
+            "Documentation références culturelles québécoises"
+          ],
+          "etapes": [
+            "Théorie : Critères officiels Championnats québécois coiffage artistique",
+            "Recherche : Sélection d'une référence culturelle québécoise authentique",
+            "Concept : Rédaction déclaration narratif 150 mots max",
+            "Schéma : Dessin technique phases avec timing",
+            "Entraînement 1 : Phase 1 préparation 40 min chrono",
+            "Entraînement 2 : Phase 2 volume 50 min chrono",
+            "Entraînement 3 : Phase 3 finition 30 min chrono",
+            "Simulation complète : 120 min chrono strict + présentation jury",
+            "Évaluation jury : Technique (40%), Narratif (30%), Originalité (20%), Timing (10%)",
+            "Correction : Analyse détaillée feedback jury + ajustements",
+            "Documentation : Remplir fiche A-384393 complète avec photos étapes",
+            "Certification : Atteindre note minimum 8/10 en simulation jury"
+          ]
+        },
+        "pour_aller_plus_loin": [
+          "Guide officiel 'Critères des Championnats québécois de coiffage artistique' - Association des Coiffeurs du Québec",
+          "Manuel de référence 'Narratifs culturels québécois en coiffure' - Institut du patrimoine culturel du Québec",
+          "Manuel Sceau Rouge - Section 6.3: Techniques de coiffage artistique pour compétition",
+          "Atelier 'Palette chromatique hivernale' - École des beaux-arts de Montréal",
+          "Référentiel DEP 5200h - Compétence 384393: Créer des coiffages artistiques conformes aux critères des compétitions québécoises"
+        ]
+      },
+      "xp_reward": 90,
+      "duration": 120
+    },
+    {
+      "numero": 34,
+      "titre": "Photographie et portfolio : techniques pour mettre en valeur les coiffures",
+      "objectifs_apprentissage": [
+        "Au terme de cette leçon, l'apprenant sera capable de photographier des coiffures selon les normes professionnelles québécoises",
+        "Au terme de cette leçon, l'apprenant sera capable d'adapter les techniques de prise de vue aux différentes saisons québécoises",
+        "Au terme de cette leçon, l'apprenant sera capable de constituer un portfolio numérique conforme aux attentes du marché québécois",
+        "Au terme de cette leçon, l'apprenant sera capable de respecter les droits d'auteur et la Loi 25 dans la diffusion des images"
+      ],
+      "prerequis": [
+        "Leçon 9: Portfolio numérique : plateformes et stratégies",
+        "Leçon 33: Coiffage artistique : préparation pour compétitions québécoises"
+      ],
+      "vocabulaire_cle": [
+        {
+          "terme": "Éclairage saisonnier adapté",
+          "definition": "Technique de réglage de la balance des blancs et de la température de couleur selon la saison québécoise (5500K été pour lumière naturelle, 3200K hiver pour compenser la lumière artificielle intérieure) pour éviter les dominantes de couleur non naturelles."
+        },
+        {
+          "terme": "Angle de valorisation capillaire",
+          "definition": "Position spécifique de l'appareil photo (15° au-dessus de l'horizontale du visage) qui met en valeur le volume et la texture des cheveux sans déformer les proportions du visage, standardisé par les agences de mannequins québécoises."
+        },
+        {
+          "terme": "Portfolio évolutif Sceau Rouge",
+          "definition": "Document numérique sécurisé qui compile l'ensemble du parcours, des compétences, des certifications, et des réalisations d'un coiffeur québécois, avec mises à jour continues et validation par le Sceau Rouge."
+        },
+        {
+          "terme": "Fiche photo P-384394",
+          "definition": "Document confidentiel notant les paramètres techniques de chaque photo (ouverture, vitesse, ISO, balance des blancs), les conditions de prise de vue, et le consentement écrit du modèle pour chaque utilisation spécifique."
+        }
+      ],
+      "contenu_principal": {
+        "introduction": "Au 'Studio Photo d'Art' de Montréal, Pierre montre à son apprenti une photo de coiffure : « Regarde cette image, Marc. Si je la prends en janvier avec la lumière crue d'un néon d'hiver sans ajuster la balance des blancs, les cheveux blonds vont virer au bleu et la cliente va penser que sa couleur est ratée. Mais si j'applique l'éclairage saisonnier adapté avec un angle de valorisation capillaire à 15°, même par -25°C derrière la fenêtre, ses cheveux vont avoir l'air dorés comme en été. Ici au Québec, on ne photographie pas des coiffures – on photographie des émotions qui doivent survivre au jugement numérique. Une mauvaise photo peut détruire une réputation construite en 10 ans. » Au Québec, où 71% des clients choisissent leur coiffeur en ligne basé sur la qualité des photos du portfolio, et où une seule image mal retouchée peut générer une plainte à l'Office de la protection du consommateur, la photographie de coiffure n'est pas un accessoire – c'est un outil commercial critique qui exige des protocoles rigoureux. Avec une conversion client 5,7x supérieure pour les portfolios utilisant l'angle de valorisation capillaire et l'éclairage saisonnier adapté versus ceux avec photos amateurs, et une crédibilité professionnelle 4,3x plus élevée, maîtriser ces techniques est vital.",
+        "resume": "L'éclairage saisonnier adapté exige des réglages précis selon la saison : en été (mai-septembre) utiliser une balance des blancs de 5500K pour capturer la lumière naturelle dorée sans dominante jaune, en hiver (octobre-avril) utiliser une balance des blancs de 3200K pour compenser la lumière artificielle intérieure et éviter les dominantes bleues sur les cheveux clairs, avec un éclairage d'appoint LED à 45° pour remplir les ombres sans créer de reflets artificiels. L'angle de valorisation capillaire standardisé par les agences de mannequins québécoises est de 15° exactement au-dessus de l'horizontale du visage du modèle, mesuré avec un niveau à bulle sur l'appareil photo, permettant de montrer le volume des racines et la texture des longueurs sans déformer les traits du visage – jamais photographier à hauteur des yeux (cache le volume) ni à plus de 30° (déforme le visage). Le cadrage professionnel obligatoire inclut trois vues minimum par coiffure : vue de face (visage centré, épaules visibles), vue de profil gauche (montrer la structure latérale), vue de profil droit (montrer la symétrie), et vue plongée à 45° (mettre en valeur le dessus de la coiffure) – chaque vue doit être prise en RAW puis retouchée en JPEG avec correction chromatique minimale (pas de filtres Instagram). Le consentement modèle obligatoire selon la Loi 25 exige un formulaire écrit signé spécifiant exactement : les utilisations permises (site web, Instagram, portfolio), la durée de validité (max 2 ans renouvelable), le droit de retrait à tout moment avec destruction des fichiers, et la mention explicite « Je consens à ce que cette photo soit utilisée pour promouvoir les services de [Nom du salon] sur [plateformes listées] jusqu'au [date] ». La documentation sur la fiche photo P-384394 est confidentielle mais obligatoire avec paramètres techniques complets (ouverture f/8, vitesse 1/125s, ISO 100, balance 3200K hiver), conditions prise de vue (intérieur/extérieur, heure, météo), et copie du consentement signé – cette documentation protège légalement en cas de litige sur l'utilisation des images.",
+        "exercice_pratique": {
+          "description": "Atelier intensif de photographie capillaire avec maîtrise de l'éclairage saisonnier adapté et de l'angle de valorisation capillaire sur modèles vivants",
+          "materiel_requis": [
+            "Appareils photo reflex professionnels",
+            "Objectifs 50mm et 85mm",
+            "Trépieds niveau à bulle intégré",
+            "Éclairages LED réglables température couleur",
+            "Cartes grises pour balance des blancs",
+            "Modèles vivants volontaires avec consentement",
+            "Logiciel retouche professionnel (Lightroom)",
+            "Fiches photo P-384394 vierges",
+            "Formateur photographe professionnel spécialisé coiffure",
+            "Échantillons saisons (lumière été simulée, lumière hiver simulée)"
+          ],
+          "etapes": [
+            "Théorie : Principes éclairage saisonnier et angle valorisation",
+            "Calibration : Réglage balance des blancs 5500K (été) et 3200K (hiver)",
+            "Mesure : Utilisation niveau à bulle pour angle 15° exact",
+            "Cadrage : Prise des 4 vues obligatoires (face, profil G/D, plongée)",
+            "Éclairage : Ajustement LED 45° pour remplir ombres sans reflets",
+            "Prise de vue été : Simulation lumière naturelle dorée",
+            "Prise de vue hiver : Simulation lumière intérieure froide",
+            "Retouche : Correction chromatique minimale en RAW → JPEG",
+            "Consentement : Remplir et faire signer formulaire Loi 25",
+            "Documentation : Remplir fiche P-384394 pour chaque photo",
+            "Portfolio : Intégrer photos dans portfolio évolutif Sceau Rouge",
+            "Évaluation : Jury professionnel note technique et esthétique",
+            "Certification : Atteindre 95% de conformité technique sur 20 photos"
+          ]
+        },
+        "pour_aller_plus_loin": [
+          "Guide officiel 'Photographie capillaire professionnelle au Québec' - Association des Coiffeurs du Québec",
+          "Manuel de référence 'Éclairage saisonnier adapté' - Institut de la photographie de Montréal",
+          "Manuel Sceau Rouge - Section 6.4: Techniques de photographie et portfolio professionnel",
+          "Atelier 'Angle de valorisation capillaire' - École des métiers de la photographie",
+          "Référentiel DEP 5200h - Compétence 384394: Photographier des coiffures selon les normes professionnelles québécoises et constituer un portfolio numérique conforme"
+        ]
+      },
+      "xp_reward": 75,
+      "duration": 75
+    },
+    {
+      "numero": 35,
+      "titre": "Techniques de vente avancées : conseil personnalisé et fidélisation",
+      "objectifs_apprentissage": [
+        "Au terme de cette leçon, l'apprenant sera capable d'appliquer des techniques de vente consultative adaptées au contexte québécois",
+        "Au terme de cette leçon, l'apprenant sera capable de personnaliser les recommandations de produits selon les besoins réels et le budget du client",
+        "Au terme de cette leçon, l'apprenant sera capable de fidéliser la clientèle par des stratégies relationnelles authentiquement québécoises",
+        "Au terme de cette leçon, l'apprenant sera capable de documenter les ventes et les recommandations selon les normes professionnelles"
+      ],
+      "prerequis": [
+        "Leçon 3: Accueil client selon les normes québécoises de courtoisie",
+        "Leçon 7: Évaluation des besoins client : écoute active québécoise",
+        "Leçon 14: Gestion des attentes irréalistes : techniques québécoises"
+      ],
+      "vocabulaire_cle": [
+        {
+          "terme": "Vente consultative nordique",
+          "definition": "Approche de vente qui privilégie le diagnostic des besoins réels du client québécois avant toute recommandation, avec transparence radicale sur les limites et les bénéfices, refusant la pression commerciale au profit de la confiance à long terme."
+        },
+        {
+          "terme": "Panier moyen équilibré",
+          "definition": "Stratégie de recommandation de produits calculée selon le budget réel du client (bas/moyen/élevé) pour maximiser la satisfaction plutôt que le chiffre d'affaires immédiat, avec seuil de rentabilité minimum respecté."
+        },
+        {
+          "terme": "Fidélisation par l'appartenance",
+          "definition": "Méthode de fidélisation qui crée un sentiment d'appartenance à une communauté de clients réguliers grâce à des rituels partagés, des attentions personnalisées, et une reconnaissance authentique de l'histoire de chaque client."
+        },
+        {
+          "terme": "Fiche vente V-384395",
+          "definition": "Document confidentiel notant les besoins identifiés, les produits recommandés avec justifications, le budget discuté, les objections traitées, et le consentement du client, utilisé pour le suivi personnalisé et la protection légale."
+        }
+      ],
+      "contenu_principal": {
+        "introduction": "Au 'Salon Vente d'Art' de Montréal, Isabelle montre à son apprentie une cliente : « Regarde cette dame, Marie. Si je lui vends le kit de soins le plus cher de mon rayon sans lui demander son budget, elle va partir avec un sentiment de pression et ne jamais revenir. Mais si j'applique la vente consultative nordique en lui demandant 'Quel est ton vrai défi avec tes cheveux cet hiver ?', qu'elle répond 'Je n'ai pas le temps de me coiffer le matin', et que je lui recommande uniquement le spray anti-humidité à 28$ qui résout SON problème, elle va repartir soulagée et me recommander à toutes ses amies. Ici au Québec, on ne vend pas des produits – on vend des solutions à des problèmes réels. La confiance construite aujourd'hui vaut plus que la vente d'aujourd'hui. » Au Québec, où 84% des clients quittent un salon après une seule expérience de vente pressante, et où un client fidélisé génère 3,2x plus de revenus sur 5 ans qu'un client occasionnel, les techniques de vente ne sont pas une compétence optionnelle – c'est un équilibre délicat entre rentabilité et authenticité qui détermine la survie à long terme du salon. Avec une fidélité client 5,9x supérieure pour les coiffeurs maîtrisant la vente consultative nordique versus ceux utilisant des techniques de pression, et un panier moyen réellement adapté au budget client (taux de conversion 78% vs 32%), maîtriser ces techniques est vital.",
+        "resume": "La vente consultative nordique exige un diagnostic préalable obligatoire avec trois questions fondamentales posées avant toute recommandation : 1) « Quel est ton vrai défi avec tes cheveux en ce moment ? » (identifier le besoin réel), 2) « Combien de temps tu as le matin pour ta coiffure ? » (adapter la solution à la réalité), 3) « Quel est ton budget comfortable pour des produits à la maison ? » (respecter les limites financières) – jamais recommander un produit sans avoir répondu à ces trois questions. Le panier moyen équilibré se calcule selon trois catégories de budget client : budget bas (moins de 40$) → recommander 1 produit essentiel maximum, budget moyen (40-80$) → recommander 2 produits complémentaires, budget élevé (plus de 80$) → recommander 3 produits maximum avec option kit, en expliquant clairement la valeur ajoutée de chaque produit et en refusant systématiquement de dépasser le budget exprimé par le client. La fidélisation par l'appartenance s'appuie sur trois rituels québécois authentiques : 1) Mémoriser et utiliser le prénom du client dès la deuxième visite, 2) Se souvenir d'un détail personnel partagé (ex: « Comment s'est passé l'examen de ton fils ? »), 3) Créer un « rituel d'accueil » personnalisé (ex: « Marie préfère le café noir, pas de sucre ») – ces attentions créent un sentiment d'être reconnu comme personne, pas comme numéro. Le consentement éclairé obligatoire exige une phrase de validation explicite avant chaque vente : « Est-ce que cette recommandation correspond à ton besoin et à ton budget ? » avec acceptation verbale claire du client – jamais supposer le consentement par le silence. La documentation sur la fiche vente V-384395 est confidentielle mais essentielle avec besoins identifiés (mots pour mots si possible), produits recommandés avec justifications précises, budget discuté, objections traitées, consentement client noté, et date de suivi prévue – cette documentation permet un suivi personnalisé et protège légalement en cas de réclamation pour vente abusive.",
+        "exercice_pratique": {
+          "description": "Atelier intensif de vente consultative avec jeux de rôle sur scénarios québécois réalistes et feedback par un formateur certifié en techniques de vente éthique",
+          "materiel_requis": [
+            "Scénarios réels de vente (budgets variés, objections courantes)",
+            "Produits capillaires québécois avec fiches techniques",
+            "Grilles d'évaluation vente consultative nordique",
+            "Caméras pour enregistrement jeux de rôle (avec consentement)",
+            "Formateur certifié en vente éthique québécoise",
+            "Fiches vente V-384395 vierges format confidentiel",
+            "Témoignages vidéo de clients sur mauvaises/bonnes expériences vente",
+            "Calculateur panier moyen équilibré",
+            "Guide des objections courantes et réponses authentiques",
+            "Miroirs pour travail langage corporel non intrusif"
+          ],
+          "etapes": [
+            "Théorie : Principes vente consultative nordique vs pression commerciale",
+            "Analyse : Étude de 5 cas réels de ventes réussies/échouées",
+            "Jeu de rôle 1 : Client budget bas (<40$) avec besoin réel identifié",
+            "Jeu de rôle 2 : Client objections multiples (prix, utilité, temps)",
+            "Jeu de rôle 3 : Client fidèle avec rituel d'appartenance personnalisé",
+            "Technique : Application des 3 questions diagnostic obligatoires",
+            "Validation : Phrase consentement éclairé explicite",
+            "Documentation : Remplir fiche V-384395 pour chaque scénario",
+            "Feedback : Analyse vidéo par le formateur + auto-évaluation",
+            "Correction : Ajustements langage, posture, écoute active",
+            "Certification : Atteindre 90% de satisfaction simulée clients + 0% pression perçue"
+          ]
+        },
+        "pour_aller_plus_loin": [
+          "Guide officiel 'Vente consultative éthique en coiffure québécoise' - Association des Coiffeurs du Québec",
+          "Manuel de référence 'Panier moyen équilibré' - HEC Montréal, Chaire de vente relationnelle",
+          "Manuel Sceau Rouge - Section 6.5: Techniques de vente avancées et fidélisation",
+          "Atelier 'Fidélisation par l'appartenance' - École de psychologie UQAM",
+          "Référentiel DEP 5200h - Compétence 384395: Appliquer des techniques de vente consultative adaptées au contexte québécois et fidéliser la clientèle"
+        ]
+      },
+      "xp_reward": 70,
+      "duration": 70
+    }
+  ]
+}
